@@ -17,6 +17,7 @@ namespace VideoGamePaint
         Color[,] pixelGrid;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
         //List<List<Color>> pixelGrid;
+        bool mouseDown = false;
 
         public frmPaint()
         {
@@ -82,19 +83,60 @@ namespace VideoGamePaint
 
         private void pnlPaint_MouseClick(object sender, MouseEventArgs e)
         {
-            if (e.X < GRID_SIZE * PIXEL_SIZE
-                && e.Y < GRID_SIZE * PIXEL_SIZE)
+            updatePixelAtPosition(e);
+        }
+
+        private void pnlPaint_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouseDown = true;
+            updatePixelAtPosition(e);
+        }
+
+        void updatePixelAtPosition(MouseEventArgs e)
+        {
+            updatePixelAtPosition(e.X, e.Y);
+        }
+        /// <summary>
+        /// Updates the pixel at the given screen coordinates
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        void updatePixelAtPosition(int ex, int ey)
+        {
+            if (ex < GRID_SIZE * PIXEL_SIZE
+                && ey < GRID_SIZE * PIXEL_SIZE)
             {
-                int px = e.X / PIXEL_SIZE;
-                int py = e.Y / PIXEL_SIZE;
-                pixelGrid[px,py] = Color.Black;
-                pnlPaint.Invalidate(new Rectangle(
-                    px*PIXEL_SIZE,
-                    py*PIXEL_SIZE,
-                    PIXEL_SIZE,
-                    PIXEL_SIZE
-                    ));
+                updatePixel(ex / PIXEL_SIZE, ey / PIXEL_SIZE);
             }
+        }
+        /// <summary>
+        /// Updates the pixel at the given grid x,y index
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        void updatePixel(int px, int py)
+        {
+            pixelGrid[px, py] = Color.Black;
+            pnlPaint.Invalidate(new Rectangle(
+                px * PIXEL_SIZE,
+                py * PIXEL_SIZE,
+                PIXEL_SIZE,
+                PIXEL_SIZE
+                ));
+        }
+
+        private void pnlPaint_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (mouseDown)
+            {
+                updatePixelAtPosition(e);
+            }
+        }
+
+        private void pnlPaint_MouseUp(object sender, MouseEventArgs e)
+        {
+            updatePixelAtPosition(e);
+            mouseDown = false;
         }
     }
 }
