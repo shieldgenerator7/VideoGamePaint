@@ -20,6 +20,7 @@ namespace VideoGamePaint
 
         public frmPaint()
         {
+            this.DoubleBuffered = true;
             InitializeComponent();
             pixelGrid = new Color[GRID_SIZE, GRID_SIZE];
             for (int x = 0; x < GRID_SIZE; x++)
@@ -34,6 +35,7 @@ namespace VideoGamePaint
                         );
                 }
             }
+            this.DoubleBuffered = true;
         }
 
         private void pnlPaint_Paint(object sender, PaintEventArgs e)
@@ -83,7 +85,15 @@ namespace VideoGamePaint
             if (e.X < GRID_SIZE * PIXEL_SIZE
                 && e.Y < GRID_SIZE * PIXEL_SIZE)
             {
-                pixelGrid[e.X / PIXEL_SIZE, e.Y / PIXEL_SIZE] = Color.Black;
+                int px = e.X / PIXEL_SIZE;
+                int py = e.Y / PIXEL_SIZE;
+                pixelGrid[px,py] = Color.Black;
+                pnlPaint.Invalidate(new Rectangle(
+                    px*PIXEL_SIZE,
+                    py*PIXEL_SIZE,
+                    PIXEL_SIZE,
+                    PIXEL_SIZE
+                    ));
             }
         }
     }
