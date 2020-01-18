@@ -39,6 +39,7 @@
             this.pnlPaint.Size = new System.Drawing.Size(800, 450);
             this.pnlPaint.TabIndex = 0;
             this.pnlPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPaint_Paint);
+            this.pnlPaint.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlPaint_MouseClick);
             // 
             // frmPaint
             // 

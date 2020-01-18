@@ -22,15 +22,6 @@ namespace VideoGamePaint
         {
             InitializeComponent();
             pixelGrid = new Color[GRID_SIZE, GRID_SIZE];
-        }
-
-        private void pnlPaint_Paint(object sender, PaintEventArgs e)
-        {
-            Pen p = new Pen(Color.Red);
-            Brush b = new SolidBrush(Color.Red);
-            Graphics g = e.Graphics;
-            //g.DrawRectangle(p, 10, 10, 100, 100);
-            //g.FillRectangle(b, 10, 10, 100, 100);
             for (int x = 0; x < GRID_SIZE; x++)
             {
                 for (int y = 0; y < GRID_SIZE; y++)
@@ -43,6 +34,16 @@ namespace VideoGamePaint
                         );
                 }
             }
+        }
+
+        private void pnlPaint_Paint(object sender, PaintEventArgs e)
+        {
+            Pen p = new Pen(Color.Red);
+            Brush b = new SolidBrush(Color.Red);
+            Graphics g = e.Graphics;
+            //g.DrawRectangle(p, 10, 10, 100, 100);
+            //g.FillRectangle(b, 10, 10, 100, 100);
+            
             for (int x = 0; x < GRID_SIZE; x++)
             {
                 for (int y = 0; y < GRID_SIZE; y++)
@@ -75,6 +76,15 @@ namespace VideoGamePaint
                 colorBrushes.Add(color, brush);
             }
             return brush;
+        }
+
+        private void pnlPaint_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.X < GRID_SIZE * PIXEL_SIZE
+                && e.Y < GRID_SIZE * PIXEL_SIZE)
+            {
+                pixelGrid[e.X / PIXEL_SIZE, e.Y / PIXEL_SIZE] = Color.Black;
+            }
         }
     }
 }
