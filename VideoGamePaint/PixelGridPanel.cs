@@ -7,8 +7,7 @@ namespace VideoGamePaint
 {
     public class PixelGridPanel : Panel
     {
-        float pixelSize;//how many screen pixels wide a grid pixel is
-        const int PIXEL_SIZE = 8;
+        public float pixelSize = 8;//how many screen pixels wide a grid pixel is
 
         bool mouseDown = false;
         Vector lastMousePosition = new Vector(0, 0);//the position of the mouse at the last mouse event, panel coordinates
@@ -30,7 +29,44 @@ namespace VideoGamePaint
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
         {
-            updatePixelAtPosition(e.X, e.Y, drawColor, forceRedraw);
+            int ex = e.X;
+            int ey = e.Y;
+            if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
+            {
+                RGB rgb = ColorToRGB(drawColor);
+                updatePixelAtPosition(ex, ey, rgb);
+                int minx = (int)Math.Min(ex, lastMousePosition.x);
+                int maxx = (int)Math.Max(ex, lastMousePosition.x);
+                int miny = (int)Math.Min(ey, lastMousePosition.y);
+                int maxy = (int)Math.Max(ey, lastMousePosition.y);
+                int rise = ey - lastMousePosition.y;
+                int run = ex - lastMousePosition.x;
+                if (run == 0)
+                {
+                    //vertical line
+                    for (int y = miny + 1; y < maxy; y++)
+                    {
+                        updatePixelAtPosition(ex, y, rgb);
+                    }
+                }
+                else
+                {
+                    int offset = ey - (ex * rise / run);
+                    float threshold = 0.1f;
+                    for (int x = minx; x <= maxx; x++)
+                    {
+                        int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
+                        int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
+                        for (int y = lowY; y <= highY; y++)
+                        {
+                            updatePixelAtPosition(x, y, rgb);
+                        }
+                    }
+                }
+                lastMousePosition.x = ex;
+                lastMousePosition.y = ey;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -38,47 +74,12 @@ namespace VideoGamePaint
         /// </summary>
         /// <param name="x">Screen x</param>
         /// <param name="y">Screen y</param>
-        public void updatePixelAtPosition(int ex, int ey, Color color, bool forceRedraw = false)
+        public void updatePixelAtPosition(int ex, int ey, RGB rgb)
         {
-            if (ex < pixelGrid.Size.x * PIXEL_SIZE
-                && ey < pixelGrid.Size.y * PIXEL_SIZE)
+            if (ex < pixelGrid.Size.x * pixelSize
+                && ey < pixelGrid.Size.y * pixelSize)
             {
-                RGB rgb = ColorToRGB(color);
-                pixelGrid.updatePixel(ex / PIXEL_SIZE, ey / PIXEL_SIZE, rgb);
-                if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
-                {
-                    int minx = (int)Math.Min(ex, lastMousePosition.x);
-                    int maxx = (int)Math.Max(ex, lastMousePosition.x);
-                    int miny = (int)Math.Min(ey, lastMousePosition.y);
-                    int maxy = (int)Math.Max(ey, lastMousePosition.y);
-                    int rise = ey - lastMousePosition.y;
-                    int run = ex - lastMousePosition.x;
-                    if (run == 0)
-                    {
-                        //vertical line
-                        for (int y = miny + 1; y < maxy; y++)
-                        {
-                            pixelGrid.updatePixel(ex / PIXEL_SIZE, y / PIXEL_SIZE, rgb);
-                        }
-                    }
-                    else
-                    {
-                        int offset = ey - (ex * rise / run);
-                        float threshold = 0.1f;
-                        for (int x = minx; x <= maxx; x++)
-                        {
-                            int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
-                            int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
-                            for (int y = lowY; y <= highY; y++)
-                            {
-                                pixelGrid.updatePixel(x / PIXEL_SIZE, y / PIXEL_SIZE, rgb);
-                            }
-                        }
-                    }
-                    lastMousePosition.x = ex;
-                    lastMousePosition.y = ey;
-                    Invalidate();
-                }
+                pixelGrid.setPixel(gridPixel(ex), gridPixel(ey), rgb);                
             }
         }
 
@@ -90,11 +91,21 @@ namespace VideoGamePaint
         public Rectangle getRect(int x, int y)
         {
             return new Rectangle(
-                x * PIXEL_SIZE,
-                y * PIXEL_SIZE,
-                PIXEL_SIZE,
-                PIXEL_SIZE
+                (int)(x * pixelSize),
+                (int)(y * pixelSize),
+                (int)pixelSize,
+                (int)pixelSize
                 );
+        }
+
+        /// <summary>
+        /// Converts the panel pixel coordinate to grid pixel coordinate
+        /// </summary>
+        /// <param name="panelPixel"></param>
+        /// <returns></returns>
+        int gridPixel(int panelPixel)
+        {
+            return (int)Math.Floor(panelPixel / pixelSize);
         }
 
         public static RGB ColorToRGB(Color color)

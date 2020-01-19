@@ -54,11 +54,11 @@ public class PixelGrid
     }
 
     /// <summary>
-    /// Updates the pixel at the given position in the grid
+    /// Sets the pixel at the given position in the grid
     /// </summary>
     /// <param name="x"></param>
     /// <param name="y"></param>
-    public void updatePixel(int px, int py, RGB rgb)
+    public void setPixel(int px, int py, RGB rgb)
     {
         pixelGrid[px, py] = rgb;
     }
