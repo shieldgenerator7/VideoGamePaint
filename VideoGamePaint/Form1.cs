@@ -152,7 +152,7 @@ namespace VideoGamePaint
         /// <param name="y"></param>
         void updatePixel(int px, int py)
         {
-            pixelGrid[px, py] = Color.Black;
+            pixelGrid[px, py] = dlgColor.Color;
             pnlPaint.Invalidate(new Rectangle(
                 px * PIXEL_SIZE,
                 py * PIXEL_SIZE,
@@ -173,6 +173,12 @@ namespace VideoGamePaint
         {
             updatePixelAtPosition(e);
             mouseDown = false;
+        }
+
+        private void btnColorPicker_Click(object sender, EventArgs e)
+        {
+            DialogResult result = dlgColor.ShowDialog();
+            btnColorPicker.BackColor = dlgColor.Color;
         }
     }
 }
