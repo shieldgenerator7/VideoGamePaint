@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 
 public class PixelGrid
 {
@@ -38,12 +38,7 @@ public class PixelGrid
         {
             for (int y = 0; y < size.y; y++)
             {
-                Random r = new Random(x * y);
-                pixelGrid[x, y] = new RGB(
-                    r.Next() % 256,
-                    r.Next() % 256,
-                    r.Next() % 256
-                    );
+                pixelGrid[x, y] = new RGB(255, 255, 255);
             }
         }
     }
