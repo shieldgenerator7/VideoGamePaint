@@ -8,6 +8,7 @@ namespace VideoGamePaint
     public class PixelGridPanel : Panel
     {
         public float pixelSize = 8;//how many screen pixels wide a grid pixel is
+        public Vector mapPos = new Vector(0, 0);//the panel position in which to start drawing the grid
 
         bool mouseDown = false;
         Vector lastMousePosition = new Vector(0, 0);//the position of the mouse at the last mouse event, panel coordinates
@@ -37,7 +38,8 @@ namespace VideoGamePaint
             updatePixelAtPosition(e.X, e.Y, forceRedraw);
         }
 
-        public void updatePixelAtPosition(int ex, int ey, bool forceRedraw = false) { 
+        public void updatePixelAtPosition(int ex, int ey, bool forceRedraw = false)
+        {
             if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
             {
                 RGB rgb = ColorToRGB(drawColor);
@@ -86,7 +88,7 @@ namespace VideoGamePaint
             if (ex < pixelGrid.Size.x * pixelSize
                 && ey < pixelGrid.Size.y * pixelSize)
             {
-                pixelGrid.setPixel(gridPixel(ex), gridPixel(ey), rgb);
+                pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
             }
         }
 
@@ -103,14 +105,20 @@ namespace VideoGamePaint
         /// <returns></returns>
         public Color getColor(int ex, int ey)
         {
-            return RGBToColor(pixelGrid.getPixel(gridPixel(ex), gridPixel(ey)));
+            return RGBToColor(pixelGrid.getPixel(gridPixelX(ex), gridPixelY(ey)));
         }
 
+        /// <summary>
+        /// Returns the rectangle that can be used to draw the pixel on the screen
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public Rectangle getRect(int x, int y)
         {
             return new Rectangle(
-                (int)(x * pixelSize),
-                (int)(y * pixelSize),
+                (int)(x * pixelSize) + mapPos.x,
+                (int)(y * pixelSize) + mapPos.y,
                 (int)pixelSize,
                 (int)pixelSize
                 );
@@ -119,11 +127,15 @@ namespace VideoGamePaint
         /// <summary>
         /// Converts the panel pixel coordinate to grid pixel coordinate
         /// </summary>
-        /// <param name="panelPixel"></param>
+        /// <param name="panelPixelX"></param>
         /// <returns></returns>
-        public int gridPixel(int panelPixel)
+        public int gridPixelX(int panelPixelX)
         {
-            return (int)Math.Floor(panelPixel / pixelSize);
+            return (int)Math.Floor((panelPixelX - mapPos.x) / pixelSize);
+        }
+        public int gridPixelY(int panelPixelY)
+        {
+            return (int)Math.Floor((panelPixelY - mapPos.y) / pixelSize);
         }
 
         public static RGB ColorToRGB(Color color)
@@ -148,7 +160,7 @@ namespace VideoGamePaint
         {
             base.OnPaint(e);
             Graphics g = e.Graphics;
-
+            g.Clear(Color.LightGray);
             for (int x = 0; x < pixelGrid.Size.x; x++)
             {
                 for (int y = 0; y < pixelGrid.Size.y; y++)
@@ -190,6 +202,7 @@ namespace VideoGamePaint
                 lastMousePosition.y = e.Y;
                 //updatePixelAtPosition(e, true);
                 activeTool.activate(e.X, e.Y);
+                Focus();
             }
         }
 
@@ -219,6 +232,29 @@ namespace VideoGamePaint
         }
         public delegate void OnPixelClicked(Color pixelColor);
         public OnPixelClicked onPixelClicked;
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            int shiftAmount = 10;
+            if (e.KeyData == Keys.W)
+            {
+                mapPos.y += shiftAmount;
+            }
+            if (e.KeyData == Keys.A)
+            {
+                mapPos.x += shiftAmount;
+            }
+            if (e.KeyData == Keys.S)
+            {
+                mapPos.y -= shiftAmount;
+            }
+            if (e.KeyData == Keys.D)
+            {
+                mapPos.x -= shiftAmount;
+            }
+            Invalidate();
+        }
 
         /// <summary>
         /// Fills the grid with the colors in the list, stopping when it runs out of colors

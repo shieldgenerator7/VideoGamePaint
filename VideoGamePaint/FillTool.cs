@@ -12,8 +12,8 @@ public class FillTool : Tool
     {
         PixelGrid pg = pixelGridPanel.pixelGrid;
         RGB baseColor = pg.getPixel(
-            pixelGridPanel.gridPixel(ex),
-            pixelGridPanel.gridPixel(ey)
+            pixelGridPanel.gridPixelX(ex),
+            pixelGridPanel.gridPixelY(ey)
             );
         for (int x = 0; x < pg.Size.x; x++)
         {
