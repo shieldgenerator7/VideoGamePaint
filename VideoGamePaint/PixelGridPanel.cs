@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -15,6 +16,7 @@ namespace VideoGamePaint
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
 
         public Color drawColor;
+        Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
 
         public PixelGridPanel() : base()
         {
@@ -106,6 +108,42 @@ namespace VideoGamePaint
                 rgb.green,
                 rgb.blue
                 );
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            Graphics g = e.Graphics;
+
+            for (int x = 0; x < pixelGrid.GRID_SIZE; x++)
+            {
+                for (int y = 0; y < pixelGrid.GRID_SIZE; y++)
+                {
+                    g.FillRectangle(
+                        getBrush(getColor(x, y)),
+                        getRect(x, y)
+                        );
+                }
+            }
+        }
+
+        Brush getBrush(Color color)
+        {
+            if (color == null)
+            {
+                color = Color.Red;
+            }
+            Brush brush;
+            if (colorBrushes.ContainsKey(color))
+            {
+                brush = colorBrushes[color];
+            }
+            else
+            {
+                brush = new SolidBrush(color);
+                colorBrushes.Add(color, brush);
+            }
+            return brush;
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
