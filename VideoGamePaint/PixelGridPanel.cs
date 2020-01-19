@@ -15,6 +15,7 @@ namespace VideoGamePaint
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
 
         public Color drawColor;
+        public Tool activeTool;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
 
         public bool defaultPaintingEnabled = true;
@@ -33,8 +34,10 @@ namespace VideoGamePaint
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
         {
-            int ex = e.X;
-            int ey = e.Y;
+            updatePixelAtPosition(e.X, e.Y, forceRedraw);
+        }
+
+        public void updatePixelAtPosition(int ex, int ey, bool forceRedraw = false) { 
             if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
             {
                 RGB rgb = ColorToRGB(drawColor);
@@ -87,9 +90,20 @@ namespace VideoGamePaint
             }
         }
 
-        public Color getColor(int x, int y)
+        public bool isColor(int gx, int gy, Color color)
         {
-            return RGBToColor(pixelGrid.getPixel(x, y));
+            return RGBToColor(pixelGrid.getPixel(gx, gy)) == color;
+        }
+
+        /// <summary>
+        /// Gets the color at the given panel coordinates
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="ey"></param>
+        /// <returns></returns>
+        public Color getColor(int ex, int ey)
+        {
+            return RGBToColor(pixelGrid.getPixel(gridPixel(ex), gridPixel(ey)));
         }
 
         public Rectangle getRect(int x, int y)
@@ -107,7 +121,7 @@ namespace VideoGamePaint
         /// </summary>
         /// <param name="panelPixel"></param>
         /// <returns></returns>
-        int gridPixel(int panelPixel)
+        public int gridPixel(int panelPixel)
         {
             return (int)Math.Floor(panelPixel / pixelSize);
         }
@@ -140,7 +154,7 @@ namespace VideoGamePaint
                 for (int y = 0; y < pixelGrid.Size.y; y++)
                 {
                     g.FillRectangle(
-                        getBrush(getColor(x, y)),
+                        getBrush(RGBToColor(pixelGrid.getPixel(x, y))),
                         getRect(x, y)
                         );
                 }
@@ -174,7 +188,8 @@ namespace VideoGamePaint
             {
                 lastMousePosition.x = e.X;
                 lastMousePosition.y = e.Y;
-                updatePixelAtPosition(e, true);
+                //updatePixelAtPosition(e, true);
+                activeTool.activate(e.X, e.Y);
             }
         }
 
@@ -185,7 +200,8 @@ namespace VideoGamePaint
             {
                 if (defaultPaintingEnabled)
                 {
-                    updatePixelAtPosition(e);
+                    //updatePixelAtPosition(e);
+                    activeTool.activate(e.X, e.Y);
                 }
             }
         }
@@ -196,9 +212,10 @@ namespace VideoGamePaint
             mouseDown = false;
             if (defaultPaintingEnabled)
             {
-                updatePixelAtPosition(e);
+                //updatePixelAtPosition(e);
+                activeTool.activate(e.X, e.Y);
             }
-            onPixelClicked?.Invoke(getColor(gridPixel(e.X), gridPixel(e.Y)));
+            onPixelClicked?.Invoke(getColor(e.X, e.Y));
         }
         public delegate void OnPixelClicked(Color pixelColor);
         public OnPixelClicked onPixelClicked;

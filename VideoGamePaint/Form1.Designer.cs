@@ -36,7 +36,10 @@
             this.pnlTools = new System.Windows.Forms.Panel();
             this.spltColors = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
+            this.btnToolPencil = new System.Windows.Forms.Button();
+            this.btnToolFill = new System.Windows.Forms.Button();
             this.pnlColors.SuspendLayout();
+            this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).BeginInit();
             this.spltColors.Panel1.SuspendLayout();
             this.spltColors.Panel2.SuspendLayout();
@@ -93,6 +96,8 @@
             // 
             // pnlTools
             // 
+            this.pnlTools.Controls.Add(this.btnToolFill);
+            this.pnlTools.Controls.Add(this.btnToolPencil);
             this.pnlTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTools.Location = new System.Drawing.Point(0, 0);
             this.pnlTools.Name = "pnlTools";
@@ -140,6 +145,26 @@
             this.spltTools.SplitterWidth = 1;
             this.spltTools.TabIndex = 4;
             // 
+            // btnToolPencil
+            // 
+            this.btnToolPencil.Location = new System.Drawing.Point(5, 13);
+            this.btnToolPencil.Name = "btnToolPencil";
+            this.btnToolPencil.Size = new System.Drawing.Size(92, 62);
+            this.btnToolPencil.TabIndex = 0;
+            this.btnToolPencil.Text = "Pencil Tool";
+            this.btnToolPencil.UseVisualStyleBackColor = true;
+            this.btnToolPencil.Click += new System.EventHandler(this.btnToolPencil_Click);
+            // 
+            // btnToolFill
+            // 
+            this.btnToolFill.Location = new System.Drawing.Point(4, 82);
+            this.btnToolFill.Name = "btnToolFill";
+            this.btnToolFill.Size = new System.Drawing.Size(91, 61);
+            this.btnToolFill.TabIndex = 1;
+            this.btnToolFill.Text = "Fill Tool";
+            this.btnToolFill.UseVisualStyleBackColor = true;
+            this.btnToolFill.Click += new System.EventHandler(this.btnToolFill_Click);
+            // 
             // frmPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -149,6 +174,7 @@
             this.Name = "frmPaint";
             this.Text = "Video Game Paint";
             this.pnlColors.ResumeLayout(false);
+            this.pnlTools.ResumeLayout(false);
             this.spltColors.Panel1.ResumeLayout(false);
             this.spltColors.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).EndInit();
@@ -171,6 +197,8 @@
         private System.Windows.Forms.Panel pnlTools;
         private System.Windows.Forms.SplitContainer spltColors;
         private System.Windows.Forms.SplitContainer spltTools;
+        private System.Windows.Forms.Button btnToolFill;
+        private System.Windows.Forms.Button btnToolPencil;
     }
 }
 

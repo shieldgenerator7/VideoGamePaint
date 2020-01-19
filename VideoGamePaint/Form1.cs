@@ -14,10 +14,16 @@ namespace VideoGamePaint
     public partial class frmPaint : Form
     {
         List<Color> colorOptions = new List<Color>();
+        Tool pencilTool;
+        Tool fillTool;
 
         public frmPaint()
         {
             InitializeComponent();
+            //Tools
+            pencilTool = new PencilTool(pnlPaint);
+            fillTool = new FillTool(pnlPaint);
+            pnlPaint.activeTool = pencilTool;
             //pnlColorOptions
             this.pnlColorOptions.pixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
@@ -50,6 +56,16 @@ namespace VideoGamePaint
             dlgColor.Color = color;
             btnColorPicker.BackColor = color;
             pnlPaint.drawColor = color;
+        }
+
+        private void btnToolPencil_Click(object sender, EventArgs e)
+        {
+            pnlPaint.activeTool = pencilTool;
+        }
+
+        private void btnToolFill_Click(object sender, EventArgs e)
+        {
+            pnlPaint.activeTool = fillTool;
         }
     }
 }
