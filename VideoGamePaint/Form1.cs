@@ -30,7 +30,8 @@ namespace VideoGamePaint
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
             this.pnlColorOptions.onPixelClicked += setDrawingColor;
-            this.pnlColorOptions.pixelGrid.Size = new Vector(10, 2);
+            this.pnlColorOptions.pixelGrid.Size.x = 10;
+            this.pnlColorOptions.pixelGrid.Size.y = 2;
             colorOptions.Add(Color.Black);
             colorOptions.Add(Color.Gray);
             colorOptions.Add(Color.White);

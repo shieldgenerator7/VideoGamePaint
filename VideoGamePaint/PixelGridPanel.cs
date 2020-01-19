@@ -39,7 +39,8 @@ namespace VideoGamePaint
         public PixelGridPanel(int width, int height) : base()
         {
             this.DoubleBuffered = true;
-            pixelGrid.Size = new Vector(width, height);
+            pixelGrid.Size.x = width;
+            pixelGrid.Size.y = height;
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
@@ -107,11 +108,38 @@ namespace VideoGamePaint
         {
             int gx = gridPixelX(ex);
             int gy = gridPixelY(ey);
-            if (gx >= 0 && gx < pixelGrid.Size.x
-                && gy >= 0 && gy < pixelGrid.Size.y)
+            //If the pixel is outside the pixel grid,
+            if (gx < 0
+                || gy < 0
+                || gx >= pixelGrid.Size.x
+                || gy >= pixelGrid.Size.y
+                )
             {
-                pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
+                //Expand the pixel grid
+                int expandX = 0;
+                if (gx < 0)
+                {
+                    expandX = gx;
+                    mapPos.x -= (int)(Math.Abs(gx) * PixelSize);
+                }
+                else if (gx >= pixelGrid.Size.x)
+                {
+                    expandX = gx - pixelGrid.Size.x + 1;
+                }
+                int expandY = 0;
+                if (gy < 0)
+                {
+                    expandY = gy;
+                    mapPos.y -= (int)(Math.Abs(gy) * PixelSize);
+                }
+                else if (gy >= pixelGrid.Size.y)
+                {
+                    expandY = gy - pixelGrid.Size.y + 1;
+                }
+                pixelGrid.expandGrid(expandX, expandY);
             }
+            //Set the pixel at the position
+            pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
         }
 
         public bool isColor(int gx, int gy, Color color)
