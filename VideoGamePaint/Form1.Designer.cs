@@ -62,7 +62,6 @@
             this.pnlColorOptions.Name = "pnlColorOptions";
             this.pnlColorOptions.Size = new System.Drawing.Size(200, 90);
             this.pnlColorOptions.TabIndex = 1;
-            this.pnlColorOptions.pixelSize = 20;
             // 
             // btnColorPicker
             // 

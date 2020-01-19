@@ -17,11 +17,15 @@ namespace VideoGamePaint
         public Color drawColor;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
 
-        public PixelGridPanel() : this(100,100)
+        public bool defaultPaintingEnabled = true;
+
+
+
+        public PixelGridPanel() : this(100, 100)
         {
         }
 
-        public PixelGridPanel(int width, int height): base()
+        public PixelGridPanel(int width, int height) : base()
         {
             this.DoubleBuffered = true;
             pixelGrid.Size = new Vector(width, height);
@@ -79,7 +83,7 @@ namespace VideoGamePaint
             if (ex < pixelGrid.Size.x * pixelSize
                 && ey < pixelGrid.Size.y * pixelSize)
             {
-                pixelGrid.setPixel(gridPixel(ex), gridPixel(ey), rgb);                
+                pixelGrid.setPixel(gridPixel(ex), gridPixel(ey), rgb);
             }
         }
 
@@ -165,10 +169,13 @@ namespace VideoGamePaint
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            lastMousePosition.x = e.X;
-            lastMousePosition.y = e.Y;
             mouseDown = true;
-            updatePixelAtPosition(e, true);
+            if (defaultPaintingEnabled)
+            {
+                lastMousePosition.x = e.X;
+                lastMousePosition.y = e.Y;
+                updatePixelAtPosition(e, true);
+            }
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -176,7 +183,10 @@ namespace VideoGamePaint
             base.OnMouseMove(e);
             if (mouseDown)
             {
-                updatePixelAtPosition(e);
+                if (defaultPaintingEnabled)
+                {
+                    updatePixelAtPosition(e);
+                }
             }
         }
 
@@ -184,7 +194,14 @@ namespace VideoGamePaint
         {
             base.OnMouseUp(e);
             mouseDown = false;
-            updatePixelAtPosition(e);
+            if (defaultPaintingEnabled)
+            {
+                updatePixelAtPosition(e);
+            }
+            onPixelClicked?.Invoke(getColor(gridPixel(e.X), gridPixel(e.Y)));
         }
+        public delegate void OnPixelClicked(Color pixelColor);
+        public OnPixelClicked onPixelClicked;
+
     }
 }
