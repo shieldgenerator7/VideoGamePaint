@@ -30,7 +30,7 @@
         {
             this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColors = new System.Windows.Forms.Panel();
-            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel(10,2);
+            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlColors.SuspendLayout();
@@ -60,7 +60,7 @@
             this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
             this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.Size = new System.Drawing.Size(200, 90);
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 90);
             this.pnlColorOptions.TabIndex = 1;
             // 
             // btnColorPicker

@@ -203,5 +203,21 @@ namespace VideoGamePaint
         public delegate void OnPixelClicked(Color pixelColor);
         public OnPixelClicked onPixelClicked;
 
+        /// <summary>
+        /// Fills the grid with the colors in the list, stopping when it runs out of colors
+        /// </summary>
+        /// <param name="colors"></param>
+        public void setColorsFromList(List<Color> colors)
+        {
+            int i = 0;
+            for (int x = 0; x < pixelGrid.Size.x && i < colors.Count; x++)
+            {
+                for (int y = 0; y < pixelGrid.Size.y && i < colors.Count; y++)
+                {
+                    pixelGrid.setPixel(x, y, ColorToRGB(colors[i]));
+                    i++;
+                }
+            }
+        }
     }
 }
