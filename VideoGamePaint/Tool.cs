@@ -21,4 +21,9 @@ public abstract class Tool
     {
 
     }
+
+    public static implicit operator bool (Tool a)
+    {
+        return a != null;
+    }
 }
