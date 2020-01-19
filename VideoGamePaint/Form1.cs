@@ -18,6 +18,7 @@ namespace VideoGamePaint
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
         //List<List<Color>> pixelGrid;
         bool mouseDown = false;
+        Vector lastMousePosition = new Vector(0, 0);//the position of the mouse at the last mouse event, panel coordinates
 
         public frmPaint()
         {
@@ -46,7 +47,7 @@ namespace VideoGamePaint
             Graphics g = e.Graphics;
             //g.DrawRectangle(p, 10, 10, 100, 100);
             //g.FillRectangle(b, 10, 10, 100, 100);
-            
+
             for (int x = 0; x < GRID_SIZE; x++)
             {
                 for (int y = 0; y < GRID_SIZE; y++)
@@ -89,6 +90,8 @@ namespace VideoGamePaint
         private void pnlPaint_MouseDown(object sender, MouseEventArgs e)
         {
             mouseDown = true;
+            lastMousePosition.x = e.X;
+            lastMousePosition.y = e.Y;
             updatePixelAtPosition(e);
         }
 
@@ -107,6 +110,39 @@ namespace VideoGamePaint
                 && ey < GRID_SIZE * PIXEL_SIZE)
             {
                 updatePixel(ex / PIXEL_SIZE, ey / PIXEL_SIZE);
+                if (ex != lastMousePosition.x || ey != lastMousePosition.y)
+                {
+                    int minx = (int)Math.Min(ex, lastMousePosition.x);
+                    int maxx = (int)Math.Max(ex, lastMousePosition.x);
+                    int miny = (int)Math.Min(ey, lastMousePosition.y);
+                    int maxy = (int)Math.Max(ey, lastMousePosition.y);
+                    int rise = ey - lastMousePosition.y;
+                    int run = ex - lastMousePosition.x;
+                    if (run == 0)
+                    {
+                        //vertical line
+                        for (int y = miny + 1; y < maxy; y++)
+                        {
+                            updatePixel(ex / PIXEL_SIZE, y / PIXEL_SIZE);
+                        }
+                    }
+                    else
+                    {
+                        int offset = ey - (ex * rise / run);
+                        float threshold = 0.1f;
+                        for (int x = minx; x <= maxx; x++)
+                        {
+                            int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
+                            int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
+                            for (int y = lowY; y <= highY; y++)
+                            {
+                                updatePixel(x / PIXEL_SIZE, y / PIXEL_SIZE);
+                            }
+                        }
+                    }
+                }
+                lastMousePosition.x = ex;
+                lastMousePosition.y = ey;
             }
         }
         /// <summary>
