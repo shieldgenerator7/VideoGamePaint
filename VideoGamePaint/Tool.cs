@@ -12,4 +12,13 @@ public abstract class Tool
 
     public abstract void activate(int ex, int ey);
 
+    public virtual void preactivate(int ex, int ey)
+    {
+
+    }
+
+    public virtual void postactivate(int ex, int ey)
+    {
+
+    }
 }

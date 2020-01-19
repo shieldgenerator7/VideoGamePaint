@@ -29,6 +29,11 @@ public class Vector
         get => new Vector(0, 0);
     }
 
+    public override string ToString()
+    {
+        return "(" + x + ", " + y + ")";
+    }
+
     public static Vector operator -(Vector a)
         => new Vector(-a.x, -a.y);
 

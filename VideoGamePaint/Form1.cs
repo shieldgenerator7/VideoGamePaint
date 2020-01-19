@@ -16,6 +16,7 @@ namespace VideoGamePaint
         List<Color> colorOptions = new List<Color>();
         Tool pencilTool;
         Tool fillTool;
+        Tool handTool;
 
         public frmPaint()
         {
@@ -23,6 +24,7 @@ namespace VideoGamePaint
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
+            handTool = new HandTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
@@ -66,6 +68,11 @@ namespace VideoGamePaint
         private void btnToolFill_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = fillTool;
+        }
+
+        private void btnHandTool_Click(object sender, EventArgs e)
+        {
+            pnlPaint.activeTool = handTool;
         }
     }
 }

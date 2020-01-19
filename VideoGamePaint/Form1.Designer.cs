@@ -34,10 +34,11 @@
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlTools = new System.Windows.Forms.Panel();
+            this.btnToolFill = new System.Windows.Forms.Button();
+            this.btnToolPencil = new System.Windows.Forms.Button();
             this.spltColors = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
-            this.btnToolPencil = new System.Windows.Forms.Button();
-            this.btnToolFill = new System.Windows.Forms.Button();
+            this.btnHandTool = new System.Windows.Forms.Button();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).BeginInit();
@@ -55,7 +56,8 @@
             this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlPaint.Location = new System.Drawing.Point(0, 0);
             this.pnlPaint.Name = "pnlPaint";
-            this.pnlPaint.Size = new System.Drawing.Size(699, 400);
+            this.pnlPaint.PixelSize = 8F;
+            this.pnlPaint.Size = new System.Drawing.Size(699, 403);
             this.pnlPaint.TabIndex = 0;
             // 
             // pnlColors
@@ -66,7 +68,7 @@
             this.pnlColors.Location = new System.Drawing.Point(0, 0);
             this.pnlColors.Name = "pnlColors";
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
-            this.pnlColors.Size = new System.Drawing.Size(800, 49);
+            this.pnlColors.Size = new System.Drawing.Size(800, 46);
             this.pnlColors.TabIndex = 1;
             // 
             // pnlColorOptions
@@ -74,7 +76,8 @@
             this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
             this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.Size = new System.Drawing.Size(400, 39);
+            this.pnlColorOptions.PixelSize = 8F;
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 36);
             this.pnlColorOptions.TabIndex = 1;
             // 
             // btnColorPicker
@@ -85,7 +88,7 @@
             this.btnColorPicker.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnColorPicker.Location = new System.Drawing.Point(5, 5);
             this.btnColorPicker.Name = "btnColorPicker";
-            this.btnColorPicker.Size = new System.Drawing.Size(90, 39);
+            this.btnColorPicker.Size = new System.Drawing.Size(90, 36);
             this.btnColorPicker.TabIndex = 0;
             this.btnColorPicker.UseVisualStyleBackColor = false;
             this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
@@ -96,13 +99,34 @@
             // 
             // pnlTools
             // 
+            this.pnlTools.Controls.Add(this.btnHandTool);
             this.pnlTools.Controls.Add(this.btnToolFill);
             this.pnlTools.Controls.Add(this.btnToolPencil);
             this.pnlTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTools.Location = new System.Drawing.Point(0, 0);
             this.pnlTools.Name = "pnlTools";
-            this.pnlTools.Size = new System.Drawing.Size(100, 400);
+            this.pnlTools.Size = new System.Drawing.Size(100, 403);
             this.pnlTools.TabIndex = 2;
+            // 
+            // btnToolFill
+            // 
+            this.btnToolFill.Location = new System.Drawing.Point(4, 82);
+            this.btnToolFill.Name = "btnToolFill";
+            this.btnToolFill.Size = new System.Drawing.Size(91, 61);
+            this.btnToolFill.TabIndex = 1;
+            this.btnToolFill.Text = "Fill Tool";
+            this.btnToolFill.UseVisualStyleBackColor = true;
+            this.btnToolFill.Click += new System.EventHandler(this.btnToolFill_Click);
+            // 
+            // btnToolPencil
+            // 
+            this.btnToolPencil.Location = new System.Drawing.Point(5, 13);
+            this.btnToolPencil.Name = "btnToolPencil";
+            this.btnToolPencil.Size = new System.Drawing.Size(92, 62);
+            this.btnToolPencil.TabIndex = 0;
+            this.btnToolPencil.Text = "Pencil Tool";
+            this.btnToolPencil.UseVisualStyleBackColor = true;
+            this.btnToolPencil.Click += new System.EventHandler(this.btnToolPencil_Click);
             // 
             // spltColors
             // 
@@ -121,7 +145,7 @@
             // 
             this.spltColors.Panel2.Controls.Add(this.pnlColors);
             this.spltColors.Size = new System.Drawing.Size(800, 450);
-            this.spltColors.SplitterDistance = 400;
+            this.spltColors.SplitterDistance = 403;
             this.spltColors.SplitterWidth = 1;
             this.spltColors.TabIndex = 3;
             // 
@@ -140,30 +164,20 @@
             // spltTools.Panel2
             // 
             this.spltTools.Panel2.Controls.Add(this.pnlPaint);
-            this.spltTools.Size = new System.Drawing.Size(800, 400);
+            this.spltTools.Size = new System.Drawing.Size(800, 403);
             this.spltTools.SplitterDistance = 100;
             this.spltTools.SplitterWidth = 1;
             this.spltTools.TabIndex = 4;
             // 
-            // btnToolPencil
+            // btnHandTool
             // 
-            this.btnToolPencil.Location = new System.Drawing.Point(5, 13);
-            this.btnToolPencil.Name = "btnToolPencil";
-            this.btnToolPencil.Size = new System.Drawing.Size(92, 62);
-            this.btnToolPencil.TabIndex = 0;
-            this.btnToolPencil.Text = "Pencil Tool";
-            this.btnToolPencil.UseVisualStyleBackColor = true;
-            this.btnToolPencil.Click += new System.EventHandler(this.btnToolPencil_Click);
-            // 
-            // btnToolFill
-            // 
-            this.btnToolFill.Location = new System.Drawing.Point(4, 82);
-            this.btnToolFill.Name = "btnToolFill";
-            this.btnToolFill.Size = new System.Drawing.Size(91, 61);
-            this.btnToolFill.TabIndex = 1;
-            this.btnToolFill.Text = "Fill Tool";
-            this.btnToolFill.UseVisualStyleBackColor = true;
-            this.btnToolFill.Click += new System.EventHandler(this.btnToolFill_Click);
+            this.btnHandTool.Location = new System.Drawing.Point(5, 150);
+            this.btnHandTool.Name = "btnHandTool";
+            this.btnHandTool.Size = new System.Drawing.Size(90, 62);
+            this.btnHandTool.TabIndex = 2;
+            this.btnHandTool.Text = "Hand Tool";
+            this.btnHandTool.UseVisualStyleBackColor = true;
+            this.btnHandTool.Click += new System.EventHandler(this.btnHandTool_Click);
             // 
             // frmPaint
             // 
@@ -199,6 +213,7 @@
         private System.Windows.Forms.SplitContainer spltTools;
         private System.Windows.Forms.Button btnToolFill;
         private System.Windows.Forms.Button btnToolPencil;
+        private System.Windows.Forms.Button btnHandTool;
     }
 }
 

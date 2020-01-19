@@ -19,7 +19,8 @@ namespace VideoGamePaint
         public Vector mapPos = new Vector(0, 0);//the panel position in which to start drawing the grid
 
         bool mouseDown = false;
-        Vector lastMousePosition = new Vector(0, 0);//the position of the mouse at the last mouse event, panel coordinates
+        public Vector lastMousePosition = new Vector(0, 0);//the position of the mouse at the last mouse event, panel coordinates
+        public Vector firstMousePosition = new Vector(0, 0);//the position of the mouse at the first mouse event of the click, panel coordinates
 
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
 
@@ -210,7 +211,10 @@ namespace VideoGamePaint
             {
                 lastMousePosition.x = e.X;
                 lastMousePosition.y = e.Y;
+                firstMousePosition.x = e.X;
+                firstMousePosition.y = e.Y;
                 //updatePixelAtPosition(e, true);
+                activeTool.preactivate(e.X, e.Y);
                 activeTool.activate(e.X, e.Y);
                 Focus();
             }
@@ -237,6 +241,7 @@ namespace VideoGamePaint
             {
                 //updatePixelAtPosition(e);
                 activeTool.activate(e.X, e.Y);
+                activeTool.postactivate(e.X, e.Y);
             }
             onPixelClicked?.Invoke(getColor(e.X, e.Y));
         }
