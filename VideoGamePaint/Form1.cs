@@ -25,7 +25,7 @@ namespace VideoGamePaint
             fillTool = new FillTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
             //pnlColorOptions
-            this.pnlColorOptions.pixelSize = 20;
+            this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
             this.pnlColorOptions.onPixelClicked += setDrawingColor;
             this.pnlColorOptions.pixelGrid.Size = new Vector(10, 2);

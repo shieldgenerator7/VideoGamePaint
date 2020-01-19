@@ -7,7 +7,15 @@ namespace VideoGamePaint
 {
     public class PixelGridPanel : Panel
     {
-        public float pixelSize = 8;//how many screen pixels wide a grid pixel is
+        private float pixelSize = 8;//how many screen pixels wide a grid pixel is
+        public float PixelSize
+        {
+            get => pixelSize;
+            set
+            {
+                pixelSize = Math.Min(Math.Max(1, value),100);
+            }
+        }
         public Vector mapPos = new Vector(0, 0);//the panel position in which to start drawing the grid
 
         bool mouseDown = false;
@@ -119,10 +127,10 @@ namespace VideoGamePaint
         public Rectangle getRect(int x, int y)
         {
             return new Rectangle(
-                (int)(x * pixelSize) + mapPos.x,
-                (int)(y * pixelSize) + mapPos.y,
-                (int)pixelSize,
-                (int)pixelSize
+                (int)(x * PixelSize) + mapPos.x,
+                (int)(y * PixelSize) + mapPos.y,
+                (int)PixelSize,
+                (int)PixelSize
                 );
         }
 
@@ -133,11 +141,11 @@ namespace VideoGamePaint
         /// <returns></returns>
         public int gridPixelX(int panelPixelX)
         {
-            return (int)Math.Floor((panelPixelX - mapPos.x) / pixelSize);
+            return (int)Math.Floor((panelPixelX - mapPos.x) / PixelSize);
         }
         public int gridPixelY(int panelPixelY)
         {
-            return (int)Math.Floor((panelPixelY - mapPos.y) / pixelSize);
+            return (int)Math.Floor((panelPixelY - mapPos.y) / PixelSize);
         }
 
         public static RGB ColorToRGB(Color color)
@@ -234,6 +242,13 @@ namespace VideoGamePaint
         }
         public delegate void OnPixelClicked(Color pixelColor);
         public OnPixelClicked onPixelClicked;
+
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            PixelSize += Math.Sign(e.Delta)*2;
+            Invalidate();
+        }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
