@@ -18,9 +18,14 @@ namespace VideoGamePaint
         public Color drawColor;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
 
-        public PixelGridPanel() : base()
+        public PixelGridPanel() : this(100,100)
+        {
+        }
+
+        public PixelGridPanel(int width, int height): base()
         {
             this.DoubleBuffered = true;
+            pixelGrid.Size = new Vector(width, height);
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
@@ -35,8 +40,8 @@ namespace VideoGamePaint
         /// <param name="y">Screen y</param>
         public void updatePixelAtPosition(int ex, int ey, Color color, bool forceRedraw = false)
         {
-            if (ex < pixelGrid.GRID_SIZE * PIXEL_SIZE
-                && ey < pixelGrid.GRID_SIZE * PIXEL_SIZE)
+            if (ex < pixelGrid.Size.x * PIXEL_SIZE
+                && ey < pixelGrid.Size.y * PIXEL_SIZE)
             {
                 RGB rgb = ColorToRGB(color);
                 pixelGrid.updatePixel(ex / PIXEL_SIZE, ey / PIXEL_SIZE, rgb);
@@ -115,9 +120,9 @@ namespace VideoGamePaint
             base.OnPaint(e);
             Graphics g = e.Graphics;
 
-            for (int x = 0; x < pixelGrid.GRID_SIZE; x++)
+            for (int x = 0; x < pixelGrid.Size.x; x++)
             {
-                for (int y = 0; y < pixelGrid.GRID_SIZE; y++)
+                for (int y = 0; y < pixelGrid.Size.y; y++)
                 {
                     g.FillRectangle(
                         getBrush(getColor(x, y)),

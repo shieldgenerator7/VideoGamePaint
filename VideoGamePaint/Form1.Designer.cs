@@ -30,8 +30,9 @@
         {
             this.pnlPaint = new PixelGridPanel();
             this.pnlColors = new System.Windows.Forms.Panel();
-            this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.btnColorPicker = new System.Windows.Forms.Button();
+            this.dlgColor = new System.Windows.Forms.ColorDialog();
+            this.pnlColorOptions = new PixelGridPanel(10,2);
             this.pnlColors.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,6 +46,7 @@
             // 
             // pnlColors
             // 
+            this.pnlColors.Controls.Add(this.pnlColorOptions);
             this.pnlColors.Controls.Add(this.btnColorPicker);
             this.pnlColors.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlColors.Location = new System.Drawing.Point(0, 350);
@@ -52,10 +54,6 @@
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
             this.pnlColors.Size = new System.Drawing.Size(800, 100);
             this.pnlColors.TabIndex = 1;
-            // 
-            // dlgColor
-            // 
-            this.dlgColor.SolidColorOnly = true;
             // 
             // btnColorPicker
             // 
@@ -69,6 +67,18 @@
             this.btnColorPicker.TabIndex = 0;
             this.btnColorPicker.UseVisualStyleBackColor = false;
             this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
+            // 
+            // dlgColor
+            // 
+            this.dlgColor.SolidColorOnly = true;
+            // 
+            // pnlColorOptions
+            // 
+            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
+            this.pnlColorOptions.Name = "pnlColorOptions";
+            this.pnlColorOptions.Size = new System.Drawing.Size(200, 90);
+            this.pnlColorOptions.TabIndex = 1;
             // 
             // frmPaint
             // 
@@ -90,6 +100,7 @@
         private System.Windows.Forms.Panel pnlColors;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.Button btnColorPicker;
+        private PixelGridPanel pnlColorOptions;
     }
 }
 
