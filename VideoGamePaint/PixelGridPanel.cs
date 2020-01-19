@@ -13,7 +13,7 @@ namespace VideoGamePaint
             get => pixelSize;
             set
             {
-                pixelSize = Math.Min(Math.Max(1, value),100);
+                pixelSize = Math.Min(Math.Max(1, value), 100);
             }
         }
         public Vector mapPos = new Vector(0, 0);//the panel position in which to start drawing the grid
@@ -246,8 +246,27 @@ namespace VideoGamePaint
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             base.OnMouseWheel(e);
-            PixelSize += Math.Sign(e.Delta)*2;
+            int mgx = gridPixelX(e.X);
+            int mgy = gridPixelY(e.Y);
+            PixelSize += Math.Sign(e.Delta) * 2;
+            centerOn(mgx, mgy, e.X, e.Y);
             Invalidate();
+        }
+
+        /// <summary>
+        /// Scrolls the screen so that the given grid coordinate is placed at the given panel coordinate
+        /// </summary>
+        /// <param name="gx"></param>
+        /// <param name="gy"></param>
+        /// <param name="ex"></param>
+        /// <param name="ey"></param>
+        void centerOn(int gx, int gy, int ex, int ey)
+        {
+            int cgx = gridPixelX(ex);
+            int cgy = gridPixelY(ey);
+            Rectangle offset = getRect(gx, gy);
+            mapPos.x -= offset.X - ex;
+            mapPos.y -= offset.Y - ey;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
