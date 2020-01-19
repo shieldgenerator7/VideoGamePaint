@@ -85,8 +85,10 @@ namespace VideoGamePaint
         /// <param name="y">Screen y</param>
         public void updatePixelAtPosition(int ex, int ey, RGB rgb)
         {
-            if (ex < pixelGrid.Size.x * pixelSize
-                && ey < pixelGrid.Size.y * pixelSize)
+            int gx = gridPixelX(ex);
+            int gy = gridPixelY(ey);
+            if (gx >= 0 && gx < pixelGrid.Size.x
+                && gy >= 0 && gy < pixelGrid.Size.y)
             {
                 pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
             }
