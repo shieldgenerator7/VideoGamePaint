@@ -23,9 +23,9 @@ namespace VideoGamePaint
             this.DoubleBuffered = true;
         }
 
-        void updatePixelAtPosition(MouseEventArgs e)
+        void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
         {
-            updatePixelAtPosition(e.X, e.Y, drawColor);
+            updatePixelAtPosition(e.X, e.Y, drawColor, forceRedraw);
         }
 
         /// <summary>
@@ -33,14 +33,14 @@ namespace VideoGamePaint
         /// </summary>
         /// <param name="x">Screen x</param>
         /// <param name="y">Screen y</param>
-        public void updatePixelAtPosition(int ex, int ey, Color color)
+        public void updatePixelAtPosition(int ex, int ey, Color color, bool forceRedraw = false)
         {
             if (ex < pixelGrid.GRID_SIZE * PIXEL_SIZE
                 && ey < pixelGrid.GRID_SIZE * PIXEL_SIZE)
             {
                 RGB rgb = ColorToRGB(color);
                 pixelGrid.updatePixel(ex / PIXEL_SIZE, ey / PIXEL_SIZE, rgb);
-                if (ex != lastMousePosition.x || ey != lastMousePosition.y)
+                if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
                 {
                     int minx = (int)Math.Min(ex, lastMousePosition.x);
                     int maxx = (int)Math.Max(ex, lastMousePosition.x);
@@ -152,7 +152,7 @@ namespace VideoGamePaint
             lastMousePosition.x = e.X;
             lastMousePosition.y = e.Y;
             mouseDown = true;
-            updatePixelAtPosition(e);
+            updatePixelAtPosition(e, true);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
