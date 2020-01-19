@@ -53,36 +53,47 @@ namespace VideoGamePaint
             {
                 RGB rgb = ColorToRGB(drawColor);
                 updatePixelAtPosition(ex, ey, rgb);
-                int minx = (int)Math.Min(ex, lastMousePosition.x);
-                int maxx = (int)Math.Max(ex, lastMousePosition.x);
-                int miny = (int)Math.Min(ey, lastMousePosition.y);
-                int maxy = (int)Math.Max(ey, lastMousePosition.y);
-                int rise = ey - lastMousePosition.y;
-                int run = ex - lastMousePosition.x;
-                if (run == 0)
+                if (ex != lastMousePosition.x || ey != lastMousePosition.y)
                 {
-                    //vertical line
-                    for (int y = miny + 1; y < maxy; y++)
-                    {
-                        updatePixelAtPosition(ex, y, rgb);
-                    }
-                }
-                else
-                {
-                    int offset = ey - (ex * rise / run);
+                    int minx = (int)Math.Min(ex, lastMousePosition.x);
+                    int maxx = (int)Math.Max(ex, lastMousePosition.x);
+                    int miny = (int)Math.Min(ey, lastMousePosition.y);
+                    int maxy = (int)Math.Max(ey, lastMousePosition.y);
+                    int rise = ey - lastMousePosition.y;
+                    int run = ex - lastMousePosition.x;
+
                     float threshold = 0.1f;
-                    for (int x = minx; x <= maxx; x++)
+                    //More horizontal than vertical
+                    if (Math.Abs(run) >= Math.Abs(rise))
                     {
-                        int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
-                        int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
-                        for (int y = lowY; y <= highY; y++)
+                        int offset = ey - (ex * rise / run);
+                        for (int x = minx; x <= maxx; x++)
                         {
-                            updatePixelAtPosition(x, y, rgb);
+                            int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
+                            int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
+                            for (int y = lowY; y <= highY; y++)
+                            {
+                                updatePixelAtPosition(x, y, rgb);
+                            }
                         }
                     }
+                    //More vertical than horizontal
+                    else
+                    {
+                        int offset = ex - (ey * run / rise);
+                        for (int y = miny; y <= maxy; y++)
+                        {
+                            int lowX = (int)Math.Floor(((y + threshold) * run / rise) + offset);
+                            int highX = (int)Math.Floor(((y + 1 - threshold) * run / rise) + offset);
+                            for (int x = lowX; x <= highX; x++)
+                            {
+                                updatePixelAtPosition(x, y, rgb);
+                            }
+                        }
+                    }
+                    lastMousePosition.x = ex;
+                    lastMousePosition.y = ey;
                 }
-                lastMousePosition.x = ex;
-                lastMousePosition.y = ey;
                 Invalidate();
             }
         }
