@@ -4,6 +4,8 @@ using VideoGamePaint;
 
 public class FillTool : Tool
 {
+    protected Vector fillSparkPos;
+
     public FillTool(PixelGridPanel pgp) : base(pgp)
     {
     }
@@ -17,6 +19,7 @@ public class FillTool : Tool
         RGB toColor = PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor);
         if (baseColor != toColor)
         {
+            fillSparkPos = new Vector(gx, gy);
             fillArea(gx, gy, baseColor, toColor);
             pixelGridPanel.Invalidate();
         }
@@ -25,7 +28,7 @@ public class FillTool : Tool
     private void fillArea(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
         //Exit if the pixel doesn't meet the requirements
-        if (!canFillPixel(gx, gy, fromRGB))
+        if (!canFillPixel(gx, gy, fromRGB, toRGB))
         {
             return;
         }
@@ -38,7 +41,7 @@ public class FillTool : Tool
         fillArea(gx, gy + 1, fromRGB, toRGB);
     }
 
-    protected virtual bool canFillPixel(int gx, int gy, RGB fromRGB)
+    protected virtual bool canFillPixel(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
         //No if outside the grid
         if (gx < 0 || gx >= pixelGridPanel.pixelGrid.Size.x

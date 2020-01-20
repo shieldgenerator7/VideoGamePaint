@@ -18,6 +18,7 @@ namespace VideoGamePaint
         Tool fillTool;
         Tool handTool;
         Tool lineTool;
+        Tool lightBulbFillTool;
 
         public frmPaint()
         {
@@ -27,6 +28,7 @@ namespace VideoGamePaint
             fillTool = new FillTool(pnlPaint);
             handTool = new HandTool(pnlPaint);
             lineTool = new LineTool(pnlPaint);
+            lightBulbFillTool = new LightBulbFillTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
@@ -81,6 +83,11 @@ namespace VideoGamePaint
         private void btnToolLine_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = lineTool;
+        }
+
+        private void btnToolFillLightBulb_Click(object sender, EventArgs e)
+        {
+            pnlPaint.activeTool = lightBulbFillTool;
         }
     }
 }

@@ -37,9 +37,10 @@
             this.spltColors = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
             this.btnHandTool = new System.Windows.Forms.Button();
+            this.btnToolLine = new System.Windows.Forms.Button();
+            this.btnToolFillLightBulb = new System.Windows.Forms.Button();
             this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
-            this.btnToolLine = new System.Windows.Forms.Button();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).BeginInit();
@@ -82,6 +83,7 @@
             // 
             // pnlTools
             // 
+            this.pnlTools.Controls.Add(this.btnToolFillLightBulb);
             this.pnlTools.Controls.Add(this.btnToolLine);
             this.pnlTools.Controls.Add(this.btnHandTool);
             this.pnlTools.Controls.Add(this.btnToolFill);
@@ -163,6 +165,26 @@
             this.btnHandTool.UseVisualStyleBackColor = true;
             this.btnHandTool.Click += new System.EventHandler(this.btnHandTool_Click);
             // 
+            // btnToolLine
+            // 
+            this.btnToolLine.Location = new System.Drawing.Point(5, 219);
+            this.btnToolLine.Name = "btnToolLine";
+            this.btnToolLine.Size = new System.Drawing.Size(92, 63);
+            this.btnToolLine.TabIndex = 3;
+            this.btnToolLine.Text = "Line Tool";
+            this.btnToolLine.UseVisualStyleBackColor = true;
+            this.btnToolLine.Click += new System.EventHandler(this.btnToolLine_Click);
+            // 
+            // btnToolFillLightBulb
+            // 
+            this.btnToolFillLightBulb.Location = new System.Drawing.Point(5, 290);
+            this.btnToolFillLightBulb.Name = "btnToolFillLightBulb";
+            this.btnToolFillLightBulb.Size = new System.Drawing.Size(90, 58);
+            this.btnToolFillLightBulb.TabIndex = 4;
+            this.btnToolFillLightBulb.Text = "LightBulb Fill";
+            this.btnToolFillLightBulb.UseVisualStyleBackColor = true;
+            this.btnToolFillLightBulb.Click += new System.EventHandler(this.btnToolFillLightBulb_Click);
+            // 
             // pnlPaint
             // 
             this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -180,16 +202,6 @@
             this.pnlColorOptions.PixelSize = 8F;
             this.pnlColorOptions.Size = new System.Drawing.Size(400, 36);
             this.pnlColorOptions.TabIndex = 1;
-            // 
-            // btnToolLine
-            // 
-            this.btnToolLine.Location = new System.Drawing.Point(5, 219);
-            this.btnToolLine.Name = "btnToolLine";
-            this.btnToolLine.Size = new System.Drawing.Size(92, 63);
-            this.btnToolLine.TabIndex = 3;
-            this.btnToolLine.Text = "Line Tool";
-            this.btnToolLine.UseVisualStyleBackColor = true;
-            this.btnToolLine.Click += new System.EventHandler(this.btnToolLine_Click);
             // 
             // frmPaint
             // 
@@ -227,6 +239,7 @@
         private System.Windows.Forms.Button btnToolPencil;
         private System.Windows.Forms.Button btnHandTool;
         private System.Windows.Forms.Button btnToolLine;
+        private System.Windows.Forms.Button btnToolFillLightBulb;
     }
 }
 

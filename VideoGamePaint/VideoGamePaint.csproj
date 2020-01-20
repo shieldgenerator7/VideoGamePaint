@@ -54,6 +54,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="HandTool.cs" />
+    <Compile Include="LightBulbFillTool.cs" />
     <Compile Include="LineTool.cs" />
     <Compile Include="PencilTool.cs" />
     <Compile Include="PixelGrid.cs" />
