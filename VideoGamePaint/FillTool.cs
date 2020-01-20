@@ -32,7 +32,7 @@ public class FillTool : Tool
         fillArea(gx, gy, fromRGB, toRGB);
     }
 
-    private void fillArea(int gx, int gy, RGB fromRGB, RGB toRGB)
+    protected void fillArea(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
         Queue<Vector> fillQueue = new Queue<Vector>();
         fillQueue.Enqueue(new Vector(gx, gy));

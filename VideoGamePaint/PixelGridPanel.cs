@@ -140,7 +140,7 @@ namespace VideoGamePaint
                 for (int x = minx; x <= maxx; x++)
                 {
                     int y = (int)Math.Round(((x + threshold) * rise / run) + offset);
-                    y = Math.Max(Math.Min(y,maxy), miny);
+                    y = Math.Max(Math.Min(y, maxy), miny);
                     vectors.Add(new Vector(x, y));
                 }
             }
@@ -242,10 +242,14 @@ namespace VideoGamePaint
             {
                 for (int y = iterYMin; y < iterYMax; y++)
                 {
-                    g.FillRectangle(
-                        getBrush(RGBToColor(pixelGrid.getPixel(x, y))),
+                    RGB pixel = pixelGrid.getPixel(x, y);
+                    if (pixel)
+                    {
+                        g.FillRectangle(
+                        getBrush(RGBToColor(pixel)),
                         getRect(x, y)
                         );
+                    }
                 }
             }
             //
