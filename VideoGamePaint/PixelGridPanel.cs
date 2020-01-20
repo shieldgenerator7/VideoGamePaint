@@ -211,9 +211,20 @@ namespace VideoGamePaint
             base.OnPaint(e);
             Graphics g = e.Graphics;
             g.Clear(Color.LightGray);
-            for (int x = 0; x < pixelGrid.Size.x; x++)
+            //
+            int sgxMin = gridPixelX(0);
+            int sgyMin = gridPixelY(0);
+            int sgxMax = gridPixelX(Size.Width)+1;
+            int sgyMax = gridPixelY(Size.Height)+1;
+            //
+            int iterXMin = Math.Max(sgxMin, 0);
+            int iterYMin = Math.Max(sgyMin, 0);
+            int iterXMax = Math.Min(sgxMax, pixelGrid.Size.x);
+            int iterYMax = Math.Min(sgyMax, pixelGrid.Size.y);
+            //
+            for (int x = iterXMin; x < iterXMax; x++)
             {
-                for (int y = 0; y < pixelGrid.Size.y; y++)
+                for (int y = iterYMin; y < iterYMax; y++)
                 {
                     g.FillRectangle(
                         getBrush(RGBToColor(pixelGrid.getPixel(x, y))),
