@@ -33,7 +33,7 @@ namespace VideoGamePaint
             lightBulbFillTool = new LightBulbFillTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
             //Player
-            player = new Player();
+            player = new Player(pnlPaint.pixelGrid);
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;

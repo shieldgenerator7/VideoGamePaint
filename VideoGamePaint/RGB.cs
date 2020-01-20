@@ -13,6 +13,8 @@ public class RGB
         this.blue = b;
     }
 
+    public static RGB white = new RGB(255, 255, 255);
+
     public override bool Equals(object obj)
     {
         return this == (RGB)obj;

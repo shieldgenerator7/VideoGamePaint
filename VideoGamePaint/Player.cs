@@ -7,8 +7,11 @@ public class Player
     public Vector pos = new Vector(0, 0);
     public Color color = Color.Purple;
 
-	public Player()
+    PixelGrid collisionGrid;
+
+	public Player(PixelGrid pg)
 	{
+        this.collisionGrid = pg;
 	}
 
     public void applyGravity()
@@ -18,21 +21,27 @@ public class Player
 
     public void applyControls(Keys key)
     {
+        Vector dir = new Vector(0, 0);
         if (key == Keys.W)
         {
-            pos.y -= 1;
+            dir.y = -1;
         }
         if (key == Keys.A)
         {
-            pos.x -= 1;
+            dir.x = -1;
         }
         if (key == Keys.S)
         {
-            pos.y += 1;
+            dir.y = 1;
         }
         if (key == Keys.D)
         {
-            pos.x += 1;
+            dir.x = 1;
+        }
+        RGB rgb = collisionGrid.getPixel(pos.x + dir.x, pos.y + dir.y);
+        if (rgb == RGB.white || rgb == null)
+        {
+            pos += dir;
         }
     }
 }
