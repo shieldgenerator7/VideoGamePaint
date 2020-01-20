@@ -25,10 +25,27 @@ public class RGB
 
     public static bool operator ==(RGB a, RGB b)
     {
+        bool aNull = ReferenceEquals(a, null);
+        bool bNull = ReferenceEquals(b, null);
+        if (aNull || bNull)
+        {
+            return aNull == bNull;
+        }
         return a.red == b.red && a.green == b.green && a.blue == b.blue;
     }
     public static bool operator !=(RGB a, RGB b)
     {
+        bool aNull = ReferenceEquals(a, null);
+        bool bNull = ReferenceEquals(b, null);
+        if (aNull || bNull)
+        {
+            return aNull != bNull;
+        }
         return a.red != b.red || a.green != b.green || a.blue != b.blue;
+    }
+
+    public static implicit operator bool (RGB a)
+    {
+        return a != null;
     }
 }

@@ -23,6 +23,7 @@ namespace VideoGamePaint
         public Vector firstMousePosition = new Vector(0, 0);//the position of the mouse at the first mouse event of the click, panel coordinates
 
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
+        public PixelGrid toolGrid { get; private set; } = new PixelGrid();//grid for drawing tool effect previews
 
         public Color drawColor;
         public Tool activeTool;
@@ -41,6 +42,7 @@ namespace VideoGamePaint
             this.DoubleBuffered = true;
             pixelGrid.Size.x = width;
             pixelGrid.Size.y = height;
+            toolGrid.clear(null);
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
@@ -56,42 +58,11 @@ namespace VideoGamePaint
                 updatePixelAtPosition(ex, ey, rgb);
                 if (ex != lastMousePosition.x || ey != lastMousePosition.y)
                 {
-                    int minx = (int)Math.Min(ex, lastMousePosition.x);
-                    int maxx = (int)Math.Max(ex, lastMousePosition.x);
-                    int miny = (int)Math.Min(ey, lastMousePosition.y);
-                    int maxy = (int)Math.Max(ey, lastMousePosition.y);
-                    int rise = ey - lastMousePosition.y;
-                    int run = ex - lastMousePosition.x;
+                    foreach (Vector v in getPixelsInBetween(ex, ey, lastMousePosition.x, lastMousePosition.y))
+                    {
+                        updatePixelAtPosition(v.x, v.y, rgb);
+                    }
 
-                    float threshold = 0.1f;
-                    //More horizontal than vertical
-                    if (Math.Abs(run) >= Math.Abs(rise))
-                    {
-                        int offset = ey - (ex * rise / run);
-                        for (int x = minx; x <= maxx; x++)
-                        {
-                            int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
-                            int highY = (int)Math.Floor(((x + 1 - threshold) * rise / run) + offset);
-                            for (int y = lowY; y <= highY; y++)
-                            {
-                                updatePixelAtPosition(x, y, rgb);
-                            }
-                        }
-                    }
-                    //More vertical than horizontal
-                    else
-                    {
-                        int offset = ex - (ey * run / rise);
-                        for (int y = miny; y <= maxy; y++)
-                        {
-                            int lowX = (int)Math.Floor(((y + threshold) * run / rise) + offset);
-                            int highX = (int)Math.Floor(((y + 1 - threshold) * run / rise) + offset);
-                            for (int x = lowX; x <= highX; x++)
-                            {
-                                updatePixelAtPosition(x, y, rgb);
-                            }
-                        }
-                    }
                     lastMousePosition.x = ex;
                     lastMousePosition.y = ey;
                 }
@@ -137,9 +108,58 @@ namespace VideoGamePaint
                     expandY = gy - pixelGrid.Size.y + 1;
                 }
                 pixelGrid.expandGrid(expandX, expandY);
+                toolGrid.expandGrid(expandX, expandY);
             }
             //Set the pixel at the position
             pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
+        }
+
+        public List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
+        {
+            List<Vector> vectors = new List<Vector>();
+
+            int rise = y2 - y1;
+            int run = x2 - x1;
+
+            if (run == 0 && rise == 0)
+            {
+                vectors.Add(new Vector(x1, y1));
+                return vectors;
+            }
+
+            //More horizontal than vertical
+            if (Math.Abs(run) >= Math.Abs(rise))
+            {
+                int offset = y2 - (x2 * rise / run);
+                int minx = (int)Math.Min(x1, x2);
+                int maxx = (int)Math.Max(x1, x2);
+                for (int x = minx; x <= maxx; x++)
+                {
+                    int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
+                    int highY = (int)Math.Ceiling(((x + 1 - threshold) * rise / run) + offset);
+                    for (int y = lowY; y <= highY; y++)
+                    {
+                        vectors.Add(new Vector(x, y));
+                    }
+                }
+            }
+            //More vertical than horizontal
+            else
+            {
+                int offset = x2 - (y2 * run / rise);
+                int miny = (int)Math.Min(y1, y2);
+                int maxy = (int)Math.Max(y1, y2);
+                for (int y = miny; y <= maxy; y++)
+                {
+                    int lowX = (int)Math.Floor(((y + threshold) * run / rise) + offset);
+                    int highX = (int)Math.Ceiling(((y + 1 - threshold) * run / rise) + offset);
+                    for (int x = lowX; x <= highX; x++)
+                    {
+                        vectors.Add(new Vector(x, y));
+                    }
+                }
+            }
+            return vectors;
         }
 
         public bool isColor(int gx, int gy, Color color)
@@ -214,8 +234,8 @@ namespace VideoGamePaint
             //
             int sgxMin = gridPixelX(0);
             int sgyMin = gridPixelY(0);
-            int sgxMax = gridPixelX(Size.Width)+1;
-            int sgyMax = gridPixelY(Size.Height)+1;
+            int sgxMax = gridPixelX(Size.Width) + 1;
+            int sgyMax = gridPixelY(Size.Height) + 1;
             //
             int iterXMin = Math.Max(sgxMin, 0);
             int iterYMin = Math.Max(sgyMin, 0);
@@ -230,6 +250,21 @@ namespace VideoGamePaint
                         getBrush(RGBToColor(pixelGrid.getPixel(x, y))),
                         getRect(x, y)
                         );
+                }
+            }
+            //
+            for (int x = iterXMin; x < iterXMax; x++)
+            {
+                for (int y = iterYMin; y < iterYMax; y++)
+                {
+                    RGB pixel = toolGrid.getPixel(x, y);
+                    if (pixel)
+                    {
+                        g.FillRectangle(
+                            getBrush(RGBToColor(pixel)),
+                            getRect(x, y)
+                            );
+                    }
                 }
             }
         }

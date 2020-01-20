@@ -1,0 +1,62 @@
+﻿using System;
+using VideoGamePaint;
+
+public class LineTool : Tool
+{
+    public LineTool(PixelGridPanel pgp) : base(pgp)
+    {
+    }
+
+    public override void activate(int ex, int ey)
+    {
+        pixelGridPanel.toolGrid.clear(null);
+        int gx = pixelGridPanel.gridPixelX(ex);
+        int gy = pixelGridPanel.gridPixelY(ey);
+        if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
+            && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
+        {
+            foreach (Vector v in pixelGridPanel.getPixelsInBetween(
+                pixelGridPanel.gridPixelX(ex),
+                pixelGridPanel.gridPixelY(ey),
+                pixelGridPanel.gridPixelX(pixelGridPanel.lastMousePosition.x),
+                pixelGridPanel.gridPixelY(pixelGridPanel.lastMousePosition.y),
+                0.2f
+                ))
+            {
+                pixelGridPanel.toolGrid.setPixel(
+                    v.x,
+                    v.y,
+                    PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)
+                    );
+            }
+        }
+        pixelGridPanel.Invalidate();
+    }
+
+    public override void postactivate(int ex, int ey)
+    {
+        base.postactivate(ex, ey);
+        pixelGridPanel.toolGrid.clear(null);
+        int gx = pixelGridPanel.gridPixelX(ex);
+        int gy = pixelGridPanel.gridPixelY(ey);
+        if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
+            && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
+        {
+            foreach (Vector v in pixelGridPanel.getPixelsInBetween(
+                pixelGridPanel.gridPixelX(ex),
+                pixelGridPanel.gridPixelY(ey),
+                pixelGridPanel.gridPixelX(pixelGridPanel.lastMousePosition.x),
+                pixelGridPanel.gridPixelY(pixelGridPanel.lastMousePosition.y),
+                0.2f
+            ))
+            {
+                pixelGridPanel.pixelGrid.setPixel(
+                    v.x,
+                    v.y,
+                    PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)
+                    );
+            }
+        }
+        pixelGridPanel.Invalidate();
+    }
+}

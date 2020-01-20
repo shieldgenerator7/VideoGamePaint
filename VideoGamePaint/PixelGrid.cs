@@ -68,6 +68,17 @@ public class PixelGrid
         }
     }
 
+    public void clear(RGB rgb)
+    {
+        for (int x = 0; x < Size.x; x++)
+        {
+            for (int y = 0; y < Size.y; y++)
+            {
+                setPixel(x, y, rgb);
+            }
+        }
+    }
+
     /// <summary>
     /// Expands the grid in the given directions.
     /// </summary>

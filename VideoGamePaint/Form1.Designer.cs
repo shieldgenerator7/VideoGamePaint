@@ -28,9 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColors = new System.Windows.Forms.Panel();
-            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlTools = new System.Windows.Forms.Panel();
@@ -39,6 +37,9 @@
             this.spltColors = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
             this.btnHandTool = new System.Windows.Forms.Button();
+            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
+            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
+            this.btnToolLine = new System.Windows.Forms.Button();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).BeginInit();
@@ -51,15 +52,6 @@
             this.spltTools.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnlPaint
-            // 
-            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
-            this.pnlPaint.Name = "pnlPaint";
-            this.pnlPaint.PixelSize = 8F;
-            this.pnlPaint.Size = new System.Drawing.Size(699, 403);
-            this.pnlPaint.TabIndex = 0;
-            // 
             // pnlColors
             // 
             this.pnlColors.Controls.Add(this.pnlColorOptions);
@@ -70,15 +62,6 @@
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
             this.pnlColors.Size = new System.Drawing.Size(800, 46);
             this.pnlColors.TabIndex = 1;
-            // 
-            // pnlColorOptions
-            // 
-            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
-            this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.PixelSize = 8F;
-            this.pnlColorOptions.Size = new System.Drawing.Size(400, 36);
-            this.pnlColorOptions.TabIndex = 1;
             // 
             // btnColorPicker
             // 
@@ -99,6 +82,7 @@
             // 
             // pnlTools
             // 
+            this.pnlTools.Controls.Add(this.btnToolLine);
             this.pnlTools.Controls.Add(this.btnHandTool);
             this.pnlTools.Controls.Add(this.btnToolFill);
             this.pnlTools.Controls.Add(this.btnToolPencil);
@@ -179,6 +163,34 @@
             this.btnHandTool.UseVisualStyleBackColor = true;
             this.btnHandTool.Click += new System.EventHandler(this.btnHandTool_Click);
             // 
+            // pnlPaint
+            // 
+            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
+            this.pnlPaint.Name = "pnlPaint";
+            this.pnlPaint.PixelSize = 8F;
+            this.pnlPaint.Size = new System.Drawing.Size(699, 403);
+            this.pnlPaint.TabIndex = 0;
+            // 
+            // pnlColorOptions
+            // 
+            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
+            this.pnlColorOptions.Name = "pnlColorOptions";
+            this.pnlColorOptions.PixelSize = 8F;
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 36);
+            this.pnlColorOptions.TabIndex = 1;
+            // 
+            // btnToolLine
+            // 
+            this.btnToolLine.Location = new System.Drawing.Point(5, 219);
+            this.btnToolLine.Name = "btnToolLine";
+            this.btnToolLine.Size = new System.Drawing.Size(92, 63);
+            this.btnToolLine.TabIndex = 3;
+            this.btnToolLine.Text = "Line Tool";
+            this.btnToolLine.UseVisualStyleBackColor = true;
+            this.btnToolLine.Click += new System.EventHandler(this.btnToolLine_Click);
+            // 
             // frmPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -214,6 +226,7 @@
         private System.Windows.Forms.Button btnToolFill;
         private System.Windows.Forms.Button btnToolPencil;
         private System.Windows.Forms.Button btnHandTool;
+        private System.Windows.Forms.Button btnToolLine;
     }
 }
 
