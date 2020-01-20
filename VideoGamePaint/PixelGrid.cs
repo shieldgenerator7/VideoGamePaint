@@ -90,9 +90,9 @@ public class PixelGrid
             dy = 0;
         }
         //Create new memory size, if needed
-        Vector expandSize = newSize + new Vector(
-            (dx != 0) ? EXPAND_BUFFER : 0,
-            (dy != 0) ? EXPAND_BUFFER : 0
+        Vector expandSize = memorySize + new Vector(
+            Math.Abs(dx) + ((dx != 0) ? EXPAND_BUFFER : 0),
+            Math.Abs(dy) + ((dy != 0) ? EXPAND_BUFFER : 0)
             );
         if (expandSize > memorySize)
         {
