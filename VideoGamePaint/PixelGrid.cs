@@ -18,17 +18,13 @@ public class PixelGrid
     RGB[,] pixelGrid;
     //List<List<Color>> pixelGrid;
 
+    public RGB defaultFillRGB;
+
     public PixelGrid()
     {
         pixelGrid = new RGB[Size.x, Size.y];
-        RGB white = new RGB(255, 255, 255);
-        for (int x = 0; x < Size.x; x++)
-        {
-            for (int y = 0; y < Size.y; y++)
-            {
-                pixelGrid[x, y] = white;
-            }
-        }
+        defaultFillRGB = new RGB(255, 255, 255);
+        clear(defaultFillRGB);
     }
 
     public RGB getPixel(int x, int y)
@@ -114,8 +110,6 @@ public class PixelGrid
                 (dx < 0) ? EXPAND_BUFFER + Math.Abs(dx) : gridOrigin.x,
                 (dy < 0) ? EXPAND_BUFFER + Math.Abs(dy) : gridOrigin.y
                 );
-            //Create default color
-            RGB white = new RGB(255, 255, 255);
             //Copy old grid into new grid
             for (int x = 0; x < expandSize.x; x++)
             {
@@ -132,7 +126,7 @@ public class PixelGrid
                     else
                     {
                         //Put in the default color
-                        newGrid[x, y] = white;
+                        newGrid[x, y] = defaultFillRGB;
                     }
                 }
             }

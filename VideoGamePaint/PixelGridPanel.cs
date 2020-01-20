@@ -42,6 +42,7 @@ namespace VideoGamePaint
             this.DoubleBuffered = true;
             pixelGrid.Size.x = width;
             pixelGrid.Size.y = height;
+            toolGrid.defaultFillRGB = null;
             toolGrid.clear(null);
         }
 
