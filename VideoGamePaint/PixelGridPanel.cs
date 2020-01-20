@@ -117,7 +117,7 @@ namespace VideoGamePaint
         public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
         {
             List<Vector> vectors = new List<Vector>();
-            
+
             int minx = (int)Math.Min(x1, x2);
             int maxx = (int)Math.Max(x1, x2);
             int miny = (int)Math.Min(y1, y2);
@@ -138,14 +138,9 @@ namespace VideoGamePaint
                 int offset = y2 - (x2 * rise / run);
                 for (int x = minx; x <= maxx; x++)
                 {
-                    int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
-                    int highY = (int)Math.Ceiling(((x + 1 - threshold) * rise / run) + offset);
-                    lowY = Math.Max(lowY, miny);
-                    highY = Math.Min(highY, maxy);
-                    for (int y = lowY; y <= highY; y++)
-                    {
-                        vectors.Add(new Vector(x, y));
-                    }
+                    int y = (int)Math.Round(((x + threshold) * rise / run) + offset);
+                    y = Math.Max(Math.Min(y,maxy), miny);
+                    vectors.Add(new Vector(x, y));
                 }
             }
             //More vertical than horizontal
@@ -154,14 +149,9 @@ namespace VideoGamePaint
                 int offset = x2 - (y2 * run / rise);
                 for (int y = miny; y <= maxy; y++)
                 {
-                    int lowX = (int)Math.Floor(((y + threshold) * run / rise) + offset);
-                    int highX = (int)Math.Ceiling(((y + 1 - threshold) * run / rise) + offset);
-                    lowX = Math.Max(lowX, minx);
-                    highX = Math.Min(highX, maxx);
-                    for (int x = lowX; x <= highX; x++)
-                    {
-                        vectors.Add(new Vector(x, y));
-                    }
+                    int x = (int)Math.Round(((y + threshold) * run / rise) + offset);
+                    x = Math.Max(Math.Min(x, maxx), minx);
+                    vectors.Add(new Vector(x, y));
                 }
             }
             return vectors;
