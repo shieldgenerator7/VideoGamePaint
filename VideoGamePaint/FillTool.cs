@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using VideoGamePaint;
 
 public class FillTool : Tool
 {
     protected Vector fillSparkPos;
-
+    
     public FillTool(PixelGridPanel pgp) : base(pgp)
     {
     }
@@ -20,25 +21,37 @@ public class FillTool : Tool
         if (baseColor != toColor)
         {
             fillSparkPos = new Vector(gx, gy);
-            fillArea(gx, gy, baseColor, toColor);
+            process(gx, gy, baseColor, toColor);
             pixelGridPanel.Invalidate();
         }
     }
 
+    //abstracted out so subtypes can call fillArea() however they want
+    protected virtual void process(int gx, int gy, RGB fromRGB, RGB toRGB)
+    {
+        fillArea(gx, gy, fromRGB, toRGB);
+    }
+
     private void fillArea(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
-        //Exit if the pixel doesn't meet the requirements
-        if (!canFillPixel(gx, gy, fromRGB, toRGB))
+        Queue<Vector> fillQueue = new Queue<Vector>();
+        fillQueue.Enqueue(new Vector(gx, gy));
+        while (fillQueue.Count > 0)
         {
-            return;
+            Vector gv = fillQueue.Dequeue();
+            //Exit if the pixel doesn't meet the requirements
+            if (!canFillPixel(gv.x, gv.y, fromRGB, toRGB))
+            {
+                continue;
+            }
+            //Set this pixel to the toRGB
+            pixelGridPanel.pixelGrid.setPixel(gv.x, gv.y, toRGB);
+            //Find the next pixels to set
+            fillQueue.Enqueue(new Vector(gv.x - 1, gv.y));
+            fillQueue.Enqueue(new Vector(gv.x + 1, gv.y));
+            fillQueue.Enqueue(new Vector(gv.x, gv.y - 1));
+            fillQueue.Enqueue(new Vector(gv.x, gv.y + 1));
         }
-        //Set this pixel to the toRGB
-        pixelGridPanel.pixelGrid.setPixel(gx, gy, toRGB);
-        //Find the next pixels to set
-        fillArea(gx - 1, gy, fromRGB, toRGB);
-        fillArea(gx + 1, gy, fromRGB, toRGB);
-        fillArea(gx, gy - 1, fromRGB, toRGB);
-        fillArea(gx, gy + 1, fromRGB, toRGB);
     }
 
     protected virtual bool canFillPixel(int gx, int gy, RGB fromRGB, RGB toRGB)
