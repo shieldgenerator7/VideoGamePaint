@@ -15,7 +15,7 @@ public class LineTool : Tool
         if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
             && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
         {
-            foreach (Vector v in pixelGridPanel.getPixelsInBetween(
+            foreach (Vector v in PixelGridPanel.getPixelsInBetween(
                 pixelGridPanel.gridPixelX(ex),
                 pixelGridPanel.gridPixelY(ey),
                 pixelGridPanel.gridPixelX(pixelGridPanel.lastMousePosition.x),
@@ -42,7 +42,7 @@ public class LineTool : Tool
         if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
             && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
         {
-            foreach (Vector v in pixelGridPanel.getPixelsInBetween(
+            foreach (Vector v in PixelGridPanel.getPixelsInBetween(
                 pixelGridPanel.gridPixelX(ex),
                 pixelGridPanel.gridPixelY(ey),
                 pixelGridPanel.gridPixelX(pixelGridPanel.lastMousePosition.x),

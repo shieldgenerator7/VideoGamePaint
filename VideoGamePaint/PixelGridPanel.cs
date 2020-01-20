@@ -114,9 +114,14 @@ namespace VideoGamePaint
             pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
         }
 
-        public List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
+        public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
         {
             List<Vector> vectors = new List<Vector>();
+            
+            int minx = (int)Math.Min(x1, x2);
+            int maxx = (int)Math.Max(x1, x2);
+            int miny = (int)Math.Min(y1, y2);
+            int maxy = (int)Math.Max(y1, y2);
 
             int rise = y2 - y1;
             int run = x2 - x1;
@@ -131,12 +136,12 @@ namespace VideoGamePaint
             if (Math.Abs(run) >= Math.Abs(rise))
             {
                 int offset = y2 - (x2 * rise / run);
-                int minx = (int)Math.Min(x1, x2);
-                int maxx = (int)Math.Max(x1, x2);
                 for (int x = minx; x <= maxx; x++)
                 {
                     int lowY = (int)Math.Floor(((x + threshold) * rise / run) + offset);
                     int highY = (int)Math.Ceiling(((x + 1 - threshold) * rise / run) + offset);
+                    lowY = Math.Max(lowY, miny);
+                    highY = Math.Min(highY, maxy);
                     for (int y = lowY; y <= highY; y++)
                     {
                         vectors.Add(new Vector(x, y));
@@ -147,12 +152,12 @@ namespace VideoGamePaint
             else
             {
                 int offset = x2 - (y2 * run / rise);
-                int miny = (int)Math.Min(y1, y2);
-                int maxy = (int)Math.Max(y1, y2);
                 for (int y = miny; y <= maxy; y++)
                 {
                     int lowX = (int)Math.Floor(((y + threshold) * run / rise) + offset);
                     int highX = (int)Math.Ceiling(((y + 1 - threshold) * run / rise) + offset);
+                    lowX = Math.Max(lowX, minx);
+                    highX = Math.Min(highX, maxx);
                     for (int x = lowX; x <= highX; x++)
                     {
                         vectors.Add(new Vector(x, y));

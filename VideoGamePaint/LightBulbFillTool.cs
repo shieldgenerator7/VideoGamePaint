@@ -15,7 +15,7 @@ public class LightBulbFillTool : FillTool
             return false;
         }
         //Exit if there's no line of sight to beginning
-        foreach (Vector v in pixelGridPanel.getPixelsInBetween(
+        foreach (Vector v in PixelGridPanel.getPixelsInBetween(
             fillSparkPos.x,
             fillSparkPos.y,
             gx,
