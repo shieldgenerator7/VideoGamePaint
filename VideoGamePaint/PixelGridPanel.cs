@@ -7,6 +7,8 @@ namespace VideoGamePaint
 {
     public class PixelGridPanel : Panel
     {
+        public Keys lastKey;
+
         private float pixelSize = 8;//how many screen pixels wide a grid pixel is
         public float PixelSize
         {
@@ -301,6 +303,7 @@ namespace VideoGamePaint
                 //updatePixelAtPosition(e, true);
                 activeTool.preactivate(e.X, e.Y);
                 activeTool.activate(e.X, e.Y);
+                Focus();
             }
         }
 
@@ -340,6 +343,18 @@ namespace VideoGamePaint
             PixelSize += Math.Sign(e.Delta) * 2;
             centerOn(mgx, mgy, e.X, e.Y);
             Invalidate();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            lastKey = e.KeyData;
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+            lastKey = Keys.Cancel;
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ public class LightBulbFillTool : FillTool
         {
             return false;
         }
-        //Return true if not required to check line of sight
+        //Return true if not required to check line of sight 
         if (!checkLOS)
         {
             return true;

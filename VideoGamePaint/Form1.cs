@@ -19,6 +19,8 @@ namespace VideoGamePaint
         Tool handTool;
         Tool lineTool;
         Tool lightBulbFillTool;
+        Player player;
+        Keys lastKey;
 
         public frmPaint()
         {
@@ -30,6 +32,8 @@ namespace VideoGamePaint
             lineTool = new LineTool(pnlPaint);
             lightBulbFillTool = new LightBulbFillTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
+            //Player
+            player = new Player();
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
@@ -88,6 +92,22 @@ namespace VideoGamePaint
         private void btnToolFillLightBulb_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = lightBulbFillTool;
+        }
+
+        private void tmrGame_Tick(object sender, EventArgs e)
+        {
+            player.applyControls(pnlPaint.lastKey);
+            pnlPaint.pixelGrid.setPixel(
+                player.pos.x,
+                player.pos.y,
+                PixelGridPanel.ColorToRGB(player.color)
+                );
+            pnlPaint.Invalidate();
+        }
+
+        private void frmPaint_KeyDown(object sender, KeyEventArgs e)
+        {
+            lastKey = e.KeyCode;
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlColors = new System.Windows.Forms.Panel();
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
@@ -41,6 +42,7 @@
             this.btnToolFillLightBulb = new System.Windows.Forms.Button();
             this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
+            this.tmrGame = new System.Windows.Forms.Timer(this.components);
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltColors)).BeginInit();
@@ -203,6 +205,12 @@
             this.pnlColorOptions.Size = new System.Drawing.Size(400, 36);
             this.pnlColorOptions.TabIndex = 1;
             // 
+            // tmrGame
+            // 
+            this.tmrGame.Enabled = true;
+            this.tmrGame.Interval = 50;
+            this.tmrGame.Tick += new System.EventHandler(this.tmrGame_Tick);
+            // 
             // frmPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -211,6 +219,7 @@
             this.Controls.Add(this.spltColors);
             this.Name = "frmPaint";
             this.Text = "Video Game Paint";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPaint_KeyDown);
             this.pnlColors.ResumeLayout(false);
             this.pnlTools.ResumeLayout(false);
             this.spltColors.Panel1.ResumeLayout(false);
@@ -240,6 +249,7 @@
         private System.Windows.Forms.Button btnHandTool;
         private System.Windows.Forms.Button btnToolLine;
         private System.Windows.Forms.Button btnToolFillLightBulb;
+        private System.Windows.Forms.Timer tmrGame;
     }
 }
 
