@@ -26,6 +26,7 @@ namespace VideoGamePaint
 
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
         public PixelGrid toolGrid { get; private set; } = new PixelGrid();//grid for drawing tool effect previews
+        public PixelGrid entityGrid { get; private set; } = new PixelGrid();//grid for drawing things that move often
 
         public Color drawColor;
         public Tool activeTool;
@@ -46,6 +47,8 @@ namespace VideoGamePaint
             pixelGrid.Size.y = height;
             toolGrid.defaultFillRGB = null;
             toolGrid.clear(null);
+            entityGrid.defaultFillRGB = null;
+            entityGrid.clear(null);
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
@@ -112,6 +115,7 @@ namespace VideoGamePaint
                 }
                 pixelGrid.expandGrid(expandX, expandY);
                 toolGrid.expandGrid(expandX, expandY);
+                entityGrid.expandGrid(expandX, expandY);
             }
             //Set the pixel at the position
             pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
@@ -254,12 +258,27 @@ namespace VideoGamePaint
                     }
                 }
             }
-            //
+            //Tool Grid
             for (int x = iterXMin; x < iterXMax; x++)
             {
                 for (int y = iterYMin; y < iterYMax; y++)
                 {
                     RGB pixel = toolGrid.getPixel(x, y);
+                    if (pixel)
+                    {
+                        g.FillRectangle(
+                            getBrush(RGBToColor(pixel)),
+                            getRect(x, y)
+                            );
+                    }
+                }
+            }
+            //Entity Grid
+            for (int x = iterXMin; x < iterXMax; x++)
+            {
+                for (int y = iterYMin; y < iterYMax; y++)
+                {
+                    RGB pixel = entityGrid.getPixel(x, y);
                     if (pixel)
                     {
                         g.FillRectangle(
