@@ -266,7 +266,6 @@ namespace VideoGamePaint
                 //updatePixelAtPosition(e, true);
                 activeTool.preactivate(e.X, e.Y);
                 activeTool.activate(e.X, e.Y);
-                Focus();
             }
         }
 
@@ -322,29 +321,6 @@ namespace VideoGamePaint
             Rectangle offset = getRect(gx, gy);
             mapPos.x -= offset.X - ex;
             mapPos.y -= offset.Y - ey;
-        }
-
-        protected override void OnKeyDown(KeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            int shiftAmount = 10;
-            if (e.KeyData == Keys.W)
-            {
-                mapPos.y += shiftAmount;
-            }
-            if (e.KeyData == Keys.A)
-            {
-                mapPos.x += shiftAmount;
-            }
-            if (e.KeyData == Keys.S)
-            {
-                mapPos.y -= shiftAmount;
-            }
-            if (e.KeyData == Keys.D)
-            {
-                mapPos.x -= shiftAmount;
-            }
-            Invalidate();
         }
 
         /// <summary>
