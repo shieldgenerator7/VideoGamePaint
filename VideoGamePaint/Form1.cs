@@ -97,6 +97,7 @@ namespace VideoGamePaint
         private void tmrGame_Tick(object sender, EventArgs e)
         {
             pnlPaint.entityGrid.clear(null);
+            player.applyGravity();
             player.applyControls(pnlPaint.lastKey);
             pnlPaint.entityGrid.setPixel(
                 player.pos.x,
