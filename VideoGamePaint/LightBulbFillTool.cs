@@ -44,7 +44,7 @@ public class LightBulbFillTool : FillTool
             0.4f
             ))
         {
-            RGB rgb = pixelGridPanel.pixelGrid.getPixel(v.x, v.y);
+            RGB rgb = pixelGridPanel.ActiveGrid.getPixel(v.x, v.y);
             if (v.x != gx || v.y != gy)
             {
                 if (rgb != fromRGB && rgb != toRGB)

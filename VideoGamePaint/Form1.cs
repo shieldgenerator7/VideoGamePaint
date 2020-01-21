@@ -33,7 +33,7 @@ namespace VideoGamePaint
             lightBulbFillTool = new LightBulbFillTool(pnlPaint);
             pnlPaint.activeTool = pencilTool;
             //Player
-            player = new Player(pnlPaint.pixelGrid);
+            player = new Player(pnlPaint.colliderGrid);
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
@@ -110,6 +110,19 @@ namespace VideoGamePaint
         private void frmPaint_KeyDown(object sender, KeyEventArgs e)
         {
             lastKey = e.KeyCode;
+        }
+
+        private void tabPalettes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (tabPalettes.SelectedIndex)
+            {
+                case 0:
+                    pnlPaint.ActiveGrid = pnlPaint.pixelGrid;
+                    break;
+                case 1:
+                    pnlPaint.ActiveGrid = pnlPaint.colliderGrid;
+                    break;
+            }
         }
     }
 }

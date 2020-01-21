@@ -13,7 +13,7 @@ public class FillTool : Tool
 
     public override void activate(int ex, int ey)
     {
-        PixelGrid pg = pixelGridPanel.pixelGrid;
+        PixelGrid pg = pixelGridPanel.ActiveGrid;
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
         RGB baseColor = pg.getPixel(gx, gy);
@@ -45,7 +45,7 @@ public class FillTool : Tool
                 continue;
             }
             //Set this pixel to the toRGB
-            pixelGridPanel.pixelGrid.setPixel(gv.x, gv.y, toRGB);
+            pixelGridPanel.ActiveGrid.setPixel(gv.x, gv.y, toRGB);
             //Find the next pixels to set
             fillQueue.Enqueue(new Vector(gv.x - 1, gv.y));
             fillQueue.Enqueue(new Vector(gv.x + 1, gv.y));
@@ -57,13 +57,13 @@ public class FillTool : Tool
     protected virtual bool canFillPixel(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
         //No if outside the grid
-        if (gx < 0 || gx >= pixelGridPanel.pixelGrid.Size.x
-            || gy < 0 || gy >= pixelGridPanel.pixelGrid.Size.y)
+        if (gx < 0 || gx >= pixelGridPanel.ActiveGrid.Size.x
+            || gy < 0 || gy >= pixelGridPanel.ActiveGrid.Size.y)
         {
             return false;
         }
         //No if no longer in the fromRGB area
-        RGB rgb = pixelGridPanel.pixelGrid.getPixel(gx, gy);
+        RGB rgb = pixelGridPanel.ActiveGrid.getPixel(gx, gy);
         if (rgb != fromRGB)
         {
             return false;

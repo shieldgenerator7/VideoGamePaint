@@ -12,8 +12,8 @@ public class LineTool : Tool
         pixelGridPanel.toolGrid.clear(RGB.nullRGB);
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
-        if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
-            && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
+        if (gx >= 0 && gx < pixelGridPanel.ActiveGrid.Size.x
+            && gy >= 0 && gy < pixelGridPanel.ActiveGrid.Size.y)
         {
             foreach (Vector v in PixelGridPanel.getPixelsInBetween(
                 pixelGridPanel.gridPixelX(ex),
@@ -39,8 +39,8 @@ public class LineTool : Tool
         pixelGridPanel.toolGrid.clear(RGB.nullRGB);
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
-        if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
-            && gy >= 0 && gy < pixelGridPanel.pixelGrid.Size.y)
+        if (gx >= 0 && gx < pixelGridPanel.ActiveGrid.Size.x
+            && gy >= 0 && gy < pixelGridPanel.ActiveGrid.Size.y)
         {
             foreach (Vector v in PixelGridPanel.getPixelsInBetween(
                 pixelGridPanel.gridPixelX(ex),
@@ -50,7 +50,7 @@ public class LineTool : Tool
                 0.2f
             ))
             {
-                pixelGridPanel.pixelGrid.setPixel(
+                pixelGridPanel.ActiveGrid.setPixel(
                     v.x,
                     v.y,
                     PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)

@@ -27,6 +27,8 @@ namespace VideoGamePaint
         public PixelGrid pixelGrid { get; private set; } = new PixelGrid();
         public PixelGrid toolGrid { get; private set; } = new PixelGrid();//grid for drawing tool effect previews
         public PixelGrid entityGrid { get; private set; } = new PixelGrid();//grid for drawing things that move often
+        public PixelGrid colliderGrid { get; private set; } = new PixelGrid();//grid for storing collision data
+        public PixelGrid ActiveGrid;
 
         public Color drawColor;
         public Tool activeTool;
@@ -48,6 +50,7 @@ namespace VideoGamePaint
             toolGrid.clear(RGB.nullRGB);
             entityGrid.defaultFillRGB = RGB.nullRGB;
             entityGrid.clear(RGB.nullRGB);
+            ActiveGrid = pixelGrid;
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)
@@ -87,8 +90,8 @@ namespace VideoGamePaint
             //If the pixel is outside the pixel grid,
             if (gx < 0
                 || gy < 0
-                || gx >= pixelGrid.Size.x
-                || gy >= pixelGrid.Size.y
+                || gx >= ActiveGrid.Size.x
+                || gy >= ActiveGrid.Size.y
                 )
             {
                 //Expand the pixel grid
@@ -98,9 +101,9 @@ namespace VideoGamePaint
                     expandX = gx;
                     mapPos.x -= (int)(Math.Abs(gx) * PixelSize);
                 }
-                else if (gx >= pixelGrid.Size.x)
+                else if (gx >= ActiveGrid.Size.x)
                 {
-                    expandX = gx - pixelGrid.Size.x + 1;
+                    expandX = gx - ActiveGrid.Size.x + 1;
                 }
                 int expandY = 0;
                 if (gy < 0)
@@ -108,16 +111,17 @@ namespace VideoGamePaint
                     expandY = gy;
                     mapPos.y -= (int)(Math.Abs(gy) * PixelSize);
                 }
-                else if (gy >= pixelGrid.Size.y)
+                else if (gy >= ActiveGrid.Size.y)
                 {
-                    expandY = gy - pixelGrid.Size.y + 1;
+                    expandY = gy - ActiveGrid.Size.y + 1;
                 }
                 pixelGrid.expandGrid(expandX, expandY);
                 toolGrid.expandGrid(expandX, expandY);
                 entityGrid.expandGrid(expandX, expandY);
+                colliderGrid.expandGrid(expandX, expandY);
             }
             //Set the pixel at the position
-            pixelGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
+            ActiveGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
         }
 
         public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
@@ -165,7 +169,7 @@ namespace VideoGamePaint
 
         public bool isColor(int gx, int gy, Color color)
         {
-            return RGBToColor(pixelGrid.getPixel(gx, gy)) == color;
+            return RGBToColor(ActiveGrid.getPixel(gx, gy)) == color;
         }
 
         /// <summary>
@@ -176,7 +180,7 @@ namespace VideoGamePaint
         /// <returns></returns>
         public Color getColor(int ex, int ey)
         {
-            return RGBToColor(pixelGrid.getPixel(gridPixelX(ex), gridPixelY(ey)));
+            return RGBToColor(ActiveGrid.getPixel(gridPixelX(ex), gridPixelY(ey)));
         }
 
         /// <summary>
@@ -240,14 +244,14 @@ namespace VideoGamePaint
             //
             int iterXMin = Math.Max(sgxMin, 0);
             int iterYMin = Math.Max(sgyMin, 0);
-            int iterXMax = Math.Min(sgxMax, pixelGrid.Size.x);
-            int iterYMax = Math.Min(sgyMax, pixelGrid.Size.y);
+            int iterXMax = Math.Min(sgxMax, ActiveGrid.Size.x);
+            int iterYMax = Math.Min(sgyMax, ActiveGrid.Size.y);
             //
             for (int x = iterXMin; x < iterXMax; x++)
             {
                 for (int y = iterYMin; y < iterYMax; y++)
                 {
-                    RGB pixel = pixelGrid.getPixel(x, y);
+                    RGB pixel = ActiveGrid.getPixel(x, y);
                     if (pixel)
                     {
                         g.FillRectangle(
