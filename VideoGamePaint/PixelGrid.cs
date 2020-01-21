@@ -190,15 +190,35 @@ public class PixelGrid
         //Create new size
         Vector newSize = new Vector(Math.Abs(dx) + _size.x, Math.Abs(dy) + _size.y);
         //Expand into existing grid area, if possible
-        if (dx < 0 && gridOrigin.x >= Math.Abs(dx))
+        if (dx < 0)
         {
-            gridOrigin.x += dx;
-            dx = 0;
+            if (gridOrigin.x >= Math.Abs(dx))
+            {
+                gridOrigin.x += dx;
+                dx = 0;
+            }
         }
-        if (dy < 0 && gridOrigin.y >= Math.Abs(dy))
+        else if (dx > 0)
         {
-            gridOrigin.y += dy;
-            dy = 0;
+            if (memorySize.x - _size.x - gridOrigin.x > Math.Abs(dx))
+            {
+                dx = 0;
+            }
+        }
+        if (dy < 0)
+        {
+            if (gridOrigin.y >= Math.Abs(dy))
+            {
+                gridOrigin.y += dy;
+                dy = 0;
+            }
+        }
+        else if (dy > 0)
+        {
+            if (memorySize.y - _size.y - gridOrigin.y > Math.Abs(dy))
+            {
+                dy = 0;
+            }
         }
         //Create new memory size, if needed
         Vector expandSize = memorySize + new Vector(
