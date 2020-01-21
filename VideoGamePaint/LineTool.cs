@@ -9,7 +9,7 @@ public class LineTool : Tool
 
     public override void activate(int ex, int ey)
     {
-        pixelGridPanel.toolGrid.clear(null);
+        pixelGridPanel.toolGrid.clear(RGB.nullRGB);
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
         if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x
@@ -36,7 +36,7 @@ public class LineTool : Tool
     public override void postactivate(int ex, int ey)
     {
         base.postactivate(ex, ey);
-        pixelGridPanel.toolGrid.clear(null);
+        pixelGridPanel.toolGrid.clear(RGB.nullRGB);
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
         if (gx >= 0 && gx < pixelGridPanel.pixelGrid.Size.x

@@ -43,12 +43,11 @@ namespace VideoGamePaint
         public PixelGridPanel(int width, int height) : base()
         {
             this.DoubleBuffered = true;
-            pixelGrid.Size.x = width;
-            pixelGrid.Size.y = height;
-            toolGrid.defaultFillRGB = null;
-            toolGrid.clear(null);
-            entityGrid.defaultFillRGB = null;
-            entityGrid.clear(null);
+            pixelGrid.Size = new Vector(width, height);
+            toolGrid.defaultFillRGB = RGB.nullRGB;
+            toolGrid.clear(RGB.nullRGB);
+            entityGrid.defaultFillRGB = RGB.nullRGB;
+            entityGrid.clear(RGB.nullRGB);
         }
 
         void updatePixelAtPosition(MouseEventArgs e, bool forceRedraw = false)

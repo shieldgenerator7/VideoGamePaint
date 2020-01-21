@@ -38,8 +38,7 @@ namespace VideoGamePaint
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
             this.pnlColorOptions.onPixelClicked += setDrawingColor;
-            this.pnlColorOptions.pixelGrid.Size.x = 10;
-            this.pnlColorOptions.pixelGrid.Size.y = 2;
+            this.pnlColorOptions.pixelGrid.Size = new Vector(10, 2);
             colorOptions.Add(Color.Black);
             colorOptions.Add(Color.Gray);
             colorOptions.Add(Color.White);
@@ -55,7 +54,7 @@ namespace VideoGamePaint
             colorOptions.Add(Color.SandyBrown);
             this.pnlColorOptions.setColorsFromList(colorOptions);
         }
-        
+
         private void btnColorPicker_Click(object sender, EventArgs e)
         {
             DialogResult result = dlgColor.ShowDialog();
@@ -96,7 +95,7 @@ namespace VideoGamePaint
 
         private void tmrGame_Tick(object sender, EventArgs e)
         {
-            pnlPaint.entityGrid.clear(null);
+            pnlPaint.entityGrid.clear(RGB.nullRGB);
             player.applyGravity();
             player.applyControls(pnlPaint.pressedKeys);
             player.move();

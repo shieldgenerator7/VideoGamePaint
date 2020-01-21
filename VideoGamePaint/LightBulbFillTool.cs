@@ -16,7 +16,7 @@ public class LightBulbFillTool : FillTool
         //in certain situations easier.
         //This of course assumes that the tempRGB value
         //is not already in the grid somwhere.
-        RGB tempRGB = null;
+        RGB tempRGB = RGB.nullRGB;
         checkLOS = true;
         fillArea(gx, gy, fromRGB, tempRGB);
         checkLOS = false;

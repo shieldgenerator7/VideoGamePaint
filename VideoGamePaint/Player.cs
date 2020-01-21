@@ -21,7 +21,7 @@ public class Player
         if (pos.y < collisionGrid.Size.y - 1)
         {
             RGB rgb = collisionGrid.getPixel(pos.x, pos.y + 1);
-            if (rgb == RGB.white || rgb == null)
+            if (rgb == RGB.white || rgb == RGB.nullRGB)
             {
                 moveDir.y += 1;
             }
@@ -53,7 +53,7 @@ public class Player
         int gx = pos.x + moveDir.x;
         int gy = pos.y + moveDir.y;
         Vector endPos = pos + moveDir;
-        Vector lastValidPoint = Vector.copy(pos);
+        Vector lastValidPoint = pos;
         foreach (Vector v in collisionGrid.getPixelsInLine(pos, endPos))
         {
             if (!collisionGrid.validPixel(v))
@@ -61,17 +61,17 @@ public class Player
                 break;
             }
             RGB rgb = collisionGrid.getPixel(v.x, v.y);
-            if (rgb == RGB.white || rgb == null)
+            if (rgb == RGB.white || rgb == RGB.nullRGB)
             {
-                lastValidPoint.copyFrom(v);
+                lastValidPoint = v;
             }
             else
             {
                 break;
             }
         }
-        pos.copyFrom(lastValidPoint);
-        moveDir.copyFrom(Vector.zero);
+        pos = lastValidPoint;
+        moveDir = Vector.zero;
         //Continue: Slide player in valid direction
         if (lastValidPoint != endPos)
         {
@@ -97,9 +97,9 @@ public class Player
                 if (collisionGrid.validPixel(nextPos))
                 {
                     RGB rgb = collisionGrid.getPixel(nextPos);
-                    if (rgb == RGB.white || rgb == null)
+                    if (rgb == RGB.white || rgb == RGB.nullRGB)
                     {
-                        moveDir.copyFrom(tryDirs[i]);
+                        moveDir = tryDirs[i];
                         move();
                         return;
                     }

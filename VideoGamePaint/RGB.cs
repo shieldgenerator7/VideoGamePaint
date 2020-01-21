@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class RGB
+public struct RGB
 {
     public int red;
     public int green;
@@ -13,6 +13,7 @@ public class RGB
         this.blue = b;
     }
 
+    public static RGB nullRGB = new RGB(-1, -1, -1);
     public static RGB white = new RGB(255, 255, 255);
 
     public override string ToString()
@@ -32,27 +33,15 @@ public class RGB
 
     public static bool operator ==(RGB a, RGB b)
     {
-        bool aNull = ReferenceEquals(a, null);
-        bool bNull = ReferenceEquals(b, null);
-        if (aNull || bNull)
-        {
-            return aNull == bNull;
-        }
         return a.red == b.red && a.green == b.green && a.blue == b.blue;
     }
     public static bool operator !=(RGB a, RGB b)
     {
-        bool aNull = ReferenceEquals(a, null);
-        bool bNull = ReferenceEquals(b, null);
-        if (aNull || bNull)
-        {
-            return aNull != bNull;
-        }
         return a.red != b.red || a.green != b.green || a.blue != b.blue;
     }
 
-    public static implicit operator bool (RGB a)
+    public static implicit operator bool(RGB a)
     {
-        return a != null;
+        return a != nullRGB;
     }
 }

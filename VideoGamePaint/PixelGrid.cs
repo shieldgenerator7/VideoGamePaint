@@ -229,7 +229,6 @@ public class PixelGrid
             memorySize.y = expandSize.y;
         }
         //Update size width and height
-        Size.x = newSize.x;
-        Size.y = newSize.y;
+        _size = newSize;
     }
 }

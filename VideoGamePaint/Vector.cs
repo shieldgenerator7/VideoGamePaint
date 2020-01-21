@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-public class Vector
+public struct Vector
 {
     public int x;
     public int y;
@@ -24,17 +24,6 @@ public class Vector
         }
     }
 
-    public void copyFrom(Vector v)
-    {
-        this.x = v.x;
-        this.y = v.y;
-    }
-
-    public static Vector copy(Vector v)
-    {
-        return new Vector(v.x, v.y);
-    }
-
     public static Vector zero
     {
         get => new Vector(0, 0);
@@ -49,14 +38,10 @@ public class Vector
         => new Vector(-a.x, -a.y);
 
     public static Vector operator +(Vector a, Vector b)
-        => (a != null && b != null)
-        ? new Vector(a.x + b.x, a.y + b.y)
-        : null;
+        => new Vector(a.x + b.x, a.y + b.y);
 
     public static Vector operator -(Vector a, Vector b)
-        => (a != null && b != null)
-        ? new Vector(a.x - b.x, a.y - b.y)
-        : null;
+        => new Vector(a.x - b.x, a.y - b.y);
 
     public static Vector operator *(Vector v, int f)
         => new Vector(v.x * f, v.y * f);
