@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 public class Player
@@ -50,12 +51,11 @@ public class Player
     {
         int gx = pos.x + moveDir.x;
         int gy = pos.y + moveDir.y;
+        Vector endPos = pos + moveDir;
         Vector lastValidPoint = Vector.copy(pos);
-        foreach (Vector v in collisionGrid.getPixelsInLine(pos, pos + moveDir))
+        foreach (Vector v in collisionGrid.getPixelsInLine(pos, endPos))
         {
-            if (v.x < 0 || v.x >= collisionGrid.Size.x
-                || v.y < 0 || v.y >= collisionGrid.Size.y
-                )
+            if (!collisionGrid.validPixel(v))
             {
                 break;
             }
@@ -71,5 +71,39 @@ public class Player
         }
         pos.copyFrom(lastValidPoint);
         moveDir.copyFrom(Vector.zero);
+        //Continue: Slide player in valid direction
+        if (lastValidPoint != endPos)
+        {
+            int rise = endPos.y - lastValidPoint.y;
+            int run = endPos.x - lastValidPoint.x;
+            Vector[] tryDirs = new Vector[2];
+            if (Math.Abs(run) >= Math.Abs(rise))
+            {
+                tryDirs[0] = new Vector(run, 0);
+                tryDirs[1] = new Vector(0, rise);
+            }
+            else
+            {
+                tryDirs[0] = new Vector(0, rise);
+                tryDirs[1] = new Vector(run, 0);
+            }
+            for (int i = 0; i < tryDirs.Length; i++)
+            {
+                Vector nextPos = lastValidPoint + new Vector(
+                    Math.Sign(tryDirs[i].x),
+                    Math.Sign(tryDirs[i].y)
+                    );
+                if (collisionGrid.validPixel(nextPos))
+                {
+                    RGB rgb = collisionGrid.getPixel(nextPos);
+                    if (rgb == RGB.white || rgb == null)
+                    {
+                        moveDir.copyFrom(tryDirs[i]);
+                        move();
+                        return;
+                    }
+                }
+            }
+        }
     }
 }

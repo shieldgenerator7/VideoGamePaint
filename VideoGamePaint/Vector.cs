@@ -69,4 +69,26 @@ public class Vector
 
     public static bool operator >(Vector a, Vector b)
         => a.Magnitude > b.Magnitude;
+
+    public static bool operator ==(Vector a, Vector b)
+    {
+        bool aNull = ReferenceEquals(a, null);
+        bool bNull = ReferenceEquals(b, null);
+        if (aNull || bNull)
+        {
+            return aNull == bNull;
+        }
+        return a.x == b.x && a.y == b.y;
+    }
+
+    public static bool operator !=(Vector a, Vector b)
+    {
+        bool aNull = ReferenceEquals(a, null);
+        bool bNull = ReferenceEquals(b, null);
+        if (aNull || bNull)
+        {
+            return aNull != bNull;
+        }
+        return a.x != b.x || a.y != b.y;
+    }
 }

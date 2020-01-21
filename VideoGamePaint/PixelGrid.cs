@@ -1,6 +1,4 @@
-﻿
-
-using System;
+﻿using System;
 
 public class PixelGrid
 {
@@ -25,6 +23,16 @@ public class PixelGrid
         pixelGrid = new RGB[Size.x, Size.y];
         defaultFillRGB = new RGB(255, 255, 255);
         clear(defaultFillRGB);
+    }
+
+    public bool validPixel(Vector v)
+    {
+        return validPixel(v.x, v.y);
+    }
+    public bool validPixel(int x, int y)
+    {
+        return x >= 0 && x < Size.x
+            && y >= 0 && y < Size.y;
     }
 
     public RGB getPixel(Vector v)
