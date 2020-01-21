@@ -7,7 +7,7 @@ namespace VideoGamePaint
 {
     public class PixelGridPanel : Panel
     {
-        public Keys lastKey;
+        public List<Keys> pressedKeys = new List<Keys>();
 
         private float pixelSize = 8;//how many screen pixels wide a grid pixel is
         public float PixelSize
@@ -367,13 +367,16 @@ namespace VideoGamePaint
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            lastKey = e.KeyData;
+            if (!pressedKeys.Contains(e.KeyCode))
+            {
+                pressedKeys.Add(e.KeyCode);
+            }
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
             base.OnKeyUp(e);
-            lastKey = Keys.Cancel;
+            pressedKeys.Remove(e.KeyCode);
         }
 
         /// <summary>

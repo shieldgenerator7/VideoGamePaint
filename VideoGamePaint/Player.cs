@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -27,21 +28,21 @@ public class Player
         }
     }
 
-    public void applyControls(Keys key)
+    public void applyControls(List<Keys> keys)
     {
-        if (key == Keys.W)
+        if (keys.Contains(Keys.W))
         {
             moveDir.y += -2;
         }
-        if (key == Keys.A)
+        if (keys.Contains(Keys.A))
         {
             moveDir.x += -1;
         }
-        if (key == Keys.S)
+        if (keys.Contains(Keys.S))
         {
             moveDir.y += 1;
         }
-        if (key == Keys.D)
+        if (keys.Contains(Keys.D))
         {
             moveDir.x += 1;
         }
