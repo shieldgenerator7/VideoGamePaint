@@ -10,6 +10,20 @@ public class PixelGrid
     public Vector Size
     {
         get => _size;
+        set
+        {
+            if (value.x > _size.x || value.y > _size.y)
+            {
+                expandGrid(
+                    (value.x > _size.x) ? value.x - _size.x : 0,
+                    (value.y > _size.y) ? value.y - _size.y : 0
+                    );
+            }
+            else
+            {
+                _size = value;
+            }
+        }
     }
     private Vector memorySize = new Vector(100, 100);//the actual size of the grid, including inaccesible areas
 
@@ -20,7 +34,7 @@ public class PixelGrid
 
     public PixelGrid()
     {
-        pixelGrid = new RGB[Size.x, Size.y];
+        pixelGrid = new RGB[_size.x, _size.y];
         defaultFillRGB = new RGB(255, 255, 255);
         clear(defaultFillRGB);
     }
@@ -31,8 +45,8 @@ public class PixelGrid
     }
     public bool validPixel(int x, int y)
     {
-        return x >= 0 && x < Size.x
-            && y >= 0 && y < Size.y;
+        return x >= 0 && x < _size.x
+            && y >= 0 && y < _size.y;
     }
 
     public RGB getPixel(Vector v)
@@ -49,8 +63,8 @@ public class PixelGrid
         catch (IndexOutOfRangeException ioore)
         {
             throw new IndexOutOfRangeException(""
-                + (gridOrigin.x + x) + " / " + Size.x + ", "
-                + (gridOrigin.y + y) + " / " + Size.y + ". "
+                + (gridOrigin.x + x) + " / " + _size.x + ", "
+                + (gridOrigin.y + y) + " / " + _size.y + ". "
                 + ioore.Message
                 );
         }
@@ -70,8 +84,8 @@ public class PixelGrid
         catch (IndexOutOfRangeException ioore)
         {
             throw new IndexOutOfRangeException(""
-                + (gridOrigin.x + px) + " / " + Size.x + ", "
-                + (gridOrigin.y + py) + " / " + Size.y + ". "
+                + (gridOrigin.x + px) + " / " + _size.x + ", "
+                + (gridOrigin.y + py) + " / " + _size.y + ". "
                 + ioore.Message
                 );
         }
@@ -79,9 +93,9 @@ public class PixelGrid
 
     public void clear(RGB rgb)
     {
-        for (int x = 0; x < Size.x; x++)
+        for (int x = 0; x < _size.x; x++)
         {
-            for (int y = 0; y < Size.y; y++)
+            for (int y = 0; y < _size.y; y++)
             {
                 setPixel(x, y, rgb);
             }
@@ -174,7 +188,7 @@ public class PixelGrid
     {
 
         //Create new size
-        Vector newSize = new Vector(Math.Abs(dx) + Size.x, Math.Abs(dy) + Size.y);
+        Vector newSize = new Vector(Math.Abs(dx) + _size.x, Math.Abs(dy) + _size.y);
         //Expand into existing grid area, if possible
         if (dx < 0 && gridOrigin.x >= Math.Abs(dx))
         {
@@ -206,8 +220,8 @@ public class PixelGrid
                 for (int y = 0; y < expandSize.y; y++)
                 {
                     //If the coordinate is in the copy destination area,
-                    if (x >= copyStart.x && x < copyStart.x + Size.x
-                        && y >= copyStart.y && y < copyStart.y + Size.y)
+                    if (x >= copyStart.x && x < copyStart.x + _size.x
+                        && y >= copyStart.y && y < copyStart.y + _size.y)
                     {
                         //Copy the pixel
                         newGrid[x, y] = getPixel(x - copyStart.x, y - copyStart.y);
