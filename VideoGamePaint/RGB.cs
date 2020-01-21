@@ -15,6 +15,11 @@ public class RGB
 
     public static RGB white = new RGB(255, 255, 255);
 
+    public override string ToString()
+    {
+        return "RGB: (" + red + ", " + green + ", " + blue + ")";
+    }
+
     public override bool Equals(object obj)
     {
         return this == (RGB)obj;

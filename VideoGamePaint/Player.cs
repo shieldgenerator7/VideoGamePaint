@@ -1,60 +1,75 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 public class Player
 {
     public Vector pos = new Vector(0, 0);
     public Color color = Color.Purple;
+    private Vector moveDir = new Vector(0, 0);//how much it moves each frame
 
     PixelGrid collisionGrid;
 
-	public Player(PixelGrid pg)
-	{
+    public Player(PixelGrid pg)
+    {
         this.collisionGrid = pg;
-	}
+    }
 
     public void applyGravity()
     {
-        move(new Vector(0, 1));
+        if (pos.y < collisionGrid.Size.y - 1)
+        {
+            RGB rgb = collisionGrid.getPixel(pos.x, pos.y + 1);
+            if (rgb == RGB.white || rgb == null)
+            {
+                moveDir.y += 1;
+            }
+        }
     }
 
     public void applyControls(Keys key)
     {
-        Vector dir = new Vector(0, 0);
         if (key == Keys.W)
         {
-            dir.y = -2;
+            moveDir.y += -2;
         }
         if (key == Keys.A)
         {
-            dir.x = -1;
+            moveDir.x += -1;
         }
         if (key == Keys.S)
         {
-            dir.y = 1;
+            moveDir.y += 1;
         }
         if (key == Keys.D)
         {
-            dir.x = 1;
+            moveDir.x += 1;
         }
-        move(dir);
     }
 
-    private void move(Vector dir)
+    public void move()
     {
-        int gx = pos.x + dir.x;
-        int gy = pos.y + dir.y;
-        if (gx < 0 || gx >= collisionGrid.Size.x
-            || gy < 0 || gy >= collisionGrid.Size.y
-            )
+        int gx = pos.x + moveDir.x;
+        int gy = pos.y + moveDir.y;
+        Vector lastValidPoint = Vector.copy(pos);
+        foreach (Vector v in collisionGrid.getPixelsInLine(pos, pos + moveDir))
         {
-            return;
+            if (v.x < 0 || v.x >= collisionGrid.Size.x
+                || v.y < 0 || v.y >= collisionGrid.Size.y
+                )
+            {
+                break;
+            }
+            RGB rgb = collisionGrid.getPixel(v.x, v.y);
+            if (rgb == RGB.white || rgb == null)
+            {
+                lastValidPoint.copyFrom(v);
+            }
+            else
+            {
+                break;
+            }
         }
-        RGB rgb = collisionGrid.getPixel(gx, gy);
-        if (rgb == RGB.white || rgb == null)
-        {
-            pos += dir;
-        }
+        pos.copyFrom(lastValidPoint);
+        moveDir.copyFrom(Vector.zero);
     }
 }

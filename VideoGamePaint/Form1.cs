@@ -99,6 +99,7 @@ namespace VideoGamePaint
             pnlPaint.entityGrid.clear(null);
             player.applyGravity();
             player.applyControls(pnlPaint.lastKey);
+            player.move();
             pnlPaint.entityGrid.setPixel(
                 player.pos.x,
                 player.pos.y,

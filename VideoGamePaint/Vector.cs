@@ -24,6 +24,17 @@ public class Vector
         }
     }
 
+    public void copyFrom(Vector v)
+    {
+        this.x = v.x;
+        this.y = v.y;
+    }
+
+    public static Vector copy(Vector v)
+    {
+        return new Vector(v.x, v.y);
+    }
+
     public static Vector zero
     {
         get => new Vector(0, 0);
