@@ -20,7 +20,6 @@ namespace VideoGamePaint
         Tool lineTool;
         Tool lightBulbFillTool;
         Player player;
-        Keys lastKey;
 
         public frmPaint()
         {
@@ -105,11 +104,7 @@ namespace VideoGamePaint
                 PixelGridPanel.ColorToRGB(player.color)
                 );
             pnlPaint.Invalidate();
-        }
-
-        private void frmPaint_KeyDown(object sender, KeyEventArgs e)
-        {
-            lastKey = e.KeyCode;
+            pnlPaint.Focus();
         }
 
         private void tabPalettes_SelectedIndexChanged(object sender, EventArgs e)
