@@ -16,6 +16,8 @@ namespace VideoGamePaint
             set
             {
                 pixelSize = Math.Min(Math.Max(1, value), 100);
+                lighten.Width = pixelSize / 8;
+                darken.Width = pixelSize / 8;
             }
         }
         public Vector mapPos = new Vector(0, 0);//the panel position in which to start drawing the grid
@@ -40,6 +42,8 @@ namespace VideoGamePaint
         }
         public Tool activeTool;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
+        Pen lighten = new Pen(Color.FromArgb(100, 255, 255, 255), 1);
+        Pen darken = new Pen(Color.FromArgb(100, 0, 0, 0), 1);
 
         public bool defaultPaintingEnabled = true;
 
@@ -387,9 +391,8 @@ namespace VideoGamePaint
             {
                 return;
             }
-            Color lighten = Color.FromArgb(100, 255, 255, 255);
-            Color darken = Color.FromArgb(100, 0, 0, 0);
             Rectangle rect = getRect(gx, gy);
+            float lineWidthOffset = lighten.Width / 2;
             //Add white line at top of blocks with nothing above them
             if (colliderGrid.validPixel(gx, gy - 1))
             {
@@ -397,11 +400,11 @@ namespace VideoGamePaint
                 if (!abovePixel || abovePixel == RGB.white)
                 {
                     g.DrawLine(
-                        new Pen(lighten, 2),
+                        lighten,
                         rect.Left,
-                        rect.Top,
+                        rect.Top + lineWidthOffset,
                         rect.Right,
-                        rect.Top
+                        rect.Top + lineWidthOffset
                         );
                 }
             }
@@ -412,10 +415,10 @@ namespace VideoGamePaint
                 if (!leftPixel || leftPixel == RGB.white)
                 {
                     g.DrawLine(
-                        new Pen(lighten, 2),
-                        rect.Left,
+                        lighten,
+                        rect.Left + lineWidthOffset,
                         rect.Top,
-                        rect.Left,
+                        rect.Left + lineWidthOffset,
                         rect.Bottom
                         );
                 }
@@ -427,11 +430,11 @@ namespace VideoGamePaint
                 if (!belowPixel || belowPixel == RGB.white)
                 {
                     g.DrawLine(
-                        new Pen(darken, 2),
+                        darken,
                         rect.Left,
-                        rect.Bottom,
+                        rect.Bottom - lineWidthOffset,
                         rect.Right,
-                        rect.Bottom
+                        rect.Bottom - lineWidthOffset
                         );
                 }
             }
@@ -442,10 +445,10 @@ namespace VideoGamePaint
                 if (!rightPixel || rightPixel == RGB.white)
                 {
                     g.DrawLine(
-                        new Pen(darken, 2),
-                        rect.Right,
+                        darken,
+                        rect.Right - lineWidthOffset,
                         rect.Top,
-                        rect.Right,
+                        rect.Right - lineWidthOffset,
                         rect.Bottom
                         );
                 }
