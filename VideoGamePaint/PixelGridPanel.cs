@@ -46,6 +46,7 @@ namespace VideoGamePaint
         Pen darken = new Pen(Color.FromArgb(100, 0, 0, 0), 1);
 
         public bool defaultPaintingEnabled = true;
+        public bool syncPixelGridToColliderGrid = true;
 
 
 
@@ -142,12 +143,15 @@ namespace VideoGamePaint
             {
                 ActiveGrid.setPixel(gx, gy, rgb);
             }
-            //Draw in the collider grid automatically
-            if (rgb.isValid())
+            if (ActiveGrid == colliderGrid || syncPixelGridToColliderGrid)
             {
-                rgb = (rgb == RGB.white) ? RGB.nullRGB : RGB.black;
+                //Draw in the collider grid automatically
+                if (rgb.isValid())
+                {
+                    rgb = (rgb == RGB.white) ? RGB.nullRGB : RGB.black;
+                }
+                colliderGrid.setPixel(gx, gy, rgb);
             }
-            colliderGrid.setPixel(gx, gy, rgb);
         }
 
         public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
@@ -561,5 +565,25 @@ namespace VideoGamePaint
                 }
             }
         }
-    }
+        public void checkSyncPixelGridToColliderGrid()
+        {
+            for (int x = 0; x < pixelGrid.Size.x; x++)
+            {
+                for (int y = 0; y < pixelGrid.Size.y; y++)
+                {
+                    bool pixelBlank = pixelGrid.getPixel(x, y) == RGB.white;
+                    bool collBlank = !colliderGrid.getPixel(x, y).isValid();
+                    if (pixelBlank != collBlank)
+                    {
+                        //They're not synced, so unsync it
+                        syncPixelGridToColliderGrid = false;
+                        return;
+                    }
+                }
+            }
+            //No asynchronicities found, so sync it
+            syncPixelGridToColliderGrid = true;
+            return;
+        }
+    }    
 }
