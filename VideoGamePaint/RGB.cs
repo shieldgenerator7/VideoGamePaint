@@ -13,9 +13,17 @@ public struct RGB
         this.blue = b;
     }
 
-    public static RGB nullRGB = new RGB(-1, -1, -1);
     public static RGB white = new RGB(255, 255, 255);
     public static RGB black = new RGB(0, 0, 0);
+
+    public static RGB nullRGB = new RGB(-1, -1, -1);
+    public static RGB tempRGB = new RGB(-2, -2, -2);
+
+    public bool isValid()
+    {
+        //Cast to boolean ensures all values are between 0 and 255, inclusive
+        return this==true;
+    }
 
     public override string ToString()
     {
@@ -43,6 +51,8 @@ public struct RGB
 
     public static implicit operator bool(RGB a)
     {
-        return a != nullRGB;
+        return a.red >= 0 && a.red <= 255
+            && a.green >= 0 && a.green <= 255
+            && a.blue >= 0 && a.blue <= 255;
     }
 }

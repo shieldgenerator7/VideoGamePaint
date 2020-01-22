@@ -21,7 +21,7 @@ public class Player
         if (pos.y < collisionGrid.Size.y - 1)
         {
             RGB rgb = collisionGrid.getPixel(pos.x, pos.y + 1);
-            if (rgb == RGB.white || rgb == RGB.nullRGB)
+            if (rgb == RGB.white || !rgb.isValid())
             {
                 moveDir.y += 1;
             }
@@ -61,7 +61,7 @@ public class Player
                 break;
             }
             RGB rgb = collisionGrid.getPixel(v.x, v.y);
-            if (rgb == RGB.white || rgb == RGB.nullRGB)
+            if (rgb == RGB.white || !rgb.isValid())
             {
                 lastValidPoint = v;
             }
@@ -97,7 +97,7 @@ public class Player
                 if (collisionGrid.validPixel(nextPos))
                 {
                     RGB rgb = collisionGrid.getPixel(nextPos);
-                    if (rgb == RGB.white || rgb == RGB.nullRGB)
+                    if (rgb == RGB.white || !rgb.isValid())
                     {
                         moveDir = tryDirs[i];
                         move();

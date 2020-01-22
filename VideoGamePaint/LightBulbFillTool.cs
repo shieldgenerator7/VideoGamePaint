@@ -16,11 +16,10 @@ public class LightBulbFillTool : FillTool
         //in certain situations easier.
         //This of course assumes that the tempRGB value
         //is not already in the grid somwhere.
-        RGB tempRGB = RGB.nullRGB;
         checkLOS = true;
-        fillArea(gx, gy, fromRGB, tempRGB);
+        fillArea(gx, gy, fromRGB, RGB.tempRGB);
         checkLOS = false;
-        fillArea(gx, gy, tempRGB, toRGB);
+        fillArea(gx, gy, RGB.tempRGB, toRGB);
     }
 
     protected override bool canFillPixel(int gx, int gy, RGB fromRGB, RGB toRGB)

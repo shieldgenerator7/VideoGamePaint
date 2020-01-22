@@ -134,8 +134,15 @@ namespace VideoGamePaint
         public void updatePixel(int gx, int gy, RGB rgb)
         {
             //Set the pixel at the position
-            ActiveGrid.setPixel(gx, gy, rgb);
-            rgb = (rgb == RGB.white || rgb == RGB.nullRGB) ? RGB.nullRGB : RGB.black;
+            if (ActiveGrid != colliderGrid)
+            {
+                ActiveGrid.setPixel(gx, gy, rgb);
+            }
+            //Draw in the collider grid automatically
+            if (rgb.isValid())
+            {
+                rgb = (rgb == RGB.white) ? RGB.nullRGB : RGB.black;
+            }
             colliderGrid.setPixel(gx, gy, rgb);
         }
 
@@ -239,7 +246,7 @@ namespace VideoGamePaint
 
         public static Color RGBToColor(RGB rgb)
         {
-            if (rgb == RGB.nullRGB)
+            if (!rgb.isValid())
             {
                 return Color.White;
             }
@@ -369,10 +376,10 @@ namespace VideoGamePaint
                 firstMousePosition.y = e.Y;
                 if (ActiveGrid == colliderGrid)
                 {
-                    RGB curColor = colliderGrid.getPixel(gridPixelX(e.X),gridPixelY(e.Y));
-                    drawColor = (curColor == RGB.nullRGB)
-                        ? RGB.black
-                        : RGB.nullRGB;
+                    RGB curColor = colliderGrid.getPixel(gridPixelX(e.X), gridPixelY(e.Y));
+                    drawColor = (curColor.isValid())
+                        ? RGB.nullRGB
+                        : RGB.black;
                 }
                 activeTool.preactivate(e.X, e.Y);
                 activeTool.activate(e.X, e.Y);
