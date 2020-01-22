@@ -57,8 +57,7 @@ public class FillTool : Tool
     protected virtual bool canFillPixel(int gx, int gy, RGB fromRGB, RGB toRGB)
     {
         //No if outside the grid
-        if (gx < 0 || gx >= pixelGridPanel.ActiveGrid.Size.x
-            || gy < 0 || gy >= pixelGridPanel.ActiveGrid.Size.y)
+        if (!pixelGridPanel.ActiveGrid.validPixel(gx,gy))
         {
             return false;
         }

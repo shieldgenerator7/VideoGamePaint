@@ -58,6 +58,7 @@ namespace VideoGamePaint
         {
             DialogResult result = dlgColor.ShowDialog();
             setDrawingColor(dlgColor.Color);
+            pnlPaint.Focus();
         }
 
         private void setDrawingColor(Color color)
@@ -70,26 +71,31 @@ namespace VideoGamePaint
         private void btnToolPencil_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = pencilTool;
+            pnlPaint.Focus();
         }
 
         private void btnToolFill_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = fillTool;
+            pnlPaint.Focus();
         }
 
         private void btnHandTool_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = handTool;
+            pnlPaint.Focus();
         }
 
         private void btnToolLine_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = lineTool;
+            pnlPaint.Focus();
         }
 
         private void btnToolFillLightBulb_Click(object sender, EventArgs e)
         {
             pnlPaint.activeTool = lightBulbFillTool;
+            pnlPaint.Focus();
         }
 
         private void tmrGame_Tick(object sender, EventArgs e)
@@ -104,7 +110,6 @@ namespace VideoGamePaint
                 PixelGridPanel.ColorToRGB(player.color)
                 );
             pnlPaint.Invalidate();
-            pnlPaint.Focus();
         }
 
         private void tabPalettes_SelectedIndexChanged(object sender, EventArgs e)
@@ -119,6 +124,7 @@ namespace VideoGamePaint
                     pnlPaint.ActiveGrid = pnlPaint.colliderGrid;
                     break;
             }
+            pnlPaint.Focus();
         }
     }
 }
