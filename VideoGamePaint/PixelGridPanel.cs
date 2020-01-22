@@ -313,6 +313,21 @@ namespace VideoGamePaint
                     }
                 }
             }
+            else
+            {
+                //Collider Grid Borders
+                for (int x = iterXMin; x < iterXMax; x++)
+                {
+                    for (int y = iterYMin; y < iterYMax; y++)
+                    {
+                        RGB pixel = colliderGrid.getPixel(x, y);
+                        if (pixel)
+                        {
+                            addBorder(g, x, y);
+                        }
+                    }
+                }
+            }
             //Tool Grid
             for (int x = iterXMin; x < iterXMax; x++)
             {
@@ -362,6 +377,79 @@ namespace VideoGamePaint
                 colorBrushes.Add(color, brush);
             }
             return brush;
+        }
+
+        void addBorder(Graphics g, int gx, int gy)
+        {
+            RGB pixel = colliderGrid.getPixel(gx, gy);
+            //Don't add borders to empty spaces
+            if (!pixel || pixel == RGB.white)
+            {
+                return;
+            }
+            Color lighten = Color.FromArgb(100, 255, 255, 255);
+            Color darken = Color.FromArgb(100, 0, 0, 0);
+            Rectangle rect = getRect(gx, gy);
+            //Add white line at top of blocks with nothing above them
+            if (colliderGrid.validPixel(gx, gy - 1))
+            {
+                RGB abovePixel = colliderGrid.getPixel(gx, gy - 1);
+                if (!abovePixel || abovePixel == RGB.white)
+                {
+                    g.DrawLine(
+                        new Pen(lighten, 2),
+                        rect.Left,
+                        rect.Top,
+                        rect.Right,
+                        rect.Top
+                        );
+                }
+            }
+            //Add white line to left of blocks with nothing left of them
+            if (colliderGrid.validPixel(gx - 1, gy))
+            {
+                RGB leftPixel = colliderGrid.getPixel(gx - 1, gy);
+                if (!leftPixel || leftPixel == RGB.white)
+                {
+                    g.DrawLine(
+                        new Pen(lighten, 2),
+                        rect.Left,
+                        rect.Top,
+                        rect.Left,
+                        rect.Bottom
+                        );
+                }
+            }
+            //Add black line at bottom of blocks with nothing below them
+            if (colliderGrid.validPixel(gx, gy + 1))
+            {
+                RGB belowPixel = colliderGrid.getPixel(gx, gy + 1);
+                if (!belowPixel || belowPixel == RGB.white)
+                {
+                    g.DrawLine(
+                        new Pen(darken, 2),
+                        rect.Left,
+                        rect.Bottom,
+                        rect.Right,
+                        rect.Bottom
+                        );
+                }
+            }
+            //Add black line at right of blocks with nothing right of them
+            if (colliderGrid.validPixel(gx + 1, gy))
+            {
+                RGB rightPixel = colliderGrid.getPixel(gx + 1, gy);
+                if (!rightPixel || rightPixel == RGB.white)
+                {
+                    g.DrawLine(
+                        new Pen(darken, 2),
+                        rect.Right,
+                        rect.Top,
+                        rect.Right,
+                        rect.Bottom
+                        );
+                }
+            }
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
