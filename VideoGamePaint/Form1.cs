@@ -118,6 +118,7 @@ namespace VideoGamePaint
             {
                 case 0:
                     pnlPaint.ActiveGrid = pnlPaint.pixelGrid;
+                    pnlPaint.DrawColor = Color.Black;
                     break;
                 case 1:
                     pnlPaint.ActiveGrid = pnlPaint.colliderGrid;
