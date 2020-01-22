@@ -292,7 +292,7 @@ namespace VideoGamePaint
             {
                 //Put white filter over screen so far
                 g.FillRectangle(
-                    getBrush(Color.FromArgb(200, 255, 255, 255)),
+                    getBrush(Color.FromArgb(220, 255, 255, 255)),
                     getRect(iterXMin, iterYMin, iterXMax - iterXMin, iterYMax - iterYMin)
                     );
                 //Draw collider grid on top
@@ -304,7 +304,7 @@ namespace VideoGamePaint
                         if (pixel && pixel != RGB.white)
                         {
                             Color baseColor = RGBToColor(pixel);
-                            Color color = Color.FromArgb(150, baseColor.R, baseColor.G, baseColor.B);
+                            Color color = Color.FromArgb(100, baseColor.R, baseColor.G, baseColor.B);
                             g.FillRectangle(
                                 getBrush(color),
                                 getRect(x, y)
