@@ -45,7 +45,7 @@ public class FillTool : Tool
                 continue;
             }
             //Set this pixel to the toRGB
-            pixelGridPanel.ActiveGrid.setPixel(gv.x, gv.y, toRGB);
+            pixelGridPanel.updatePixel(gv.x, gv.y, toRGB);
             //Find the next pixels to set
             fillQueue.Enqueue(new Vector(gv.x - 1, gv.y));
             fillQueue.Enqueue(new Vector(gv.x + 1, gv.y));

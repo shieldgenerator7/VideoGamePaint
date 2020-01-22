@@ -50,7 +50,7 @@ public class LineTool : Tool
                 0.2f
             ))
             {
-                pixelGridPanel.ActiveGrid.setPixel(
+                pixelGridPanel.updatePixel(
                     v.x,
                     v.y,
                     PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)

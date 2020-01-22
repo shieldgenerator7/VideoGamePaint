@@ -120,8 +120,16 @@ namespace VideoGamePaint
                 entityGrid.expandGrid(expandX, expandY);
                 colliderGrid.expandGrid(expandX, expandY);
             }
+            updatePixel(gridPixelX(ex), gridPixelY(ey), rgb);
+        }
+        public void updatePixel(int gx, int gy, RGB rgb)
+        {
             //Set the pixel at the position
-            ActiveGrid.setPixel(gridPixelX(ex), gridPixelY(ey), rgb);
+            ActiveGrid.setPixel(gx, gy, rgb);
+            if (ActiveGrid == pixelGrid)
+            {
+                colliderGrid.setPixel(gx, gy, rgb);
+            }
         }
 
         public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
