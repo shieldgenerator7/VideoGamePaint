@@ -65,7 +65,7 @@ namespace VideoGamePaint
         {
             dlgColor.Color = color;
             btnColorPicker.BackColor = color;
-            pnlPaint.drawColor = color;
+            pnlPaint.DrawColor = color;
         }
 
         private void btnToolPencil_Click(object sender, EventArgs e)

@@ -30,7 +30,14 @@ namespace VideoGamePaint
         public PixelGrid colliderGrid { get; private set; } = new PixelGrid();//grid for storing collision data
         public PixelGrid ActiveGrid;
 
-        public Color drawColor;
+        public RGB drawColor;
+        public Color DrawColor
+        {
+            set
+            {
+                drawColor = ColorToRGB(value);
+            }
+        }
         public Tool activeTool;
         Dictionary<Color, Brush> colorBrushes = new Dictionary<Color, Brush>();
 
@@ -50,6 +57,8 @@ namespace VideoGamePaint
             toolGrid.clear(RGB.nullRGB);
             entityGrid.defaultFillRGB = RGB.nullRGB;
             entityGrid.clear(RGB.nullRGB);
+            colliderGrid.defaultFillRGB = RGB.nullRGB;
+            colliderGrid.clear(RGB.nullRGB);
             ActiveGrid = pixelGrid;
         }
 
@@ -62,7 +71,7 @@ namespace VideoGamePaint
         {
             if (forceRedraw || ex != lastMousePosition.x || ey != lastMousePosition.y)
             {
-                RGB rgb = ColorToRGB(drawColor);
+                RGB rgb = drawColor;
                 updatePixelAtPosition(ex, ey, rgb);
                 if (ex != lastMousePosition.x || ey != lastMousePosition.y)
                 {
@@ -126,10 +135,8 @@ namespace VideoGamePaint
         {
             //Set the pixel at the position
             ActiveGrid.setPixel(gx, gy, rgb);
-            if (ActiveGrid == pixelGrid)
-            {
-                colliderGrid.setPixel(gx, gy, rgb);
-            }
+            rgb = (rgb == RGB.white || rgb == RGB.nullRGB) ? RGB.nullRGB : RGB.black;
+            colliderGrid.setPixel(gx, gy, rgb);
         }
 
         public static List<Vector> getPixelsInBetween(int x1, int y1, int x2, int y2, float threshold = 0.1f)
@@ -197,13 +204,13 @@ namespace VideoGamePaint
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public Rectangle getRect(int x, int y)
+        public Rectangle getRect(int x, int y, int width = 1, int height = 1)
         {
             return new Rectangle(
                 (int)(x * PixelSize) + mapPos.x,
                 (int)(y * PixelSize) + mapPos.y,
-                (int)PixelSize,
-                (int)PixelSize
+                (int)PixelSize * width,
+                (int)PixelSize * height
                 );
         }
 
@@ -232,6 +239,10 @@ namespace VideoGamePaint
 
         public static Color RGBToColor(RGB rgb)
         {
+            if (rgb == RGB.nullRGB)
+            {
+                return Color.White;
+            }
             return Color.FromArgb(
                 rgb.red,
                 rgb.green,
@@ -254,18 +265,44 @@ namespace VideoGamePaint
             int iterYMin = Math.Max(sgyMin, 0);
             int iterXMax = Math.Min(sgxMax, ActiveGrid.Size.x);
             int iterYMax = Math.Min(sgyMax, ActiveGrid.Size.y);
-            //
+            //Pixel Grid
             for (int x = iterXMin; x < iterXMax; x++)
             {
                 for (int y = iterYMin; y < iterYMax; y++)
                 {
-                    RGB pixel = ActiveGrid.getPixel(x, y);
+                    RGB pixel = pixelGrid.getPixel(x, y);
                     if (pixel)
                     {
                         g.FillRectangle(
                         getBrush(RGBToColor(pixel)),
                         getRect(x, y)
                         );
+                    }
+                }
+            }
+            //Collider Grid
+            if (colliderGrid == ActiveGrid)
+            {
+                //Put white filter over screen so far
+                g.FillRectangle(
+                    getBrush(Color.FromArgb(200, 255, 255, 255)),
+                    getRect(iterXMin, iterYMin, iterXMax - iterXMin, iterYMax - iterYMin)
+                    );
+                //Draw collider grid on top
+                for (int x = iterXMin; x < iterXMax; x++)
+                {
+                    for (int y = iterYMin; y < iterYMax; y++)
+                    {
+                        RGB pixel = colliderGrid.getPixel(x, y);
+                        if (pixel && pixel != RGB.white)
+                        {
+                            Color baseColor = RGBToColor(pixel);
+                            Color color = Color.FromArgb(150, baseColor.R, baseColor.G, baseColor.B);
+                            g.FillRectangle(
+                                getBrush(color),
+                                getRect(x, y)
+                                );
+                        }
                     }
                 }
             }
@@ -330,7 +367,13 @@ namespace VideoGamePaint
                 lastMousePosition.y = e.Y;
                 firstMousePosition.x = e.X;
                 firstMousePosition.y = e.Y;
-                //updatePixelAtPosition(e, true);
+                if (ActiveGrid == colliderGrid)
+                {
+                    RGB curColor = colliderGrid.getPixel(gridPixelX(e.X),gridPixelY(e.Y));
+                    drawColor = (curColor == RGB.nullRGB)
+                        ? RGB.black
+                        : RGB.nullRGB;
+                }
                 activeTool.preactivate(e.X, e.Y);
                 activeTool.activate(e.X, e.Y);
                 Focus();
@@ -344,7 +387,6 @@ namespace VideoGamePaint
             {
                 if (defaultPaintingEnabled)
                 {
-                    //updatePixelAtPosition(e);
                     activeTool.activate(e.X, e.Y);
                 }
             }
@@ -356,7 +398,6 @@ namespace VideoGamePaint
             mouseDown = false;
             if (defaultPaintingEnabled)
             {
-                //updatePixelAtPosition(e);
                 activeTool.activate(e.X, e.Y);
                 activeTool.postactivate(e.X, e.Y);
             }

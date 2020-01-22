@@ -26,7 +26,7 @@ public class LineTool : Tool
                 pixelGridPanel.toolGrid.setPixel(
                     v.x,
                     v.y,
-                    PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)
+                    pixelGridPanel.drawColor
                     );
             }
         }
@@ -53,7 +53,7 @@ public class LineTool : Tool
                 pixelGridPanel.updatePixel(
                     v.x,
                     v.y,
-                    PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor)
+                    pixelGridPanel.drawColor
                     );
             }
         }

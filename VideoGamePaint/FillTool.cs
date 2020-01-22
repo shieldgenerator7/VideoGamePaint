@@ -17,7 +17,7 @@ public class FillTool : Tool
         int gx = pixelGridPanel.gridPixelX(ex);
         int gy = pixelGridPanel.gridPixelY(ey);
         RGB baseColor = pg.getPixel(gx, gy);
-        RGB toColor = PixelGridPanel.ColorToRGB(pixelGridPanel.drawColor);
+        RGB toColor = pixelGridPanel.drawColor;
         if (baseColor != toColor)
         {
             fillSparkPos = new Vector(gx, gy);

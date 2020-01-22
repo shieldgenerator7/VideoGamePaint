@@ -15,6 +15,7 @@ public struct RGB
 
     public static RGB nullRGB = new RGB(-1, -1, -1);
     public static RGB white = new RGB(255, 255, 255);
+    public static RGB black = new RGB(0, 0, 0);
 
     public override string ToString()
     {
