@@ -257,7 +257,6 @@
             this.Controls.Add(this.spltPalettes);
             this.Name = "frmPaint";
             this.Text = "Video Game Paint";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmPaint_KeyDown);
             this.pnlColors.ResumeLayout(false);
             this.pnlTools.ResumeLayout(false);
             this.spltPalettes.Panel1.ResumeLayout(false);
