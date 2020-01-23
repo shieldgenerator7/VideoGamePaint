@@ -5,7 +5,26 @@
 /// </summary>
 public abstract class Expression
 {
-    public Expression[] arguments { get; set; }
+    public Expression[] arguments = null;
+    public Expression[] Arguments
+    {
+        get => arguments;
+        set
+        {
+            if (arguments == null || arguments.Length == 0)
+            {
+                arguments = value;
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    "Expression " + this + " cannot have its argument list set twice! " +
+                    "Check to make sure you're not using the same "+this.GetType()+
+                    " in a condition list or action list more than once."
+                    );
+            }
+        }
+    }
 
     //For building
     public int index = 0;
@@ -59,7 +78,7 @@ public abstract class Expression
     public virtual float toFloat() { throw new NotImplementedException(); }
 
     //Interpret as bool
-    public virtual bool isBool{ get => false; }
+    public virtual bool isBool { get => false; }
     public virtual bool toBool() { throw new NotImplementedException(); }
 
     //Interpret as Vector

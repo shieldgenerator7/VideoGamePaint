@@ -14,7 +14,7 @@ public class PlayerInputValue : Expression
     public override bool isVector { get => true; }
     public override Vector toVector()
     {
-        Entity entity = arguments[0].toEntity();
+        Entity entity = Arguments[0].toEntity();
         return entity.inputDir;
     }
 }

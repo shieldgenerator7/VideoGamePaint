@@ -15,8 +15,8 @@ public class MoveAction : Expression
     public override bool isFunction { get => true; }
     public override void runFunction()
     {
-        Entity entity = arguments[0].toEntity();
-        Vector vector = arguments[1].toVector();
+        Entity entity = Arguments[0].toEntity();
+        Vector vector = Arguments[1].toVector();
         entity.move(vector);
     }
 }

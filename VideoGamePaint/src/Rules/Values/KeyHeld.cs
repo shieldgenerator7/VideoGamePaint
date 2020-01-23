@@ -22,7 +22,7 @@ public class KeyHeld:Expression
     public override bool isBool { get => true; }
     public override bool toBool()
     {
-        Entity entity = arguments[0].toEntity();
+        Entity entity = Arguments[0].toEntity();
         return entity.inputs.Contains(key);
     }
 }

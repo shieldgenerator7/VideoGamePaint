@@ -89,7 +89,7 @@ public class Rule
             args[c] = expr;
             nextIndex = expr.nextIndex;
         }
-        action.arguments = args;
+        action.Arguments = args;
         action.nextIndex = nextIndex;
         return action;
     }
