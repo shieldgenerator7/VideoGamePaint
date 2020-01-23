@@ -6,18 +6,19 @@ using System.Windows.Forms;
 public class Player : Entity
 {
     public Color color = Color.Purple;
-
-    MoveAction moveAction;
-    EntityValue entityValue;
-    PlayerInputValue playerInputValue;
+    
+    Rule movementRule;
 
     public Player(PixelGrid pg) : base(pg)
     {
-        moveAction = new MoveAction();
-        entityValue = new EntityValue(this);
-        playerInputValue = new PlayerInputValue();
-        moveAction.arguments = new Expression[2] { entityValue, playerInputValue };
-        playerInputValue.arguments = new Expression[1] { entityValue };
+        movementRule = new Rule(
+            new Expression[4] {
+                new MoveAction(),
+                new EntityValue(this),
+                new PlayerInputValue(),
+                new EntityValue(this)
+            }
+            );
     }
 
     public void applyGravity()
@@ -47,6 +48,6 @@ public class Player : Entity
         {
             inputDir.x += 1;
         }
-        moveAction.runFunction();
+        movementRule.check();
     }
 }

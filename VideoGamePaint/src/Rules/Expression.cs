@@ -7,6 +7,10 @@ public abstract class Expression
 {
     public Expression[] arguments { get; set; }
 
+    //For building
+    public int index = 0;
+    public int nextIndex = 0;
+
     public Expression()
     {
         if (!isFunction
@@ -60,4 +64,7 @@ public abstract class Expression
     //Interpret as Entity
     public virtual bool isEntity { get => false; }
     public virtual Entity toEntity() { throw new NotImplementedException(); }
+
+    //Operator Overloads
+    public static implicit operator bool(Expression a) => a != null;
 }
