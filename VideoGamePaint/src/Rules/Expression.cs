@@ -69,6 +69,31 @@ public abstract class Expression
     public virtual bool isFunction { get => false; }
     public virtual void runFunction() { throw new NotImplementedException(); }
 
+    public bool isType(Type type)
+    {
+        if (type == typeof(int))
+        {
+            return isInteger;
+        }
+        else if (type == typeof(float))
+        {
+            return isFloat;
+        }
+        else if (type == typeof(bool))
+        {
+            return isBool;
+        }
+        else if (type == typeof(Vector))
+        {
+            return isVector;
+        }
+        else if (type == typeof(Entity))
+        {
+            return isEntity;
+        }
+        throw new ArgumentException("Unsupported type: "+type);
+    }
+
     //Interpret as int
     public virtual bool isInteger { get => false; }
     public virtual int toInteger() { throw new NotImplementedException(); }

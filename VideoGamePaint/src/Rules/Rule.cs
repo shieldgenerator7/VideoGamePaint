@@ -78,20 +78,33 @@ public class Rule
     /// <returns>The next index after it</returns>
     private Expression buildAt(Expression[] exprListRaw, int index)
     {
-        Expression action = exprListRaw[index];
-        action.index = index;
-        int paramCount = action.parameterCount;
+        Expression expression = exprListRaw[index];
+        expression.index = index;
+        int paramCount = expression.parameterCount;
+        Type[] paramTypes = expression.getParameterTypeList();
         Expression[] args = new Expression[paramCount];
         int nextIndex = index + 1;
         for (int c = 0; c < paramCount; c++)
         {
             Expression expr = buildAt(exprListRaw, nextIndex);
+            if (!expr.isType(paramTypes[c]))
+            {
+                throw new ArgumentException(
+                       "Rule " + this + ": " +
+                       "Expression " + expression +
+                       " cannot accept parameter " + expr +
+                       " as its parameter [" + c + "]! " +
+                       "Expression " + expression +
+                       " requires a " + paramTypes[c] +
+                       " and " + expr + " does not return it."
+                       );
+            }
             args[c] = expr;
             nextIndex = expr.nextIndex;
         }
-        action.Arguments = args;
-        action.nextIndex = nextIndex;
-        return action;
+        expression.Arguments = args;
+        expression.nextIndex = nextIndex;
+        return expression;
     }
 
     public void check()
