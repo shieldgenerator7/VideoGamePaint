@@ -66,6 +66,8 @@ public static class RuleBuilder
             //Operators
             case "not":
                 return new NotOperator();
+            case "multiply":
+                return new MultiplyOperator();
             //Actions
             case "move":
                 return new MoveAction();

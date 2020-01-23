@@ -23,6 +23,14 @@ public class ConstantValue:Expression
         {
             this.value = Vector.right;
         }
+        else
+        {
+            int outInt;
+            if (Int32.TryParse(valueString, out outInt))
+            {
+                this.value = outInt;
+            }
+        }
     }
 
     public ConstantValue(object value)
