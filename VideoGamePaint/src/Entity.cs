@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 public class Entity
 {
+    public List<Keys> inputs;
+    public List<Rule> rules = new List<Rule>();
+
     public Vector pos = new Vector(0, 0);
     private Vector moveDir = new Vector(0, 0);//how much it moves each frame
 
@@ -12,6 +17,14 @@ public class Entity
     public Entity(PixelGrid pg)
     {
         this.collisionGrid = pg;
+    }
+
+    public void processRules()
+    {
+        foreach(Rule rule in rules)
+        {
+            rule.check();
+        }
     }
 
     /// <summary>

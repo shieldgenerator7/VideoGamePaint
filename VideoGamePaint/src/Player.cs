@@ -6,21 +6,66 @@ using System.Windows.Forms;
 public class Player : Entity
 {
     public Color color = Color.Purple;
-    
-    Rule movementRule;
 
     public Player(PixelGrid pg) : base(pg)
     {
-        movementRule = new Rule(
-            new Expression[4] {
+        //Up arrow rule
+        rules.Add(new Rule(
+            new Expression[2]
+            {
+                new KeyHeld(Keys.W),
+                new EntityValue(this)
+            },
+            new Expression[3]
+            {
                 new MoveAction(),
                 new EntityValue(this),
-                new PlayerInputValue(),
-                new EntityValue(this)
+                new ConstantValue(Vector.up * 2)
             }
-            );
+            ));
+        //Down arrow rule
+        rules.Add(new Rule(
+            new Expression[2]
+            {
+                new KeyHeld(Keys.S),
+                new EntityValue(this)
+            },
+            new Expression[3]
+            {
+                new MoveAction(),
+                new EntityValue(this),
+                new ConstantValue(Vector.down)
+            }
+            ));
+        //Left arrow rule
+        rules.Add(new Rule(
+            new Expression[2]
+            {
+                new KeyHeld(Keys.A),
+                new EntityValue(this)
+            },
+            new Expression[3]
+            {
+                new MoveAction(),
+                new EntityValue(this),
+                new ConstantValue(Vector.left)
+            }
+            ));
+        //Right arrow rule
+        rules.Add(new Rule(
+            new Expression[2]
+            {
+                new KeyHeld(Keys.D),
+                new EntityValue(this)
+            },
+            new Expression[3]
+            {
+                new MoveAction(),
+                new EntityValue(this),
+                new ConstantValue(Vector.right)
+            }
+            ));
     }
-
     public void applyGravity()
     {
         if (canMove(Vector.down))
@@ -29,25 +74,4 @@ public class Player : Entity
         }
     }
 
-    public void applyControls(List<Keys> keys)
-    {
-        inputDir = Vector.zero;
-        if (keys.Contains(Keys.W))
-        {
-            inputDir.y += -2;
-        }
-        if (keys.Contains(Keys.A))
-        {
-            inputDir.x += -1;
-        }
-        if (keys.Contains(Keys.S))
-        {
-            inputDir.y += 1;
-        }
-        if (keys.Contains(Keys.D))
-        {
-            inputDir.x += 1;
-        }
-        movementRule.check();
-    }
 }

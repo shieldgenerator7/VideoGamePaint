@@ -102,7 +102,8 @@ namespace VideoGamePaint
         {
             pnlPaint.entityGrid.clear(RGB.nullRGB);
             player.applyGravity();
-            player.applyControls(pnlPaint.pressedKeys);
+            player.inputs = pnlPaint.pressedKeys;
+            player.processRules();
             player.updateMovement();
             pnlPaint.entityGrid.setPixel(
                 player.pos.x,
