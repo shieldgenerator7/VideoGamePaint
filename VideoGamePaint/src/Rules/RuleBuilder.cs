@@ -13,7 +13,10 @@ public static class RuleBuilder
     {
         string[] split = ruleString.Split(';');
         //Conditions
-        string[] conditionStrings = split[0].Split(' ');
+        string[] conditionStrings = split[0].Split(
+            new char[] { ' ', ',' },
+            StringSplitOptions.RemoveEmptyEntries
+            );
         List<Expression> conditions = new List<Expression>();
         for (int i = 0; i < conditionStrings.Length; i++)
         {
@@ -24,7 +27,10 @@ public static class RuleBuilder
             }
         }
         //Actions
-        string[] actionStrings = split[1].Split(' ');
+        string[] actionStrings = split[1].Split(
+            new char[] { ' ', ',' },
+            StringSplitOptions.RemoveEmptyEntries
+            );
         List<Expression> actions = new List<Expression>();
         for (int i = 0; i < actionStrings.Length; i++)
         {
@@ -43,14 +49,14 @@ public static class RuleBuilder
         string expr = exprs[index].Trim().ToLower();
         if (exprs[index].Trim() == "")
         {
-            return null;
+            throw new ArgumentException("Expression string at the given index was the empty string!");
         }
         //Switch expression string and make a new expression
         switch (expr)
         {
             //Values
             case "constant":
-                return new ConstantValue(getNextParameter(exprs,index,1));
+                return new ConstantValue(getNextParameter(exprs, index, 1));
             case "entity":
                 return new EntityValue(getNextParameter(exprs, index, 1));
             case "grounded":
@@ -86,6 +92,10 @@ public static class RuleBuilder
             if (exprNext != "")
             {
                 curParamNumber++;
+            }
+            else
+            {
+                throw new ArgumentException("Expression string at the given index was the empty string!");
             }
         }
         return exprNext;
