@@ -5,9 +5,14 @@ public class KeyHeld:Expression
 {
     Keys key;
 
-    public KeyHeld(Keys key)
+    public KeyHeld(Keys key):base()
     {
         this.key = key;
+    }
+
+    public KeyHeld(string keyString)
+        :this((Keys)Enum.Parse(typeof(Keys), keyString))
+    {
     }
 
     public override int parameterCount { get => 1; }

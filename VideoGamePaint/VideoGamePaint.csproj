@@ -62,6 +62,7 @@
     <Compile Include="src\Rules\Actions\MoveAction.cs" />
     <Compile Include="src\Rules\Expression.cs" />
     <Compile Include="src\Rules\Rule.cs" />
+    <Compile Include="src\Rules\RuleBuilder.cs" />
     <Compile Include="src\Rules\Values\ConstantValue.cs" />
     <Compile Include="src\Rules\Values\EntityValue.cs" />
     <Compile Include="src\Rules\Values\GroundedValue.cs" />

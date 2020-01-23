@@ -4,7 +4,28 @@ public class ConstantValue:Expression
 {
     object value = 0;
 
-	public ConstantValue(object value)
+    public ConstantValue(string valueString)
+    {
+        valueString = valueString.Trim().ToLower();
+        if (valueString == "vectorup")
+        {
+            this.value = Vector.up;
+        }
+        else if (valueString == "vectordown")
+        {
+            this.value = Vector.down;
+        }
+        else if (valueString == "vectorleft")
+        {
+            this.value = Vector.left;
+        }
+        else if (valueString == "vectorright")
+        {
+            this.value = Vector.right;
+        }
+    }
+
+    public ConstantValue(object value)
 	{
         this.value = value;
 	}
