@@ -5,83 +5,39 @@ using System.Windows.Forms;
 
 public class Player : Entity
 {
+    public static Player instance;
     public Color color = Color.Purple;
 
     public Player(PixelGrid pg) : base(pg)
     {
-        EntityValue entityValue = new EntityValue(this);
+        if (instance == null)
+        {
+            instance = this;
+        }
         //Up arrow rule
-        rules.Add(new Rule(
-            new Expression[4]
-            {
-                new KeyHeld(Keys.W),
-                entityValue,
-                new GroundedValue(),
-                entityValue
-            },
-            new Expression[3]
-            {
-                new MoveAction(),
-                entityValue,
-                new ConstantValue(Vector.up * 2)
-            }
+        rules.Add(RuleBuilder.buildRule(
+            "Key W Entity Player, Grounded Entity Player;" +
+            "Move Entity Player Constant VectorUp"
             ));
         //Down arrow rule
-        rules.Add(new Rule(
-            new Expression[2]
-            {
-                new KeyHeld(Keys.S),
-                entityValue
-            },
-            new Expression[3]
-            {
-                new MoveAction(),
-                entityValue,
-                new ConstantValue(Vector.down)
-            }
+        rules.Add(RuleBuilder.buildRule(
+            "Key S Entity Player;" +
+            "Move Entity Player Constant VectorDown"
             ));
         //Left arrow rule
-        rules.Add(new Rule(
-            new Expression[2]
-            {
-                new KeyHeld(Keys.A),
-                entityValue
-            },
-            new Expression[3]
-            {
-                new MoveAction(),
-                entityValue,
-                new ConstantValue(Vector.left)
-            }
+        rules.Add(RuleBuilder.buildRule(
+            "Key A Entity Player;" +
+            "Move Entity Player Constant VectorLeft"
             ));
         //Right arrow rule
-        rules.Add(new Rule(
-            new Expression[2]
-            {
-                new KeyHeld(Keys.D),
-                entityValue
-            },
-            new Expression[3]
-            {
-                new MoveAction(),
-                entityValue,
-                new ConstantValue(Vector.right)
-            }
+        rules.Add(RuleBuilder.buildRule(
+            "Key D Entity Player;" +
+            "Move Entity Player Constant VectorRight"
             ));
         //Gravity Rule
-        rules.Add(new Rule(
-            new Expression[3]
-            {
-                new NotOperator(),
-                new GroundedValue(),
-                entityValue
-            },
-            new Expression[3]
-            {
-                new MoveAction(),
-                entityValue,
-                new ConstantValue(Vector.down)
-            }
+        rules.Add(RuleBuilder.buildRule(
+            "Not Grounded Entity Player;" +
+            "Move Entity Player Constant VectorDown"
             ));
     }
 
