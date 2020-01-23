@@ -17,7 +17,7 @@ public class Player : Entity
         //Up arrow rule
         rules.Add(RuleBuilder.buildRule(
             "Key W Entity Player, Grounded Entity Player;" +
-            "Move Entity Player Multiply Constant VectorUp Constant 3"
+            "Move Entity Player Multiply Constant 3 Constant VectorUp"
             ));
         //Down arrow rule
         rules.Add(RuleBuilder.buildRule(
