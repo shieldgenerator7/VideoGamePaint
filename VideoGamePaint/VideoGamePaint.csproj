@@ -51,6 +51,7 @@
     </Compile>
     <Compile Include="Form1.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Entity.cs" />
     <Compile Include="src\PixelGrid.cs" />
     <Compile Include="src\PixelGridPanel.cs">
       <SubType>Component</SubType>

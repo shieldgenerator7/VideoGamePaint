@@ -28,6 +28,22 @@ public struct Vector
     {
         get => new Vector(0, 0);
     }
+    public static Vector up
+    {
+        get => new Vector(0, -1);
+    }
+    public static Vector down
+    {
+        get => new Vector(0, 1);
+    }
+    public static Vector left
+    {
+        get => new Vector(-1, 0);
+    }
+    public static Vector right
+    {
+        get => new Vector(1, 0);
+    }
 
     public override string ToString()
     {
