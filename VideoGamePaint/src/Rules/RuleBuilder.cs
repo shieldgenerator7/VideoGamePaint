@@ -75,7 +75,14 @@ public static class RuleBuilder
             case "move":
                 return new MoveAction();
         }
-        return null;
+        //Constant claiming
+        Expression claimedExpression = null;
+        claimedExpression = EntityValue.claimExpressionString(expr);
+        if (!claimedExpression)
+        {
+            claimedExpression = ConstantValue.claimExpressionString(expr);
+        }
+        return claimedExpression;
     }
 
     static string getNextParameter(string[] exprs, int index, int paramNumber)

@@ -1,42 +1,48 @@
 ﻿using System;
 
-public class ConstantValue:Expression
+public class ConstantValue : Expression
 {
     object value = 0;
 
     public ConstantValue(string valueString)
     {
+        this.value = getObjectFromString(valueString);
+    }
+
+    public ConstantValue(object value)
+    {
+        this.value = value;
+    }
+
+    private static object getObjectFromString(string valueString)
+    {
         valueString = valueString.Trim().ToLower();
         if (valueString == "vectorup")
         {
-            this.value = Vector.up;
+            return Vector.up;
         }
         else if (valueString == "vectordown")
         {
-            this.value = Vector.down;
+            return Vector.down;
         }
         else if (valueString == "vectorleft")
         {
-            this.value = Vector.left;
+            return Vector.left;
         }
         else if (valueString == "vectorright")
         {
-            this.value = Vector.right;
+            return Vector.right;
         }
         else
         {
             int outInt;
             if (Int32.TryParse(valueString, out outInt))
             {
-                this.value = outInt;
+                return outInt;
             }
         }
+        return null;
     }
-
-    public ConstantValue(object value)
-	{
-        this.value = value;
-	}
 
     public override bool isInteger { get => value is int; }
     public override int toInteger()
@@ -50,7 +56,7 @@ public class ConstantValue:Expression
         return (float)value;
     }
 
-    public override bool isBool{ get => value is bool; }
+    public override bool isBool { get => value is bool; }
     public override bool toBool()
     {
         return (bool)value;
@@ -60,5 +66,16 @@ public class ConstantValue:Expression
     public override Vector toVector()
     {
         return (Vector)value;
+    }
+
+    public static Expression claimExpressionString(string exprStr)
+    {
+        exprStr = exprStr.ToLower();
+        object strObj = getObjectFromString(exprStr);
+        if (strObj != null)
+        {
+            return new ConstantValue(strObj);
+        }
+        return null;
     }
 }

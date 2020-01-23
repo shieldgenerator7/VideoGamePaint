@@ -31,4 +31,14 @@ public class EntityValue:Expression
     {
         return this.entity;
     }
+
+    public static Expression claimExpressionString(string exprStr)
+    {
+        exprStr = exprStr.ToLower();
+        if (exprStr == "player")
+        {
+            return new EntityValue(exprStr);
+        }
+        return null;
+    }
 }
