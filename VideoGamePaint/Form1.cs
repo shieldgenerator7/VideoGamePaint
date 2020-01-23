@@ -101,7 +101,6 @@ namespace VideoGamePaint
         private void tmrGame_Tick(object sender, EventArgs e)
         {
             pnlPaint.entityGrid.clear(RGB.nullRGB);
-            player.applyGravity();
             player.inputs = pnlPaint.pressedKeys;
             player.processRules();
             player.updateMovement();

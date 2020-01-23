@@ -9,17 +9,20 @@ public class Player : Entity
 
     public Player(PixelGrid pg) : base(pg)
     {
+        EntityValue entityValue = new EntityValue(this);
         //Up arrow rule
         rules.Add(new Rule(
-            new Expression[2]
+            new Expression[4]
             {
                 new KeyHeld(Keys.W),
-                new EntityValue(this)
+                entityValue,
+                new GroundedValue(),
+                entityValue
             },
             new Expression[3]
             {
                 new MoveAction(),
-                new EntityValue(this),
+                entityValue,
                 new ConstantValue(Vector.up * 2)
             }
             ));
@@ -28,12 +31,12 @@ public class Player : Entity
             new Expression[2]
             {
                 new KeyHeld(Keys.S),
-                new EntityValue(this)
+                entityValue
             },
             new Expression[3]
             {
                 new MoveAction(),
-                new EntityValue(this),
+                entityValue,
                 new ConstantValue(Vector.down)
             }
             ));
@@ -42,12 +45,12 @@ public class Player : Entity
             new Expression[2]
             {
                 new KeyHeld(Keys.A),
-                new EntityValue(this)
+                entityValue
             },
             new Expression[3]
             {
                 new MoveAction(),
-                new EntityValue(this),
+                entityValue,
                 new ConstantValue(Vector.left)
             }
             ));
@@ -56,22 +59,30 @@ public class Player : Entity
             new Expression[2]
             {
                 new KeyHeld(Keys.D),
-                new EntityValue(this)
+                entityValue
             },
             new Expression[3]
             {
                 new MoveAction(),
-                new EntityValue(this),
+                entityValue,
                 new ConstantValue(Vector.right)
             }
             ));
-    }
-    public void applyGravity()
-    {
-        if (canMove(Vector.down))
-        {
-            move(Vector.down);
-        }
+        //Gravity Rule
+        rules.Add(new Rule(
+            new Expression[3]
+            {
+                new NotOperator(),
+                new GroundedValue(),
+                entityValue
+            },
+            new Expression[3]
+            {
+                new MoveAction(),
+                entityValue,
+                new ConstantValue(Vector.down)
+            }
+            ));
     }
 
 }
