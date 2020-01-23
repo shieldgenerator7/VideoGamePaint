@@ -16,6 +16,7 @@ public abstract class Expression
         if (!isFunction
             && !isInteger
             && !isFloat
+            && !isBool
             && !isVector
             && !isEntity
             )
@@ -55,7 +56,11 @@ public abstract class Expression
 
     //Interpret as float
     public virtual bool isFloat { get => false; }
-    public virtual int toFloat() { throw new NotImplementedException(); }
+    public virtual float toFloat() { throw new NotImplementedException(); }
+
+    //Interpret as bool
+    public virtual bool isBool{ get => false; }
+    public virtual bool toBool() { throw new NotImplementedException(); }
 
     //Interpret as Vector
     public virtual bool isVector { get => false; }
