@@ -5,6 +5,8 @@
 /// </summary>
 public abstract class Expression
 {
+    public Expression[] arguments { get; set; }
+
     public Expression()
     {
         if (!isFunction
@@ -41,7 +43,7 @@ public abstract class Expression
 
     //Process as function
     public virtual bool isFunction { get => false; }
-    public virtual void runFunction(Expression[] parameters) { throw new NotImplementedException(); }
+    public virtual void runFunction() { throw new NotImplementedException(); }
 
     //Interpret as int
     public virtual bool isInteger { get => false; }
@@ -53,7 +55,7 @@ public abstract class Expression
 
     //Interpret as Vector
     public virtual bool isVector { get => false; }
-    public virtual Vector toVector(Expression[] parameters) { throw new NotImplementedException(); }
+    public virtual Vector toVector() { throw new NotImplementedException(); }
 
     //Interpret as Entity
     public virtual bool isEntity { get => false; }

@@ -13,10 +13,10 @@ public class MoveAction : Expression
     }
 
     public override bool isFunction { get => true; }
-    public override void runFunction(Expression[] parameters)
+    public override void runFunction()
     {
-        Entity entity = parameters[0].toEntity();
-        Vector vector = parameters[1].toVector(new Expression[] { parameters[0] });
+        Entity entity = arguments[0].toEntity();
+        Vector vector = arguments[1].toVector();
         entity.move(vector);
     }
 }

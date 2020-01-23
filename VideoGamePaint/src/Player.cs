@@ -16,6 +16,8 @@ public class Player : Entity
         moveAction = new MoveAction();
         entityValue = new EntityValue(this);
         playerInputValue = new PlayerInputValue();
+        moveAction.arguments = new Expression[2] { entityValue, playerInputValue };
+        playerInputValue.arguments = new Expression[1] { entityValue };
     }
 
     public void applyGravity()
@@ -45,6 +47,6 @@ public class Player : Entity
         {
             inputDir.x += 1;
         }
-        moveAction.runFunction(new Expression[2] { entityValue, playerInputValue });
+        moveAction.runFunction();
     }
 }

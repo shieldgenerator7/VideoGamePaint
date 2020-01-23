@@ -12,9 +12,9 @@ public class PlayerInputValue : Expression
     }
 
     public override bool isVector { get => true; }
-    public override Vector toVector(Expression[] parameters)
+    public override Vector toVector()
     {
-        Entity entity = parameters[0].toEntity();
+        Entity entity = arguments[0].toEntity();
         return entity.inputDir;
     }
 }
