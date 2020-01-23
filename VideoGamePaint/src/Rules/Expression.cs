@@ -19,7 +19,7 @@ public abstract class Expression
             {
                 throw new InvalidOperationException(
                     "Expression " + this + " cannot have its argument list set twice! " +
-                    "Check to make sure you're not using the same "+this.GetType()+
+                    "Check to make sure you're not using the same " + this.GetType() +
                     " in a condition list or action list more than once."
                     );
             }
@@ -46,23 +46,97 @@ public abstract class Expression
 
     //Parameters
     public virtual int parameterCount { get => 0; }
-    public Type[] getParameterTypeList()
+    private Type[][] parameterTypeList;
+    protected Type[][] getParameterTypeList()
     {
-        Type[] types = _getParameterTypeList();
-        if (types.Length != parameterCount)
+        if (parameterTypeList == null)
         {
-            throw new InvalidOperationException(
-                "Expression subtype " + this.GetType()
-                + " gives a list of " + types.Length
-                + " parameter types, but says it requires " + parameterCount + "!"
-                );
+            parameterTypeList = new Type[signatureCount][];
+            if (signatureCount == 1)
+            {
+                Type[] typeList = _getParameterTypeList();
+                parameterTypeList[0] = typeList;
+                if (typeList.Length != parameterCount)
+                {
+                    throw new InvalidOperationException(
+                        "Expression subtype " + this.GetType()
+                        + " gives a list of " + typeList.Length
+                        + " parameter types, but says it requires " + parameterCount + "!"
+                        );
+                }
+            }
+            else
+            {
+                for (int i = 0; i < signatureCount; i++)
+                {
+                    Type[] typeList = _getParameterTypeList(i);
+                    parameterTypeList[i] = typeList;
+                    if (typeList.Length != parameterCount)
+                    {
+                        throw new InvalidOperationException(
+                            "Expression subtype " + this.GetType()
+                            + " gives a list of " + typeList.Length
+                            + " parameter types, but says it requires " + parameterCount + "!"
+                            );
+                    }
+                }
+            }
         }
-        return types;
+        return parameterTypeList;
     }
     protected virtual Type[] _getParameterTypeList()
     {
         //Return empty list for no parameters
         return new Type[0];
+    }
+
+    protected virtual int signatureCount { get => 1; }
+    /// <summary>
+    /// For those expressions that have multiple signatures
+    /// </summary>
+    /// <param name="signatureIndex"></param>
+    /// <returns></returns>
+    protected virtual Type[] _getParameterTypeList(int signatureIndex)
+    {
+        return new Type[0];
+    }
+
+    /// <summary>
+    /// Throws an exception if the argIndex does not match any param list signature
+    /// </summary>
+    /// <param name="expr"></param>
+    /// <param name="argIndex"></param>
+    public void checkArgument(Expression expr, int argIndex)
+    {
+        if (parameterTypeList == null)
+        {
+            getParameterTypeList();
+        }
+        bool argValid = false;
+        foreach (Type[] typeList in parameterTypeList)
+        {
+            if (expr.isType(typeList[argIndex]))
+            {
+                argValid = true;
+                break;
+            }
+        }
+        if (!argValid)
+        {
+            string validTypeString = "";
+            foreach (Type[] typeList in parameterTypeList)
+            {
+                validTypeString += typeList[argIndex] + ", ";
+            }
+            throw new ArgumentException(
+                   "Expression " + this +
+                   " cannot accept parameter " + expr +
+                   " as its parameter [" + argIndex + "]! " +
+                   "Expression " + this +
+                   " requires one of " + validTypeString +
+                   " and " + expr + " does not return it."
+                   );
+        }
     }
 
     //Process as function
@@ -91,7 +165,7 @@ public abstract class Expression
         {
             return isEntity;
         }
-        throw new ArgumentException("Unsupported type: "+type);
+        throw new ArgumentException("Unsupported type: " + type);
     }
 
     //Interpret as int

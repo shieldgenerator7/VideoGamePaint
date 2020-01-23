@@ -11,7 +11,10 @@ public static class RuleBuilder
     /// <returns></returns>
     public static Rule buildRule(string ruleString)
     {
-        string[] split = ruleString.Split(';');
+        string[] split = ruleString.Split(
+            new char[] { ';' },
+            StringSplitOptions.RemoveEmptyEntries
+            );
         //Conditions
         string[] conditionStrings = split[0].Split(
             new char[] { ' ', ',' },
