@@ -16,28 +16,28 @@ public class Player : Entity
         }
         //Up arrow rule
         rules.Add(RuleBuilder.buildRule(
-            "Key W Entity Player, Grounded Entity Player;" +
-            "Move Entity Player Multiply Constant 3 Constant VectorUp"
+            "Key W Player, Grounded Player;" +
+            "Move Player Multiply 3 VectorUp"
             ));
         //Down arrow rule
         rules.Add(RuleBuilder.buildRule(
-            "Key S Entity Player;" +
-            "Move Entity Player Constant VectorDown"
+            "Key S Player;" +
+            "Move Player VectorDown"
             ));
         //Left arrow rule
         rules.Add(RuleBuilder.buildRule(
-            "Key A Entity Player;" +
-            "Move Entity Player Constant VectorLeft"
+            "Key A Player;" +
+            "Move Player VectorLeft"
             ));
         //Right arrow rule
         rules.Add(RuleBuilder.buildRule(
-            "Key D Entity Player;" +
-            "Move Entity Player Constant VectorRight"
+            "Key D Player;" +
+            "Move Player VectorRight"
             ));
         //Gravity Rule
         rules.Add(RuleBuilder.buildRule(
-            "Not Grounded Entity Player;" +
-            "Move Entity Player Constant VectorDown"
+            "Not Grounded Player;" +
+            "Move Player VectorDown"
             ));
     }
 
