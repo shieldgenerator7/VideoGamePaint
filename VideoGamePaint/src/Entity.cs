@@ -7,6 +7,8 @@ public class Entity
 
     private PixelGrid collisionGrid;
 
+    public Vector inputDir = Vector.zero;
+
     public Entity(PixelGrid pg)
     {
         this.collisionGrid = pg;

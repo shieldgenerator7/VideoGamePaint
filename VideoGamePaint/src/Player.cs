@@ -7,8 +7,15 @@ public class Player : Entity
 {
     public Color color = Color.Purple;
 
+    MoveAction moveAction;
+    EntityValue entityValue;
+    PlayerInputValue playerInputValue;
+
     public Player(PixelGrid pg) : base(pg)
     {
+        moveAction = new MoveAction();
+        entityValue = new EntityValue(this);
+        playerInputValue = new PlayerInputValue();
     }
 
     public void applyGravity()
@@ -21,23 +28,23 @@ public class Player : Entity
 
     public void applyControls(List<Keys> keys)
     {
-        Vector moveDir = Vector.zero;
+        inputDir = Vector.zero;
         if (keys.Contains(Keys.W))
         {
-            moveDir.y += -2;
+            inputDir.y += -2;
         }
         if (keys.Contains(Keys.A))
         {
-            moveDir.x += -1;
+            inputDir.x += -1;
         }
         if (keys.Contains(Keys.S))
         {
-            moveDir.y += 1;
+            inputDir.y += 1;
         }
         if (keys.Contains(Keys.D))
         {
-            moveDir.x += 1;
+            inputDir.x += 1;
         }
-        move(moveDir);
+        moveAction.runFunction(new Expression[2] { entityValue, playerInputValue });
     }
 }

@@ -59,6 +59,10 @@
     <Compile Include="src\Player.cs" />
     <Compile Include="src\Program.cs" />
     <Compile Include="src\RGB.cs" />
+    <Compile Include="src\Rules\Actions\MoveAction.cs" />
+    <Compile Include="src\Rules\Expression.cs" />
+    <Compile Include="src\Rules\Values\EntityValue.cs" />
+    <Compile Include="src\Rules\Values\PlayerInputValue.cs" />
     <Compile Include="src\Tools\FillTool.cs" />
     <Compile Include="src\Tools\HandTool.cs" />
     <Compile Include="src\Tools\LightBulbFillTool.cs" />
