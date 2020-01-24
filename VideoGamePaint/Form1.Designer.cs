@@ -47,9 +47,9 @@
             this.tmrGame = new System.Windows.Forms.Timer(this.components);
             this.txtCode = new System.Windows.Forms.TextBox();
             this.btnCodeGo = new System.Windows.Forms.Button();
+            this.spltCode = new System.Windows.Forms.SplitContainer();
             this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
-            this.spltCode = new System.Windows.Forms.SplitContainer();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltPalettes)).BeginInit();
@@ -76,7 +76,7 @@
             this.pnlColors.Location = new System.Drawing.Point(3, 3);
             this.pnlColors.Name = "pnlColors";
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
-            this.pnlColors.Size = new System.Drawing.Size(674, 31);
+            this.pnlColors.Size = new System.Drawing.Size(670, 28);
             this.pnlColors.TabIndex = 1;
             // 
             // btnColorPicker
@@ -87,7 +87,7 @@
             this.btnColorPicker.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnColorPicker.Location = new System.Drawing.Point(5, 5);
             this.btnColorPicker.Name = "btnColorPicker";
-            this.btnColorPicker.Size = new System.Drawing.Size(90, 21);
+            this.btnColorPicker.Size = new System.Drawing.Size(90, 18);
             this.btnColorPicker.TabIndex = 0;
             this.btnColorPicker.UseVisualStyleBackColor = false;
             this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
@@ -106,7 +106,7 @@
             this.pnlTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTools.Location = new System.Drawing.Point(0, 0);
             this.pnlTools.Name = "pnlTools";
-            this.pnlTools.Size = new System.Drawing.Size(100, 463);
+            this.pnlTools.Size = new System.Drawing.Size(100, 466);
             this.pnlTools.TabIndex = 2;
             // 
             // btnToolFillLightBulb
@@ -175,8 +175,8 @@
             // spltPalettes.Panel2
             // 
             this.spltPalettes.Panel2.Controls.Add(this.tabPalettes);
-            this.spltPalettes.Size = new System.Drawing.Size(696, 548);
-            this.spltPalettes.SplitterDistance = 463;
+            this.spltPalettes.Size = new System.Drawing.Size(692, 548);
+            this.spltPalettes.SplitterDistance = 466;
             this.spltPalettes.SplitterWidth = 1;
             this.spltPalettes.TabIndex = 3;
             // 
@@ -195,7 +195,7 @@
             // spltTools.Panel2
             // 
             this.spltTools.Panel2.Controls.Add(this.pnlPaint);
-            this.spltTools.Size = new System.Drawing.Size(696, 463);
+            this.spltTools.Size = new System.Drawing.Size(692, 466);
             this.spltTools.SplitterDistance = 100;
             this.spltTools.SplitterWidth = 1;
             this.spltTools.TabIndex = 4;
@@ -208,7 +208,7 @@
             this.tabPalettes.Location = new System.Drawing.Point(0, 0);
             this.tabPalettes.Name = "tabPalettes";
             this.tabPalettes.SelectedIndex = 0;
-            this.tabPalettes.Size = new System.Drawing.Size(696, 84);
+            this.tabPalettes.Size = new System.Drawing.Size(692, 81);
             this.tabPalettes.TabIndex = 1;
             this.tabPalettes.SelectedIndexChanged += new System.EventHandler(this.tabPalettes_SelectedIndexChanged);
             // 
@@ -218,7 +218,7 @@
             this.tabColors.Location = new System.Drawing.Point(8, 39);
             this.tabColors.Name = "tabColors";
             this.tabColors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColors.Size = new System.Drawing.Size(680, 37);
+            this.tabColors.Size = new System.Drawing.Size(676, 34);
             this.tabColors.TabIndex = 0;
             this.tabColors.Text = "Colors";
             this.tabColors.UseVisualStyleBackColor = true;
@@ -228,7 +228,7 @@
             this.tabColliders.Location = new System.Drawing.Point(8, 39);
             this.tabColliders.Name = "tabColliders";
             this.tabColliders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColliders.Size = new System.Drawing.Size(680, 37);
+            this.tabColliders.Size = new System.Drawing.Size(676, 34);
             this.tabColliders.TabIndex = 1;
             this.tabColliders.Text = "Colliders";
             this.tabColliders.UseVisualStyleBackColor = true;
@@ -241,7 +241,21 @@
             // 
             // txtCode
             // 
-            this.txtCode.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.txtCode.AcceptsTab = true;
+            this.txtCode.AutoCompleteCustomSource.AddRange(new string[] {
+            "Constant",
+            "Entity",
+            "Grounded",
+            "Key",
+            "Not",
+            "Multiply",
+            "Move",
+            "Player",
+            "VectorUp",
+            "VectorDown",
+            "VectorLeft",
+            "VectorRight"});
+            this.txtCode.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.txtCode.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.txtCode.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCode.Location = new System.Drawing.Point(0, 65);
@@ -257,29 +271,11 @@
             this.btnCodeGo.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCodeGo.Location = new System.Drawing.Point(0, 0);
             this.btnCodeGo.Name = "btnCodeGo";
-            this.btnCodeGo.Size = new System.Drawing.Size(96, 56);
+            this.btnCodeGo.Size = new System.Drawing.Size(100, 56);
             this.btnCodeGo.TabIndex = 1;
             this.btnCodeGo.Text = "Go";
             this.btnCodeGo.UseVisualStyleBackColor = true;
             this.btnCodeGo.Click += new System.EventHandler(this.btnCodeGo_Click);
-            // 
-            // pnlPaint
-            // 
-            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
-            this.pnlPaint.Name = "pnlPaint";
-            this.pnlPaint.PixelSize = 8F;
-            this.pnlPaint.Size = new System.Drawing.Size(595, 463);
-            this.pnlPaint.TabIndex = 0;
-            // 
-            // pnlColorOptions
-            // 
-            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
-            this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.PixelSize = 8F;
-            this.pnlColorOptions.Size = new System.Drawing.Size(400, 21);
-            this.pnlColorOptions.TabIndex = 1;
             // 
             // spltCode
             // 
@@ -298,10 +294,28 @@
             this.spltCode.Panel2.Controls.Add(this.btnCodeGo);
             this.spltCode.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
             this.spltCode.Size = new System.Drawing.Size(800, 548);
-            this.spltCode.SplitterDistance = 696;
+            this.spltCode.SplitterDistance = 692;
             this.spltCode.SplitterWidth = 8;
             this.spltCode.TabIndex = 4;
             this.spltCode.Resize += new System.EventHandler(this.spltCode_Resize);
+            // 
+            // pnlPaint
+            // 
+            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
+            this.pnlPaint.Name = "pnlPaint";
+            this.pnlPaint.PixelSize = 8F;
+            this.pnlPaint.Size = new System.Drawing.Size(591, 466);
+            this.pnlPaint.TabIndex = 0;
+            // 
+            // pnlColorOptions
+            // 
+            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
+            this.pnlColorOptions.Name = "pnlColorOptions";
+            this.pnlColorOptions.PixelSize = 8F;
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 18);
+            this.pnlColorOptions.TabIndex = 1;
             // 
             // frmPaint
             // 
