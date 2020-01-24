@@ -124,10 +124,10 @@
     <value>182, 17</value>
   </metadata>
   <data name="txtCode.Text" xml:space="preserve">
-    <value>Key W Player, Grounded Player; Move Player Multiply 3 VectorUp.
-Key S Player; Move Player VectorDown.
-Key A Player; Move Player VectorLeft.
-Key D Player; Move Player VectorRight.
-Not Grounded Player; Move Player VectorDown.</value>
+    <value>Key W Player, Grounded Player: Move Player Multiply 3 VectorUp.
+Key S Player: Move Player VectorDown.
+Key A Player: Move Player VectorLeft.
+Key D Player: Move Player VectorRight.
+Not Grounded Player: Move Player VectorDown.</value>
   </data>
 </root>

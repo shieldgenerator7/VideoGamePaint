@@ -7,10 +7,10 @@ public static class RuleBuilder
     {
         List<Rule> ruleSet = new List<Rule>();
         string[] ruleStrings = ruleSetString.Split(
-            new char[] { '.' },
+            new char[] { '.', ';' },
             StringSplitOptions.RemoveEmptyEntries
             );
-        foreach(string ruleString in ruleStrings)
+        foreach (string ruleString in ruleStrings)
         {
             string ruleStringTrim = ruleString.Trim();
             if (ruleStringTrim != "" && !ruleStringTrim.StartsWith("//"))
@@ -30,7 +30,7 @@ public static class RuleBuilder
     public static Rule buildRule(string ruleString)
     {
         string[] split = ruleString.Split(
-            new char[] { ';' },
+            new char[] { ':','=' },
             StringSplitOptions.RemoveEmptyEntries
             );
         //Conditions
