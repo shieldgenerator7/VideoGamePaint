@@ -24,6 +24,7 @@ namespace VideoGamePaint
         public frmPaint()
         {
             InitializeComponent();
+            resizeTxtCode();
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
@@ -133,6 +134,26 @@ namespace VideoGamePaint
         {
             player.rules.Clear();
             player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
+        }
+
+        private void frmPaint_Resize(object sender, EventArgs e)
+        {
+            resizeTxtCode();
+        }
+        private void spltCode_Resize(object sender, EventArgs e)
+        {
+            resizeTxtCode();
+        }
+        private void splitContainer1_Panel2_Resize(object sender, EventArgs e)
+        {
+            resizeTxtCode();
+        }
+        void resizeTxtCode()
+        {
+            txtCode.Size = new Size(
+                spltCode.Panel2.Size.Width,
+                spltCode.Panel2.Size.Height - btnCodeGo.Size.Height
+                );
         }
     }
 }
