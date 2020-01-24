@@ -33,6 +33,7 @@ namespace VideoGamePaint
             pnlPaint.activeTool = pencilTool;
             //Player
             player = new Player(pnlPaint.colliderGrid);
+            player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
@@ -126,6 +127,12 @@ namespace VideoGamePaint
                     break;
             }
             pnlPaint.Focus();
+        }
+
+        private void btnCodeGo_Click(object sender, EventArgs e)
+        {
+            player.rules.Clear();
+            player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
         }
     }
 }

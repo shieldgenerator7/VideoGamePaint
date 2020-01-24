@@ -3,6 +3,24 @@ using System.Collections.Generic;
 
 public static class RuleBuilder
 {
+    public static List<Rule> buildRuleSet(string ruleSetString)
+    {
+        List<Rule> ruleSet = new List<Rule>();
+        string[] ruleStrings = ruleSetString.Split(
+            new char[] { '.' },
+            StringSplitOptions.RemoveEmptyEntries
+            );
+        foreach(string ruleString in ruleStrings)
+        {
+            string ruleStringTrim = ruleString.Trim();
+            if (ruleStringTrim != "" && !ruleStringTrim.StartsWith("//"))
+            {
+                ruleSet.Add(buildRule(ruleStringTrim));
+            }
+        }
+        return ruleSet;
+    }
+
     /// <summary>
     /// Returns a new Rule with the conditions and actions in the string
     /// FORMAT: Expression Argument Expression Argument; Expression Argument Expression Argument.
