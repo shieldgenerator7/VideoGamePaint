@@ -27,7 +27,7 @@ public class ConstantValue : AnyTypeValue
             );
     }
 
-    private static object getObjectFromString(string valueString)
+    public static object getObjectFromString(string valueString)
     {
         valueString = valueString.Trim().ToLower();
         if (valueString == "vectorup")

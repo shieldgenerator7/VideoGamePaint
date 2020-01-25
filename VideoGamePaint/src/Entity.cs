@@ -24,7 +24,7 @@ public class Entity
     public void setVariableNames(string nameListString)
     {
         string[] names = nameListString.Trim().Split(
-            new char[] {'\n',' ',','},
+            new char[] { '\n', ' ', ',' },
             StringSplitOptions.RemoveEmptyEntries
             );
         setVariableNames(names);
@@ -33,24 +33,38 @@ public class Entity
     public void setVariableNames(string[] names)
     {
         variables = new Dictionary<string, object>();
+        int initialValueStep = 0;//0,1
+        string lastVarName = "";
         foreach (string name in names)
         {
             string nameTrim = name.Trim().ToLower();
+            if (nameTrim == "=")
+            {
+                initialValueStep = 1;
+                continue;
+            }
+            else if (initialValueStep == 1)
+            {
+                initialValueStep = 0;
+                variables[lastVarName] = ConstantValue.getObjectFromString(nameTrim);
+                continue;
+            }
             if (variables.ContainsKey(nameTrim))
             {
                 throw new ArgumentException(
                     "Variable " + name + " cannot be added twice! " +
-                    "(Same as variable "+nameTrim+") " +
+                    "(Same as variable " + nameTrim + ") " +
                     "Entity: " + this
                     );
             }
+            lastVarName = nameTrim;
             variables.Add(nameTrim, 0);
         }
     }
 
     public void processRules()
     {
-        foreach(Rule rule in rules)
+        foreach (Rule rule in rules)
         {
             rule.check();
         }

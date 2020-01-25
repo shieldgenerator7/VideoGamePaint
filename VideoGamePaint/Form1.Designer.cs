@@ -335,7 +335,7 @@
             this.txtVariables.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtVariables.Size = new System.Drawing.Size(112, 25);
             this.txtVariables.TabIndex = 0;
-            this.txtVariables.Text = "JumpHeight\r\nHealth";
+            this.txtVariables.Text = "JumpHeight = 3\r\nHealth = 1";
             // 
             // pnlPaint
             // 
