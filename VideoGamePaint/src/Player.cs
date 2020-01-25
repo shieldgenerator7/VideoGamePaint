@@ -14,7 +14,6 @@ public class Player : Entity
         {
             instance = this;
         }
-        setVariableNames(new List<string>() { "JumpHeight", "Health" });
     }
 
 }

@@ -24,7 +24,7 @@ namespace VideoGamePaint
         public frmPaint()
         {
             InitializeComponent();
-            resizeTxtCode();
+            resizeForm();
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
@@ -34,6 +34,7 @@ namespace VideoGamePaint
             pnlPaint.activeTool = pencilTool;
             //Player
             player = new Player(pnlPaint.colliderGrid);
+            player.setVariableNames(txtVariables.Text);
             player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
@@ -132,25 +133,26 @@ namespace VideoGamePaint
 
         private void btnCodeGo_Click(object sender, EventArgs e)
         {
+            player.setVariableNames(txtVariables.Text);
             player.rules.Clear();
             player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
         }
 
         private void frmPaint_Resize(object sender, EventArgs e)
         {
-            resizeTxtCode();
+            resizeForm();
         }
         private void spltCode_Resize(object sender, EventArgs e)
         {
-            resizeTxtCode();
+            resizeForm();
         }
         private void splitContainer1_Panel2_Resize(object sender, EventArgs e)
         {
-            resizeTxtCode();
+            resizeForm();
         }
-        void resizeTxtCode()
+        void resizeForm()
         {
-            txtCode.Size = new Size(
+            spltVariables.Size = new Size(
                 spltCode.Panel2.Size.Width,
                 spltCode.Panel2.Size.Height - btnCodeGo.Size.Height
                 );

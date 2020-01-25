@@ -21,7 +21,16 @@ public class Entity
         this.collisionGrid = pg;
     }
 
-    public void setVariableNames(List<string> names)
+    public void setVariableNames(string nameListString)
+    {
+        string[] names = nameListString.Trim().Split(
+            new char[] {'\n',' ',','},
+            StringSplitOptions.RemoveEmptyEntries
+            );
+        setVariableNames(names);
+    }
+
+    public void setVariableNames(string[] names)
     {
         variables = new Dictionary<string, object>();
         foreach (string name in names)
