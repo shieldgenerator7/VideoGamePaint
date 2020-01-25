@@ -17,4 +17,6 @@ public class PlayerInputValue : Expression
         Entity entity = Arguments[0].toEntity();
         return entity.inputDir;
     }
+
+    public override string TokenName => "PlayerInputValue";
 }

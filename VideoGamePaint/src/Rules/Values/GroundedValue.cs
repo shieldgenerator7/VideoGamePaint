@@ -17,4 +17,6 @@ public class GroundedValue:Expression
         Entity entity = Arguments[0].toEntity();
         return !entity.canMove(Vector.down);
     }
+
+    public override string TokenName => "Grounded";
 }

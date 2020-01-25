@@ -75,4 +75,6 @@ public class ConstantValue : AnyTypeValue
         }
         return null;
     }
+
+    public override string TokenName => "Constant";
 }

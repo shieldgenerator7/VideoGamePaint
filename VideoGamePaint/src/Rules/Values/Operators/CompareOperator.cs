@@ -72,4 +72,6 @@ public class CompareOperator : Operator
         //Unable to claim expression string, return null
         return null;
     }
+
+    public override string TokenName => "Compare";
 }

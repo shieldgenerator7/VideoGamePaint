@@ -21,4 +21,6 @@ public class VariableSetAction:Expression
         object obj = arguments[2].toValue();
         entity.variables[str] = obj;
     }
+
+    public override string TokenName => "Set";
 }

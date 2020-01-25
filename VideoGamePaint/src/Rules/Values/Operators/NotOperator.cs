@@ -17,4 +17,6 @@ public class NotOperator : Operator
         bool boolArg = Arguments[0].toBool();
         return !boolArg;
     }
+
+    public override string TokenName => "Not";
 }

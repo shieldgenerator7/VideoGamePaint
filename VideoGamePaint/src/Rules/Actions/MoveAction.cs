@@ -19,4 +19,6 @@ public class MoveAction : Expression
         Vector vector = Arguments[1].toVector();
         entity.move(vector);
     }
+
+    public override string TokenName => "Move";
 }

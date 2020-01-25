@@ -182,7 +182,8 @@ public abstract class Expression
                 || isEntity;
         }
     }
-    public virtual object toValue() {
+    public virtual object toValue()
+    {
         if (isInteger)
         {
             return toInteger();
@@ -234,6 +235,53 @@ public abstract class Expression
     public virtual bool isEntity { get => false; }
     public virtual Entity toEntity() { throw new NotImplementedException(); }
 
+    #region Meta Expression Properties and Methods
+    //
+    // The Meta Expression is used to build the rules
+    //
+
+    private enum Meta
+    {
+        NORMAL,
+        META
+    }
+    private Meta meta = Meta.NORMAL;
+    public bool isMeta { get => meta == Meta.META; }
+
+    private Expression(Meta meta)
+    {
+        this.meta = meta;
+    }
+    public Expression getMetaExpression()
+    {
+        return (Expression)this.GetType()
+            .GetConstructor(new Type[] { typeof(Meta) })
+            .Invoke(new object[] { Meta.META });
+    }
+
+    /// <summary>
+    /// The name used in the code to identify this expression
+    /// </summary>
+    public abstract string TokenName { get; }
+    //public abstract string DisplayName { get; set; }
+
+    public virtual Expression claimExpressionString(string exprStr)
+    {
+        if (!isMeta)
+        {
+            throw new InvalidOperationException(
+                "Cannot call claimExpressionString() on a non meta expression object! "+
+                "Expression: "+this+", "+
+                "ExprStr: "+exprStr
+                );
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region Operator Overrides
     //Operator Overloads
     public static implicit operator bool(Expression a) => a != null;
+    #endregion
 }

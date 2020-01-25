@@ -41,4 +41,6 @@ public class EntityValue:Expression
         }
         return null;
     }
+
+    public override string TokenName => "Entity";
 }

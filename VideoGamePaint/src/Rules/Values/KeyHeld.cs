@@ -30,4 +30,6 @@ public class KeyHeld:Expression
         Entity entity = Arguments[0].toEntity();
         return entity.inputs.Contains(key);
     }
+
+    public override string TokenName => "Key";
 }

@@ -66,4 +66,6 @@ public class MultiplyOperator : Operator
     {
         return arguments[0].toInteger() * arguments[1].toInteger();
     }
+
+    public override string TokenName => "Multiply";
 }

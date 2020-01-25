@@ -21,4 +21,6 @@ public class VariableGetValue:AnyTypeValue
         }
         set { }
     }
+
+    public override string TokenName => "Get";
 }
