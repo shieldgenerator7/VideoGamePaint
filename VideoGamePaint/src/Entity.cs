@@ -4,8 +4,10 @@ using System.Windows.Forms;
 
 public class Entity
 {
-    public List<Keys> inputs;
+    public List<Keys> inputs;//the runtime list of keys currently being pressed
     public List<Rule> rules = new List<Rule>();
+
+    public Dictionary<string, object> variables = new Dictionary<string, object>();
 
     public Vector pos = new Vector(0, 0);
     private Vector moveDir = new Vector(0, 0);//how much it moves each frame
@@ -17,6 +19,24 @@ public class Entity
     public Entity(PixelGrid pg)
     {
         this.collisionGrid = pg;
+    }
+
+    public void setVariableNames(List<string> names)
+    {
+        variables = new Dictionary<string, object>();
+        foreach (string name in names)
+        {
+            string nameTrim = name.Trim().ToLower();
+            if (variables.ContainsKey(nameTrim))
+            {
+                throw new ArgumentException(
+                    "Variable " + name + " cannot be added twice! " +
+                    "(Same as variable "+nameTrim+") " +
+                    "Entity: " + this
+                    );
+            }
+            variables.Add(nameTrim, 0);
+        }
     }
 
     public void processRules()

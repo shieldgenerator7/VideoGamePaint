@@ -30,7 +30,7 @@ public static class RuleBuilder
     public static Rule buildRule(string ruleString)
     {
         string[] split = ruleString.Split(
-            new char[] { ':','=' },
+            new char[] { ':', '=' },
             StringSplitOptions.RemoveEmptyEntries
             );
         //Conditions
@@ -39,9 +39,11 @@ public static class RuleBuilder
             StringSplitOptions.RemoveEmptyEntries
             );
         List<Expression> conditions = new List<Expression>();
-        for (int i = 0; i < conditionStrings.Length; i++)
+        for (int i = 0; i < conditionStrings.Length;)
         {
-            Expression expr = getExpression(conditionStrings, i);
+            int outIndex;
+            Expression expr = getExpression(conditionStrings, i, out outIndex);
+            i = outIndex;
             if (expr)
             {
                 conditions.Add(expr);
@@ -53,9 +55,11 @@ public static class RuleBuilder
             StringSplitOptions.RemoveEmptyEntries
             );
         List<Expression> actions = new List<Expression>();
-        for (int i = 0; i < actionStrings.Length; i++)
+        for (int i = 0; i < actionStrings.Length;)
         {
-            Expression expr = getExpression(actionStrings, i);
+            int outIndex;
+            Expression expr = getExpression(actionStrings, i, out outIndex);
+            i = outIndex;
             if (expr)
             {
                 actions.Add(expr);
@@ -65,8 +69,9 @@ public static class RuleBuilder
         return new Rule(conditions.ToArray(), actions.ToArray());
     }
 
-    static Expression getExpression(string[] exprs, int index)
+    static Expression getExpression(string[] exprs, int index, out int nextIndex)
     {
+        nextIndex = index + 1;
         string expr = exprs[index].Trim().ToLower();
         if (exprs[index].Trim() == "")
         {
@@ -76,20 +81,24 @@ public static class RuleBuilder
         switch (expr)
         {
             //Values
+            case "get":
+                return new VariableGetValue();
             case "constant":
-                return new ConstantValue(getNextParameter(exprs, index, 1));
+                return new ConstantValue(getNextParameter(exprs, index, out nextIndex, 1));
             case "entity":
-                return new EntityValue(getNextParameter(exprs, index, 1));
+                return new EntityValue(getNextParameter(exprs, index, out nextIndex, 1));
             case "grounded":
                 return new GroundedValue();
             case "key":
-                return new KeyHeld(getNextParameter(exprs, index, 1));
+                return new KeyHeld(getNextParameter(exprs, index, out nextIndex, 1));
             //Operators
             case "not":
                 return new NotOperator();
             case "multiply":
                 return new MultiplyOperator();
             //Actions
+            case "set":
+                return new VariableSetAction();
             case "move":
                 return new MoveAction();
         }
@@ -103,8 +112,9 @@ public static class RuleBuilder
         return claimedExpression;
     }
 
-    static string getNextParameter(string[] exprs, int index, int paramNumber)
+    static string getNextParameter(string[] exprs, int index, out int nextIndex, int paramNumber)
     {
+        nextIndex = index + 2;
         string exprNext = exprs[index + 1].Trim();
         int curParamNumber = 0;
         if (exprNext != "")
@@ -118,6 +128,7 @@ public static class RuleBuilder
             i++
             )
         {
+            nextIndex++;
             exprNext = exprs[i].Trim();
             if (exprNext != "")
             {

@@ -32,13 +32,7 @@ public abstract class Expression
 
     public Expression()
     {
-        if (!isFunction
-            && !isInteger
-            && !isFloat
-            && !isBool
-            && !isVector
-            && !isEntity
-            )
+        if (!isFunction && !isValue)
         {
             throw new NotImplementedException("Expression subtype " + this.GetType() + " does not override any type properties!");
         }
@@ -157,6 +151,10 @@ public abstract class Expression
         {
             return isBool;
         }
+        else if (type == typeof(string))
+        {
+            return isString;
+        }
         else if (type == typeof(Vector))
         {
             return isVector;
@@ -165,7 +163,51 @@ public abstract class Expression
         {
             return isEntity;
         }
+        else if (type == typeof(object))
+        {
+            return isValue;
+        }
         throw new ArgumentException("Unsupported type: " + type);
+    }
+
+    public virtual bool isValue
+    {
+        get
+        {
+            return isInteger
+                || isFloat
+                || isBool
+                || isString
+                || isVector
+                || isEntity;
+        }
+    }
+    public virtual object toValue() {
+        if (isInteger)
+        {
+            return toInteger();
+        }
+        else if (isFloat)
+        {
+            return toFloat();
+        }
+        else if (isBool)
+        {
+            return toBool();
+        }
+        else if (isString)
+        {
+            return toString();
+        }
+        else if (isVector)
+        {
+            return toVector();
+        }
+        else if (isEntity)
+        {
+            return toEntity();
+        }
+        throw new InvalidOperationException("Expression " + this + " does not return a value!");
     }
 
     //Interpret as int
@@ -179,6 +221,10 @@ public abstract class Expression
     //Interpret as bool
     public virtual bool isBool { get => false; }
     public virtual bool toBool() { throw new NotImplementedException(); }
+
+    //Interpret as string
+    public virtual bool isString { get => false; }
+    public virtual string toString() { throw new NotImplementedException(); }
 
     //Interpret as Vector
     public virtual bool isVector { get => false; }

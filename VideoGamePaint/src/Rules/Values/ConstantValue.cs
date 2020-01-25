@@ -1,8 +1,13 @@
 ﻿using System;
 
-public class ConstantValue : Expression
+public class ConstantValue : AnyTypeValue
 {
-    object value = 0;
+    private object _value;
+    protected override object value
+    {
+        get => _value;
+        set => _value = value;
+    }
 
     public ConstantValue(string valueString)
     {
@@ -12,6 +17,14 @@ public class ConstantValue : Expression
     public ConstantValue(object value)
     {
         this.value = value;
+    }
+
+    public override Entity toEntity()
+    {
+        throw new NotImplementedException(
+            "Expression " + this + " does not implement toEntity()." +
+            " This method should not be called on this expression type."
+            );
     }
 
     private static object getObjectFromString(string valueString)
@@ -41,32 +54,16 @@ public class ConstantValue : Expression
                 return outInt;
             }
         }
+        //String has not been claimed yet,
+        //So claim it as its string value
+        if (valueString != null && valueString != "")
+        {
+            return valueString;
+        }
         return null;
     }
 
-    public override bool isInteger { get => value is int; }
-    public override int toInteger()
-    {
-        return (int)value;
-    }
 
-    public override bool isFloat { get => value is float; }
-    public override float toFloat()
-    {
-        return (float)value;
-    }
-
-    public override bool isBool { get => value is bool; }
-    public override bool toBool()
-    {
-        return (bool)value;
-    }
-
-    public override bool isVector { get => value is Vector; }
-    public override Vector toVector()
-    {
-        return (Vector)value;
-    }
 
     public static Expression claimExpressionString(string exprStr)
     {
