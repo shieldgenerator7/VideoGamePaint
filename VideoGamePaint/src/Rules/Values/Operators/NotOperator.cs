@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class NotOperator : Expression
+public class NotOperator : Operator
 {
     public override int parameterCount { get => 1; }
     protected override Type[] _getParameterTypeList()

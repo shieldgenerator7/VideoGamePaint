@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class MultiplyOperator : Expression
+public class MultiplyOperator : Operator
 {
     public MultiplyOperator()
     {

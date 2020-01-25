@@ -30,7 +30,7 @@ public static class RuleBuilder
     public static Rule buildRule(string ruleString)
     {
         string[] split = ruleString.Split(
-            new char[] { ':', '=' },
+            new char[] { ':' },
             StringSplitOptions.RemoveEmptyEntries
             );
         //Conditions
@@ -104,11 +104,10 @@ public static class RuleBuilder
         }
         //Constant claiming
         Expression claimedExpression = null;
-        claimedExpression = EntityValue.claimExpressionString(expr);
-        if (!claimedExpression)
-        {
-            claimedExpression = ConstantValue.claimExpressionString(expr);
-        }
+        claimedExpression =
+            CompareOperator.claimExpressionString(expr)
+            ?? EntityValue.claimExpressionString(expr)
+            ?? ConstantValue.claimExpressionString(expr);
         return claimedExpression;
     }
 

@@ -71,8 +71,10 @@
     <Compile Include="src\Rules\Values\EntityValue.cs" />
     <Compile Include="src\Rules\Values\GroundedValue.cs" />
     <Compile Include="src\Rules\Values\KeyHeld.cs" />
+    <Compile Include="src\Rules\Values\Operators\CompareOperator.cs" />
     <Compile Include="src\Rules\Values\Operators\MultiplyOperator.cs" />
     <Compile Include="src\Rules\Values\Operators\NotOperator.cs" />
+    <Compile Include="src\Rules\Values\Operators\Operator.cs" />
     <Compile Include="src\Rules\Values\PlayerInputValue.cs" />
     <Compile Include="src\Rules\Values\VariableGetValue.cs" />
     <Compile Include="src\Tools\FillTool.cs" />
