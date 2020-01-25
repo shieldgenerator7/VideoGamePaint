@@ -124,7 +124,8 @@
     <value>182, 17</value>
   </metadata>
   <data name="txtCode.Text" xml:space="preserve">
-    <value>Key W Player, Grounded Player: Move Player Multiply Get Player JumpHeight VectorUp.
+    <value>== 0 Get Player JumpHeight: Set Player JumpHeight 3.
+Key W Player, Grounded Player: Move Player Multiply Get Player JumpHeight VectorUp.
 Key S Player: Move Player VectorDown.
 Key A Player: Move Player VectorLeft.
 Key D Player: Move Player VectorRight.
