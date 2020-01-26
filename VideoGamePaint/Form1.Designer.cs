@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPaint));
             this.pnlColors = new System.Windows.Forms.Panel();
+            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlTools = new System.Windows.Forms.Panel();
@@ -41,6 +42,7 @@
             this.btnToolPencil = new System.Windows.Forms.Button();
             this.spltPalettes = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
+            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.tabPalettes = new System.Windows.Forms.TabControl();
             this.tabColors = new System.Windows.Forms.TabPage();
             this.tabColliders = new System.Windows.Forms.TabPage();
@@ -50,8 +52,6 @@
             this.spltCode = new System.Windows.Forms.SplitContainer();
             this.spltVariables = new System.Windows.Forms.SplitContainer();
             this.txtVariables = new System.Windows.Forms.TextBox();
-            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
-            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltPalettes)).BeginInit();
@@ -82,8 +82,17 @@
             this.pnlColors.Location = new System.Drawing.Point(3, 3);
             this.pnlColors.Name = "pnlColors";
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
-            this.pnlColors.Size = new System.Drawing.Size(658, 19);
+            this.pnlColors.Size = new System.Drawing.Size(654, 16);
             this.pnlColors.TabIndex = 1;
+            // 
+            // pnlColorOptions
+            // 
+            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
+            this.pnlColorOptions.Name = "pnlColorOptions";
+            this.pnlColorOptions.PixelSize = 8F;
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 6);
+            this.pnlColorOptions.TabIndex = 1;
             // 
             // btnColorPicker
             // 
@@ -93,7 +102,7 @@
             this.btnColorPicker.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnColorPicker.Location = new System.Drawing.Point(5, 5);
             this.btnColorPicker.Name = "btnColorPicker";
-            this.btnColorPicker.Size = new System.Drawing.Size(90, 9);
+            this.btnColorPicker.Size = new System.Drawing.Size(90, 6);
             this.btnColorPicker.TabIndex = 0;
             this.btnColorPicker.UseVisualStyleBackColor = false;
             this.btnColorPicker.Click += new System.EventHandler(this.btnColorPicker_Click);
@@ -112,7 +121,7 @@
             this.pnlTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTools.Location = new System.Drawing.Point(0, 0);
             this.pnlTools.Name = "pnlTools";
-            this.pnlTools.Size = new System.Drawing.Size(100, 475);
+            this.pnlTools.Size = new System.Drawing.Size(100, 478);
             this.pnlTools.TabIndex = 2;
             // 
             // btnToolFillLightBulb
@@ -181,8 +190,8 @@
             // spltPalettes.Panel2
             // 
             this.spltPalettes.Panel2.Controls.Add(this.tabPalettes);
-            this.spltPalettes.Size = new System.Drawing.Size(680, 548);
-            this.spltPalettes.SplitterDistance = 475;
+            this.spltPalettes.Size = new System.Drawing.Size(676, 548);
+            this.spltPalettes.SplitterDistance = 478;
             this.spltPalettes.SplitterWidth = 1;
             this.spltPalettes.TabIndex = 3;
             // 
@@ -201,10 +210,19 @@
             // spltTools.Panel2
             // 
             this.spltTools.Panel2.Controls.Add(this.pnlPaint);
-            this.spltTools.Size = new System.Drawing.Size(680, 475);
+            this.spltTools.Size = new System.Drawing.Size(676, 478);
             this.spltTools.SplitterDistance = 100;
             this.spltTools.SplitterWidth = 1;
             this.spltTools.TabIndex = 4;
+            // 
+            // pnlPaint
+            // 
+            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
+            this.pnlPaint.Name = "pnlPaint";
+            this.pnlPaint.PixelSize = 8F;
+            this.pnlPaint.Size = new System.Drawing.Size(575, 478);
+            this.pnlPaint.TabIndex = 0;
             // 
             // tabPalettes
             // 
@@ -214,7 +232,7 @@
             this.tabPalettes.Location = new System.Drawing.Point(0, 0);
             this.tabPalettes.Name = "tabPalettes";
             this.tabPalettes.SelectedIndex = 0;
-            this.tabPalettes.Size = new System.Drawing.Size(680, 72);
+            this.tabPalettes.Size = new System.Drawing.Size(676, 69);
             this.tabPalettes.TabIndex = 1;
             this.tabPalettes.SelectedIndexChanged += new System.EventHandler(this.tabPalettes_SelectedIndexChanged);
             // 
@@ -224,7 +242,7 @@
             this.tabColors.Location = new System.Drawing.Point(8, 39);
             this.tabColors.Name = "tabColors";
             this.tabColors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColors.Size = new System.Drawing.Size(664, 25);
+            this.tabColors.Size = new System.Drawing.Size(660, 22);
             this.tabColors.TabIndex = 0;
             this.tabColors.Text = "Colors";
             this.tabColors.UseVisualStyleBackColor = true;
@@ -234,7 +252,7 @@
             this.tabColliders.Location = new System.Drawing.Point(8, 39);
             this.tabColliders.Name = "tabColliders";
             this.tabColliders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColliders.Size = new System.Drawing.Size(664, 25);
+            this.tabColliders.Size = new System.Drawing.Size(664, 22);
             this.tabColliders.TabIndex = 1;
             this.tabColliders.Text = "Colliders";
             this.tabColliders.UseVisualStyleBackColor = true;
@@ -269,7 +287,7 @@
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
             this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCode.Size = new System.Drawing.Size(112, 459);
+            this.txtCode.Size = new System.Drawing.Size(116, 434);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             // 
@@ -278,7 +296,7 @@
             this.btnCodeGo.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCodeGo.Location = new System.Drawing.Point(0, 0);
             this.btnCodeGo.Name = "btnCodeGo";
-            this.btnCodeGo.Size = new System.Drawing.Size(112, 56);
+            this.btnCodeGo.Size = new System.Drawing.Size(116, 56);
             this.btnCodeGo.TabIndex = 1;
             this.btnCodeGo.Text = "Go";
             this.btnCodeGo.UseVisualStyleBackColor = true;
@@ -301,7 +319,7 @@
             this.spltCode.Panel2.Controls.Add(this.btnCodeGo);
             this.spltCode.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
             this.spltCode.Size = new System.Drawing.Size(800, 548);
-            this.spltCode.SplitterDistance = 680;
+            this.spltCode.SplitterDistance = 676;
             this.spltCode.SplitterWidth = 8;
             this.spltCode.TabIndex = 4;
             this.spltCode.Resize += new System.EventHandler(this.spltCode_Resize);
@@ -321,8 +339,7 @@
             // spltVariables.Panel2
             // 
             this.spltVariables.Panel2.Controls.Add(this.txtCode);
-            this.spltVariables.Size = new System.Drawing.Size(112, 492);
-            this.spltVariables.SplitterDistance = 25;
+            this.spltVariables.Size = new System.Drawing.Size(116, 492);
             this.spltVariables.SplitterWidth = 8;
             this.spltVariables.TabIndex = 2;
             // 
@@ -333,27 +350,9 @@
             this.txtVariables.Multiline = true;
             this.txtVariables.Name = "txtVariables";
             this.txtVariables.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtVariables.Size = new System.Drawing.Size(112, 25);
+            this.txtVariables.Size = new System.Drawing.Size(116, 50);
             this.txtVariables.TabIndex = 0;
-            this.txtVariables.Text = "JumpHeight = 3\r\nHealth = 1";
-            // 
-            // pnlPaint
-            // 
-            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
-            this.pnlPaint.Name = "pnlPaint";
-            this.pnlPaint.PixelSize = 8F;
-            this.pnlPaint.Size = new System.Drawing.Size(579, 475);
-            this.pnlPaint.TabIndex = 0;
-            // 
-            // pnlColorOptions
-            // 
-            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
-            this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.PixelSize = 8F;
-            this.pnlColorOptions.Size = new System.Drawing.Size(400, 9);
-            this.pnlColorOptions.TabIndex = 1;
+            this.txtVariables.Text = "JumpHeight = 3\r\nHealth = 1\r\nSpeed = 3";
             // 
             // frmPaint
             // 

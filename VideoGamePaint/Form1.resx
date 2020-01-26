@@ -126,8 +126,8 @@
   <data name="txtCode.Text" xml:space="preserve">
     <value>Key W Player, Grounded Player: Move Player Multiply Get Player JumpHeight VectorUp.
 Key S Player: Move Player VectorDown.
-Key A Player: Move Player VectorLeft.
-Key D Player: Move Player VectorRight.
+Key A Player: Move Player Multiply Get Player Speed VectorLeft.
+Key D Player: Move Player Multiply Get Player Speed VectorRight.
 Not Grounded Player: Move Player VectorDown.
 Key Q Player: Set Player JumpHeight 3.
 Key E Player: Set Player JumpHeight 10.</value>
