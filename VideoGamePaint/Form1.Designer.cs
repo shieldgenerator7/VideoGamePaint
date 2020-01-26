@@ -53,6 +53,8 @@
             this.ctxtExpression = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbExpression = new System.Windows.Forms.ComboBox();
+            this.flwCode = new System.Windows.Forms.FlowLayoutPanel();
             this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.pnlColors.SuspendLayout();
@@ -76,6 +78,7 @@
             this.spltVariables.Panel2.SuspendLayout();
             this.spltVariables.SuspendLayout();
             this.ctxtExpression.SuspendLayout();
+            this.flwCode.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlColors
@@ -276,6 +279,7 @@
             this.txtCode.Size = new System.Drawing.Size(120, 434);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
+            this.txtCode.Visible = false;
             this.txtCode.TextChanged += new System.EventHandler(this.txtCode_TextChanged);
             // 
             // btnCodeGo
@@ -325,6 +329,7 @@
             // 
             // spltVariables.Panel2
             // 
+            this.spltVariables.Panel2.Controls.Add(this.flwCode);
             this.spltVariables.Panel2.Controls.Add(this.txtCode);
             this.spltVariables.Size = new System.Drawing.Size(120, 492);
             this.spltVariables.SplitterWidth = 8;
@@ -361,6 +366,27 @@
             this.getToolStripMenuItem.Name = "getToolStripMenuItem";
             this.getToolStripMenuItem.Size = new System.Drawing.Size(127, 36);
             this.getToolStripMenuItem.Text = "Get";
+            // 
+            // cmbExpression
+            // 
+            this.cmbExpression.FormattingEnabled = true;
+            this.cmbExpression.Items.AddRange(new object[] {
+            "Get",
+            "Set"});
+            this.cmbExpression.Location = new System.Drawing.Point(3, 3);
+            this.cmbExpression.Name = "cmbExpression";
+            this.cmbExpression.Size = new System.Drawing.Size(121, 33);
+            this.cmbExpression.TabIndex = 1;
+            this.cmbExpression.SelectedIndexChanged += new System.EventHandler(this.cmbExpression_SelectedIndexChanged);
+            // 
+            // flwCode
+            // 
+            this.flwCode.Controls.Add(this.cmbExpression);
+            this.flwCode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flwCode.Location = new System.Drawing.Point(0, 0);
+            this.flwCode.Name = "flwCode";
+            this.flwCode.Size = new System.Drawing.Size(120, 434);
+            this.flwCode.TabIndex = 2;
             // 
             // pnlPaint
             // 
@@ -412,6 +438,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.spltVariables)).EndInit();
             this.spltVariables.ResumeLayout(false);
             this.ctxtExpression.ResumeLayout(false);
+            this.flwCode.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -443,5 +470,7 @@
         private System.Windows.Forms.ContextMenuStrip ctxtExpression;
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cmbExpression;
+        private System.Windows.Forms.FlowLayoutPanel flwCode;
     }
 }

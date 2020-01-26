@@ -20,6 +20,7 @@ namespace VideoGamePaint
         Tool lineTool;
         Tool lightBulbFillTool;
         Player player;
+        List<ComboBox> expressions = new List<ComboBox>();
 
         public frmPaint()
         {
@@ -164,6 +165,33 @@ namespace VideoGamePaint
             //Point showPoint = txtCode.GetPositionFromCharIndex(txtCode.SelectionStart);
             //showPoint.Offset(0, (int)Math.Ceiling(txtCode.Font.SizeInPoints)+5);
             //ctxtExpression.Show(txtCode, showPoint);
+        }
+
+        void addNewExpressionDropDown()
+        {
+            ComboBox newComboBox = new ComboBox();
+
+            newComboBox.FormattingEnabled = true;
+            newComboBox.Items.Add(" ");
+            newComboBox.Items.AddRange(RuleBuilder.ExpressionDisplayNames);
+            //newComboBox.Location = new System.Drawing.Point(3, 3);
+            //newComboBox.Name = "cmbExpression";
+            newComboBox.Size = new System.Drawing.Size(121, 33);
+            newComboBox.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
+
+            this.flwCode.Controls.Add(newComboBox);
+        }
+
+        private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox cmb = (ComboBox)sender;
+            if (flwCode.Controls[flwCode.Controls.Count-1] == cmb)
+            {
+                if (cmb.Text != null && cmb.Text.Trim() != "")
+                {
+                    addNewExpressionDropDown();
+                }
+            }
         }
     }
 }

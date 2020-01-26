@@ -5,6 +5,21 @@ public static class RuleBuilder
 {
     static Dictionary<string, Expression> exprMetas;
 
+    public static string[] ExpressionDisplayNames
+    {
+        get
+        {
+            string[] names = new string[exprMetas.Keys.Count];
+            int i = 0;
+            foreach (Expression expr in exprMetas.Values)
+            {
+                names[i] = expr.TokenName;
+                i++;
+            }
+            return names;
+        }
+    }
+
     public static void buildMetas()
     {
         List<Type> metaTypes = new List<Type>();
@@ -119,7 +134,7 @@ public static class RuleBuilder
             for (int i = 0; i < count; i++)
             {
                 strTypes[i] = typeof(string);
-                objs[i] = getNextParameter(exprs, index, out nextIndex, i+1);
+                objs[i] = getNextParameter(exprs, index, out nextIndex, i + 1);
             }
             return (Expression)exprMetas[expr].GetType()
                 .GetConstructor(strTypes)
