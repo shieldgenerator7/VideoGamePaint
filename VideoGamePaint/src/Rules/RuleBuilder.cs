@@ -17,9 +17,11 @@ public static class RuleBuilder
         metaTypes.Add(typeof(GroundedValue));
         metaTypes.Add(typeof(KeyHeld));
         metaTypes.Add(typeof(VariableGetValue));
+        metaTypes.Add(typeof(VectorValue));
         metaTypes.Add(typeof(ConstantValue));
         //Actions
         metaTypes.Add(typeof(MoveAction));
+        metaTypes.Add(typeof(TeleportAction));
         metaTypes.Add(typeof(VariableSetAction));
 
         //Add all the types to the dictionary

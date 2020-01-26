@@ -62,6 +62,7 @@
     <Compile Include="src\Player.cs" />
     <Compile Include="src\RGB.cs" />
     <Compile Include="src\Rules\Actions\MoveAction.cs" />
+    <Compile Include="src\Rules\Actions\TeleportAction.cs" />
     <Compile Include="src\Rules\Actions\VariableSetAction.cs" />
     <Compile Include="src\Rules\Expression.cs" />
     <Compile Include="src\Rules\Rule.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="src\Rules\Values\Operators\Operator.cs" />
     <Compile Include="src\Rules\Values\PlayerInputValue.cs" />
     <Compile Include="src\Rules\Values\VariableGetValue.cs" />
+    <Compile Include="src\Rules\Values\VectorValue.cs" />
     <Compile Include="src\Tools\FillTool.cs" />
     <Compile Include="src\Tools\HandTool.cs" />
     <Compile Include="src\Tools\LightBulbFillTool.cs" />
