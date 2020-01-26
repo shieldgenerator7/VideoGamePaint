@@ -130,6 +130,7 @@ Key A Player: Move Player Multiply Get Player Speed VectorLeft.
 Key D Player: Move Player Multiply Get Player Speed VectorRight.
 Not Grounded Player: Move Player VectorDown.
 Key Q Player: Set Player JumpHeight 3.
-Key E Player: Set Player JumpHeight 10.</value>
+Key E Player: Set Player JumpHeight 10.
+Key R Player: Teleport Player Vector 0 0.</value>
   </data>
 </root>
