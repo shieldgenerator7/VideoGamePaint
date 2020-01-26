@@ -32,4 +32,9 @@ public class KeyHeld:Expression
     }
 
     public override string TokenName => "Key";
+    public override int ConstructorParameterCount => 1;
+    public KeyHeld()
+    {
+        isMeta = true;
+    }
 }

@@ -3,6 +3,37 @@ using System.Collections.Generic;
 
 public static class RuleBuilder
 {
+    static Dictionary<string, Expression> exprMetas;
+
+    public static void buildMetas()
+    {
+        List<Type> metaTypes = new List<Type>();
+        //Operators
+        metaTypes.Add(typeof(NotOperator));
+        metaTypes.Add(typeof(MultiplyOperator));
+        metaTypes.Add(typeof(CompareOperator));
+        //Values
+        metaTypes.Add(typeof(EntityValue));
+        metaTypes.Add(typeof(GroundedValue));
+        metaTypes.Add(typeof(KeyHeld));
+        metaTypes.Add(typeof(VariableGetValue));
+        metaTypes.Add(typeof(ConstantValue));
+        //Actions
+        metaTypes.Add(typeof(MoveAction));
+        metaTypes.Add(typeof(VariableSetAction));
+
+        //Add all the types to the dictionary
+        exprMetas = new Dictionary<string, Expression>();
+        foreach (Type metaType in metaTypes)
+        {
+            Expression meta = (Expression)metaType
+                .GetConstructor(new Type[0])
+                .Invoke(new object[0]);
+            meta.isMeta = true;
+            exprMetas.Add(meta.TokenName.Trim().ToLower(), meta);
+        }
+    }
+
     public static List<Rule> buildRuleSet(string ruleSetString)
     {
         List<Rule> ruleSet = new List<Rule>();
@@ -77,38 +108,31 @@ public static class RuleBuilder
         {
             throw new ArgumentException("Expression string at the given index was the empty string!");
         }
-        //Switch expression string and make a new expression
-        switch (expr)
+        //Get expression string and make a new expression
+        if (exprMetas.ContainsKey(expr))
         {
-            //Values
-            case "get":
-                return new VariableGetValue();
-            case "constant":
-                return new ConstantValue(getNextParameter(exprs, index, out nextIndex, 1));
-            case "entity":
-                return new EntityValue(getNextParameter(exprs, index, out nextIndex, 1));
-            case "grounded":
-                return new GroundedValue();
-            case "key":
-                return new KeyHeld(getNextParameter(exprs, index, out nextIndex, 1));
-            //Operators
-            case "not":
-                return new NotOperator();
-            case "multiply":
-                return new MultiplyOperator();
-            //Actions
-            case "set":
-                return new VariableSetAction();
-            case "move":
-                return new MoveAction();
+            int count = exprMetas[expr].ConstructorParameterCount;
+            Type[] strTypes = new Type[count];
+            object[] objs = new object[count];
+            for (int i = 0; i < count; i++)
+            {
+                strTypes[i] = typeof(string);
+                objs[i] = getNextParameter(exprs, index, out nextIndex, i+1);
+            }
+            return (Expression)exprMetas[expr].GetType()
+                .GetConstructor(strTypes)
+                .Invoke(objs);
         }
         //Constant claiming
-        Expression claimedExpression = null;
-        claimedExpression =
-            CompareOperator.claimExpressionString(expr)
-            ?? EntityValue.claimExpressionString(expr)
-            ?? ConstantValue.claimExpressionString(expr);
-        return claimedExpression;
+        foreach (Expression meta in exprMetas.Values)
+        {
+            Expression claimedExpression = meta.claimExpressionString(expr);
+            if (claimedExpression)
+            {
+                return claimedExpression;
+            }
+        }
+        return null;
     }
 
     static string getNextParameter(string[] exprs, int index, out int nextIndex, int paramNumber)

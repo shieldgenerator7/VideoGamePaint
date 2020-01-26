@@ -246,17 +246,12 @@ public abstract class Expression
         META
     }
     private Meta meta = Meta.NORMAL;
-    public bool isMeta { get => meta == Meta.META; }
-
-    private Expression(Meta meta)
+    public bool isMeta
     {
-        this.meta = meta;
-    }
-    public Expression getMetaExpression()
-    {
-        return (Expression)this.GetType()
-            .GetConstructor(new Type[] { typeof(Meta) })
-            .Invoke(new object[] { Meta.META });
+        get => meta == Meta.META;
+        set => this.meta = (value)
+            ? Meta.META
+            : Meta.NORMAL;
     }
 
     /// <summary>
@@ -265,14 +260,16 @@ public abstract class Expression
     public abstract string TokenName { get; }
     //public abstract string DisplayName { get; set; }
 
+    public virtual int ConstructorParameterCount { get => 0; }
+
     public virtual Expression claimExpressionString(string exprStr)
     {
         if (!isMeta)
         {
             throw new InvalidOperationException(
-                "Cannot call claimExpressionString() on a non meta expression object! "+
-                "Expression: "+this+", "+
-                "ExprStr: "+exprStr
+                "Cannot call claimExpressionString() on a non meta expression object! " +
+                "Expression: " + this + ", " +
+                "ExprStr: " + exprStr
                 );
         }
         return null;

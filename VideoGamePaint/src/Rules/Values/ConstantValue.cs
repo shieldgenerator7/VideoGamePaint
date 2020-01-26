@@ -65,8 +65,9 @@ public class ConstantValue : AnyTypeValue
 
 
 
-    public static Expression claimExpressionString(string exprStr)
+    public override Expression claimExpressionString(string exprStr)
     {
+        base.claimExpressionString(exprStr);
         exprStr = exprStr.ToLower();
         object strObj = getObjectFromString(exprStr);
         if (strObj != null)
@@ -77,4 +78,9 @@ public class ConstantValue : AnyTypeValue
     }
 
     public override string TokenName => "Constant";
+    public override int ConstructorParameterCount => 1;
+    public ConstantValue()
+    {
+        isMeta = true;
+    }
 }

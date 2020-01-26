@@ -51,8 +51,9 @@ public class CompareOperator : Operator
         return int1 == int2;
     }
 
-    public static Expression claimExpressionString(string exprStr)
+    public override Expression claimExpressionString(string exprStr)
     {
+        base.claimExpressionString(exprStr);
         exprStr = exprStr.Trim().ToLower();
         switch (exprStr)
         {
@@ -74,4 +75,8 @@ public class CompareOperator : Operator
     }
 
     public override string TokenName => "Compare";
+    public CompareOperator()
+    {
+        isMeta = true;
+    }
 }

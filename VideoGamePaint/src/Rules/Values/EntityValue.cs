@@ -32,8 +32,9 @@ public class EntityValue:Expression
         return this.entity;
     }
 
-    public static Expression claimExpressionString(string exprStr)
+    public override Expression claimExpressionString(string exprStr)
     {
+        base.claimExpressionString(exprStr);
         exprStr = exprStr.ToLower();
         if (exprStr == "player")
         {
@@ -43,4 +44,9 @@ public class EntityValue:Expression
     }
 
     public override string TokenName => "Entity";
+    public override int ConstructorParameterCount => 1;
+    public EntityValue()
+    {
+        isMeta = true;
+    }
 }

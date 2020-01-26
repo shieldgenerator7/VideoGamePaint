@@ -25,6 +25,7 @@ namespace VideoGamePaint
         {
             InitializeComponent();
             resizeForm();
+            RuleBuilder.buildMetas();
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
