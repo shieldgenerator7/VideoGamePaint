@@ -133,4 +133,7 @@ Key Q Player: Set Player JumpHeight 3.
 Key E Player: Set Player JumpHeight 10.
 Key R Player: Teleport Player Vector 0 0.</value>
   </data>
+  <metadata name="ctxtExpression.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>356, 17</value>
+  </metadata>
 </root>

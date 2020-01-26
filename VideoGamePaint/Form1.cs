@@ -158,5 +158,12 @@ namespace VideoGamePaint
                 spltCode.Panel2.Size.Height - btnCodeGo.Size.Height
                 );
         }
+
+        private void txtCode_TextChanged(object sender, EventArgs e)
+        {
+            //Point showPoint = txtCode.GetPositionFromCharIndex(txtCode.SelectionStart);
+            //showPoint.Offset(0, (int)Math.Ceiling(txtCode.Font.SizeInPoints)+5);
+            //ctxtExpression.Show(txtCode, showPoint);
+        }
     }
 }
