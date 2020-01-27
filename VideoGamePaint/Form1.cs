@@ -26,7 +26,9 @@ namespace VideoGamePaint
         {
             InitializeComponent();
             resizeForm();
+            //Rule Builder
             RuleBuilder.buildMetas();
+            addNewExpressionDropDown();
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
@@ -170,10 +172,57 @@ namespace VideoGamePaint
         void addNewExpressionDropDown()
         {
             ComboBox newComboBox = new ComboBox();
-
+            
             newComboBox.FormattingEnabled = true;
             newComboBox.Items.Add(" ");
-            newComboBox.Items.AddRange(RuleBuilder.ExpressionDisplayNames);
+            //if (flwCode.Controls.Count )
+            //Find the options you need
+            Type[] options = new Type[0];
+            //try
+            //{
+            //    string strCombo = "";
+            //    foreach (Control ctrl in flwCode.Controls)
+            //    {
+            //        strCombo += ctrl.Text + " ";
+            //    }
+            //    RuleBuilder.buildRule(strCombo);
+            //}
+            //catch(ArgumentMissingException ame)
+            //{
+            //    options = ame.argTypes;
+            //}
+            //catch(IndexOutOfRangeException ioore)
+            //{
+            //    //do nothing
+            //}
+            if (flwCode.Controls.Count > 0)
+            {
+                options = ((Expression)
+                   ((ComboBox) flwCode.Controls[flwCode.Controls.Count - 1]).SelectedItem
+                   ).getArgumentTypeOptions(0);
+            }
+            foreach (Expression expr in RuleBuilder.Expressions)
+            {
+                //2020-01-27: TODO: (to fix) this condition currently allows bools in actions and functions in conditions!!
+                if (options.Length == 0
+                    && (expr.isBool || expr.isFunction))
+                {
+                    newComboBox.Items.Add(expr);
+                }
+                //Find a return type that matches one of the options
+                else
+                {
+                    foreach (Type type in options)
+                    {
+                        if (type == null || expr.isType(type))
+                        {
+                            newComboBox.Items.Add(expr);
+                            break;
+                        }
+                    }
+                }
+            }
+            //newComboBox.Items.AddRange(RuleBuilder.Expressions);
             //newComboBox.Location = new System.Drawing.Point(3, 3);
             //newComboBox.Name = "cmbExpression";
             newComboBox.Size = new System.Drawing.Size(121, 33);

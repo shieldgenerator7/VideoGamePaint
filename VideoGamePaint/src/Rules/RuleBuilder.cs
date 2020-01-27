@@ -5,6 +5,21 @@ public static class RuleBuilder
 {
     static Dictionary<string, Expression> exprMetas;
 
+    public static Expression[] Expressions
+    {
+        get
+        {
+            Expression[] exprs = new Expression[exprMetas.Keys.Count];
+            int i = 0;
+            foreach (Expression expr in exprMetas.Values)
+            {
+                exprs[i] = expr;
+                i++;
+            }
+            return exprs;
+        }
+    }
+
     public static string[] ExpressionDisplayNames
     {
         get

@@ -49,6 +49,7 @@
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\ArgumentMissingException.cs" />
     <Compile Include="src\Entity.cs" />
     <Compile Include="src\PixelGrid.cs" />
     <Compile Include="src\PixelGridPanel.cs">

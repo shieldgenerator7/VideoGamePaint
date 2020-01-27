@@ -85,6 +85,13 @@ public class Rule
         int nextIndex = index + 1;
         for (int c = 0; c < paramCount; c++)
         {
+            if (nextIndex >= exprListRaw.Length)
+            {
+                throw new ArgumentMissingException(
+                    expression,
+                    expression.getArgumentTypeOptions(c)
+                    );
+            }
             Expression expr = buildAt(exprListRaw, nextIndex);
             expression.checkArgument(expr, c);
             args[c] = expr;

@@ -10,37 +10,37 @@ public abstract class AnyTypeValue:Expression
         return value;
     }
 
-    public override bool isInteger { get => value is int; }
+    public override bool isInteger { get => isMeta || value is int; }
     public override int toInteger()
     {
         return (int)value;
     }
 
-    public override bool isFloat { get => value is float; }
+    public override bool isFloat { get => isMeta || value is float; }
     public override float toFloat()
     {
         return (float)value;
     }
 
-    public override bool isBool { get => value is bool; }
+    public override bool isBool { get => isMeta || value is bool; }
     public override bool toBool()
     {
         return (bool)value;
     }
 
-    public override bool isString { get => value is string; }
+    public override bool isString { get => isMeta || value is string; }
     public override string toString()
     {
         return (string)value;
     }
 
-    public override bool isVector { get => value is Vector; }
+    public override bool isVector { get => isMeta || value is Vector; }
     public override Vector toVector()
     {
         return (Vector)value;
     }
 
-    public override bool isEntity { get => value is Entity; }
+    public override bool isEntity { get => isMeta || value is Entity; }
     public override Entity toEntity()
     {
         return (Entity)value;

@@ -95,6 +95,29 @@ public abstract class Expression
         return new Type[0];
     }
 
+    public Type[] getArgumentTypeOptions(int argIndex)
+    {
+        if (parameterTypeList == null)
+        {
+            getParameterTypeList();
+        }
+        Type[] options = new Type[parameterTypeList.Length];
+        int i = 0;
+        foreach (Type[] typeList in parameterTypeList)
+        {
+            if (typeList.Length > 0)
+            {
+                options[i] = typeList[argIndex];
+            }
+            else
+            {
+                options[i] = null;
+            }
+            i++;
+        }
+        return options;
+    }
+
     /// <summary>
     /// Throws an exception if the argIndex does not match any param list signature
     /// </summary>
@@ -277,7 +300,12 @@ public abstract class Expression
 
     #endregion
 
-    #region Operator Overrides
+    #region Operator And Object Method Overrides
+    public override string ToString()
+    {
+        return TokenName;
+    }
+
     //Operator Overloads
     public static implicit operator bool(Expression a) => a != null;
     #endregion
