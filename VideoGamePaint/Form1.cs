@@ -174,7 +174,33 @@ namespace VideoGamePaint
             ComboBox newComboBox = new ComboBox();
 
             newComboBox.FormattingEnabled = true;
-            newComboBox.Items.Add(" ");
+
+            setExpressionDropDownOptions(newComboBox);
+
+            for(int i = 0; i < newComboBox.Items.Count; i++)
+            {
+                string option = ""+newComboBox.Items[i];
+                if (option.Length > 1)
+                {
+                    newComboBox.SelectedIndex = i;
+                    break;
+                }
+            }
+            //newComboBox.Items.AddRange(RuleBuilder.Expressions);
+            //newComboBox.Location = new System.Drawing.Point(3, 3);
+            //newComboBox.Name = "cmbExpression";
+            newComboBox.Size = new System.Drawing.Size(121, 33);
+            newComboBox.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
+
+            this.flwCode.Controls.Add(newComboBox);
+            //Move "new" button to end of list
+            this.flwCode.Controls.SetChildIndex(btnAddExpression, this.flwCode.Controls.Count - 1);
+        }
+
+        private void setExpressionDropDownOptions(ComboBox cmb)
+        {
+            cmb.Items.Clear();
+            cmb.Items.Add(" ");
             //if (flwCode.Controls.Count )
             //Find the options you need
             Type[] options = new Type[0];
@@ -210,7 +236,7 @@ namespace VideoGamePaint
             //}
             if (options.Length == 0)
             {
-                newComboBox.Items.AddRange(new string[] { ":", ",", "." });
+                cmb.Items.AddRange(new string[] { ":", ",", "." });
             }
             foreach (Expression expr in RuleBuilder.Expressions)
             {
@@ -218,16 +244,16 @@ namespace VideoGamePaint
                 if (options.Length == 0
                     && (expr.isBool || expr.isFunction))
                 {
-                    newComboBox.Items.Add(expr);
+                    cmb.Items.Add(expr);
                     string[] constantNames;
                     constantNames = expr.getConstantNames(typeof(bool));
                     if (constantNames != null && constantNames.Length > 0)
                     {
                         foreach (string constantName in constantNames)
                         {
-                            if (!newComboBox.Items.Contains(constantName))
+                            if (!cmb.Items.Contains(constantName))
                             {
-                                newComboBox.Items.Add(constantName);
+                                cmb.Items.Add(constantName);
                             }
                         }
                     }
@@ -239,7 +265,7 @@ namespace VideoGamePaint
                     {
                         if (type == null || expr.isType(type))
                         {
-                            newComboBox.Items.Add(expr);
+                            cmb.Items.Add(expr);
                             break;
                         }
                     }
@@ -251,41 +277,25 @@ namespace VideoGamePaint
                         {
                             foreach (string constantName in constantNames)
                             {
-                                if (!newComboBox.Items.Contains(constantName))
+                                if (!cmb.Items.Contains(constantName))
                                 {
-                                    newComboBox.Items.Add(constantName);
+                                    cmb.Items.Add(constantName);
                                 }
                             }
                         }
                     }
                 }
             }
-            if (options.Length == 0)
-            {
-                newComboBox.SelectedIndex = 4;
-            }
-            else
-            {
-                newComboBox.SelectedIndex = 1;
-            }
-            if (newComboBox.Items.Contains("INFINITY"))
-            {
-                newComboBox.Items.Remove("INFINITY");
-                newComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            }
-            else
-            {
-                newComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            }
-            //newComboBox.Items.AddRange(RuleBuilder.Expressions);
-            //newComboBox.Location = new System.Drawing.Point(3, 3);
-            //newComboBox.Name = "cmbExpression";
-            newComboBox.Size = new System.Drawing.Size(121, 33);
-            newComboBox.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
 
-            this.flwCode.Controls.Add(newComboBox);
-            //Move "new" button to end of list
-            this.flwCode.Controls.SetChildIndex(btnAddExpression, this.flwCode.Controls.Count - 1);
+            if (cmb.Items.Contains("INFINITY"))
+            {
+                cmb.Items.Remove("INFINITY");
+                cmb.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            else
+            {
+                cmb.DropDownStyle = ComboBoxStyle.DropDownList;
+            }
         }
 
         private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
