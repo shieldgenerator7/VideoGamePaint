@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPaint));
             this.pnlColors = new System.Windows.Forms.Panel();
-            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.btnColorPicker = new System.Windows.Forms.Button();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.pnlTools = new System.Windows.Forms.Panel();
@@ -42,7 +41,6 @@
             this.btnToolPencil = new System.Windows.Forms.Button();
             this.spltPalettes = new System.Windows.Forms.SplitContainer();
             this.spltTools = new System.Windows.Forms.SplitContainer();
-            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
             this.tabPalettes = new System.Windows.Forms.TabControl();
             this.tabColors = new System.Windows.Forms.TabPage();
             this.tabColliders = new System.Windows.Forms.TabPage();
@@ -56,6 +54,9 @@
             this.ctxtExpression = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.setToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnAddExpression = new System.Windows.Forms.Button();
+            this.pnlPaint = new VideoGamePaint.PixelGridPanel();
+            this.pnlColorOptions = new VideoGamePaint.PixelGridPanel();
             this.pnlColors.SuspendLayout();
             this.pnlTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltPalettes)).BeginInit();
@@ -76,6 +77,7 @@
             this.spltVariables.Panel1.SuspendLayout();
             this.spltVariables.Panel2.SuspendLayout();
             this.spltVariables.SuspendLayout();
+            this.flwCode.SuspendLayout();
             this.ctxtExpression.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,17 +89,8 @@
             this.pnlColors.Location = new System.Drawing.Point(3, 3);
             this.pnlColors.Name = "pnlColors";
             this.pnlColors.Padding = new System.Windows.Forms.Padding(5);
-            this.pnlColors.Size = new System.Drawing.Size(646, 10);
+            this.pnlColors.Size = new System.Drawing.Size(378, 7);
             this.pnlColors.TabIndex = 1;
-            // 
-            // pnlColorOptions
-            // 
-            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
-            this.pnlColorOptions.Name = "pnlColorOptions";
-            this.pnlColorOptions.PixelSize = 8F;
-            this.pnlColorOptions.Size = new System.Drawing.Size(400, 0);
-            this.pnlColorOptions.TabIndex = 1;
             // 
             // btnColorPicker
             // 
@@ -126,7 +119,7 @@
             this.pnlTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTools.Location = new System.Drawing.Point(0, 0);
             this.pnlTools.Name = "pnlTools";
-            this.pnlTools.Size = new System.Drawing.Size(100, 484);
+            this.pnlTools.Size = new System.Drawing.Size(100, 487);
             this.pnlTools.TabIndex = 2;
             // 
             // btnToolFillLightBulb
@@ -195,8 +188,8 @@
             // spltPalettes.Panel2
             // 
             this.spltPalettes.Panel2.Controls.Add(this.tabPalettes);
-            this.spltPalettes.Size = new System.Drawing.Size(668, 548);
-            this.spltPalettes.SplitterDistance = 484;
+            this.spltPalettes.Size = new System.Drawing.Size(400, 548);
+            this.spltPalettes.SplitterDistance = 487;
             this.spltPalettes.SplitterWidth = 1;
             this.spltPalettes.TabIndex = 3;
             // 
@@ -215,19 +208,10 @@
             // spltTools.Panel2
             // 
             this.spltTools.Panel2.Controls.Add(this.pnlPaint);
-            this.spltTools.Size = new System.Drawing.Size(668, 484);
+            this.spltTools.Size = new System.Drawing.Size(400, 487);
             this.spltTools.SplitterDistance = 100;
             this.spltTools.SplitterWidth = 1;
             this.spltTools.TabIndex = 4;
-            // 
-            // pnlPaint
-            // 
-            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
-            this.pnlPaint.Name = "pnlPaint";
-            this.pnlPaint.PixelSize = 8F;
-            this.pnlPaint.Size = new System.Drawing.Size(567, 484);
-            this.pnlPaint.TabIndex = 0;
             // 
             // tabPalettes
             // 
@@ -237,7 +221,7 @@
             this.tabPalettes.Location = new System.Drawing.Point(0, 0);
             this.tabPalettes.Name = "tabPalettes";
             this.tabPalettes.SelectedIndex = 0;
-            this.tabPalettes.Size = new System.Drawing.Size(668, 63);
+            this.tabPalettes.Size = new System.Drawing.Size(400, 60);
             this.tabPalettes.TabIndex = 1;
             this.tabPalettes.SelectedIndexChanged += new System.EventHandler(this.tabPalettes_SelectedIndexChanged);
             // 
@@ -247,7 +231,7 @@
             this.tabColors.Location = new System.Drawing.Point(8, 39);
             this.tabColors.Name = "tabColors";
             this.tabColors.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColors.Size = new System.Drawing.Size(652, 16);
+            this.tabColors.Size = new System.Drawing.Size(384, 13);
             this.tabColors.TabIndex = 0;
             this.tabColors.Text = "Colors";
             this.tabColors.UseVisualStyleBackColor = true;
@@ -257,7 +241,7 @@
             this.tabColliders.Location = new System.Drawing.Point(8, 39);
             this.tabColliders.Name = "tabColliders";
             this.tabColliders.Padding = new System.Windows.Forms.Padding(3);
-            this.tabColliders.Size = new System.Drawing.Size(652, 16);
+            this.tabColliders.Size = new System.Drawing.Size(648, 13);
             this.tabColliders.TabIndex = 1;
             this.tabColliders.Text = "Colliders";
             this.tabColliders.UseVisualStyleBackColor = true;
@@ -292,7 +276,7 @@
             this.txtCode.Multiline = true;
             this.txtCode.Name = "txtCode";
             this.txtCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtCode.Size = new System.Drawing.Size(124, 434);
+            this.txtCode.Size = new System.Drawing.Size(392, 434);
             this.txtCode.TabIndex = 0;
             this.txtCode.Text = resources.GetString("txtCode.Text");
             this.txtCode.Visible = false;
@@ -303,7 +287,7 @@
             this.btnCodeGo.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnCodeGo.Location = new System.Drawing.Point(0, 0);
             this.btnCodeGo.Name = "btnCodeGo";
-            this.btnCodeGo.Size = new System.Drawing.Size(124, 56);
+            this.btnCodeGo.Size = new System.Drawing.Size(392, 56);
             this.btnCodeGo.TabIndex = 1;
             this.btnCodeGo.Text = "Go";
             this.btnCodeGo.UseVisualStyleBackColor = true;
@@ -326,7 +310,7 @@
             this.spltCode.Panel2.Controls.Add(this.btnCodeGo);
             this.spltCode.Panel2.Resize += new System.EventHandler(this.splitContainer1_Panel2_Resize);
             this.spltCode.Size = new System.Drawing.Size(800, 548);
-            this.spltCode.SplitterDistance = 668;
+            this.spltCode.SplitterDistance = 400;
             this.spltCode.SplitterWidth = 8;
             this.spltCode.TabIndex = 4;
             this.spltCode.Resize += new System.EventHandler(this.spltCode_Resize);
@@ -347,7 +331,7 @@
             // 
             this.spltVariables.Panel2.Controls.Add(this.flwCode);
             this.spltVariables.Panel2.Controls.Add(this.txtCode);
-            this.spltVariables.Size = new System.Drawing.Size(124, 492);
+            this.spltVariables.Size = new System.Drawing.Size(392, 492);
             this.spltVariables.SplitterWidth = 8;
             this.spltVariables.TabIndex = 2;
             // 
@@ -358,16 +342,17 @@
             this.txtVariables.Multiline = true;
             this.txtVariables.Name = "txtVariables";
             this.txtVariables.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtVariables.Size = new System.Drawing.Size(124, 50);
+            this.txtVariables.Size = new System.Drawing.Size(392, 50);
             this.txtVariables.TabIndex = 0;
             this.txtVariables.Text = "JumpHeight = 3\r\nHealth = 1\r\nSpeed = 3";
             // 
             // flwCode
             // 
+            this.flwCode.Controls.Add(this.btnAddExpression);
             this.flwCode.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flwCode.Location = new System.Drawing.Point(0, 0);
             this.flwCode.Name = "flwCode";
-            this.flwCode.Size = new System.Drawing.Size(124, 434);
+            this.flwCode.Size = new System.Drawing.Size(392, 434);
             this.flwCode.TabIndex = 2;
             // 
             // ctxtExpression
@@ -391,6 +376,36 @@
             this.getToolStripMenuItem.Size = new System.Drawing.Size(127, 36);
             this.getToolStripMenuItem.Text = "Get";
             // 
+            // btnAddExpression
+            // 
+            this.btnAddExpression.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddExpression.Location = new System.Drawing.Point(3, 3);
+            this.btnAddExpression.Name = "btnAddExpression";
+            this.btnAddExpression.Size = new System.Drawing.Size(45, 51);
+            this.btnAddExpression.TabIndex = 0;
+            this.btnAddExpression.Text = "+";
+            this.btnAddExpression.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.btnAddExpression.UseVisualStyleBackColor = true;
+            this.btnAddExpression.Click += new System.EventHandler(this.btnAddExpression_Click);
+            // 
+            // pnlPaint
+            // 
+            this.pnlPaint.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlPaint.Location = new System.Drawing.Point(0, 0);
+            this.pnlPaint.Name = "pnlPaint";
+            this.pnlPaint.PixelSize = 8F;
+            this.pnlPaint.Size = new System.Drawing.Size(299, 487);
+            this.pnlPaint.TabIndex = 0;
+            // 
+            // pnlColorOptions
+            // 
+            this.pnlColorOptions.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlColorOptions.Location = new System.Drawing.Point(95, 5);
+            this.pnlColorOptions.Name = "pnlColorOptions";
+            this.pnlColorOptions.PixelSize = 8F;
+            this.pnlColorOptions.Size = new System.Drawing.Size(400, 0);
+            this.pnlColorOptions.TabIndex = 1;
+            // 
             // frmPaint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -399,6 +414,7 @@
             this.Controls.Add(this.spltCode);
             this.Name = "frmPaint";
             this.Text = "Video Game Paint";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Resize += new System.EventHandler(this.frmPaint_Resize);
             this.pnlColors.ResumeLayout(false);
             this.pnlTools.ResumeLayout(false);
@@ -422,6 +438,7 @@
             this.spltVariables.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltVariables)).EndInit();
             this.spltVariables.ResumeLayout(false);
+            this.flwCode.ResumeLayout(false);
             this.ctxtExpression.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -455,5 +472,6 @@
         private System.Windows.Forms.ToolStripMenuItem setToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getToolStripMenuItem;
         private System.Windows.Forms.FlowLayoutPanel flwCode;
+        private System.Windows.Forms.Button btnAddExpression;
     }
 }

@@ -178,29 +178,36 @@ namespace VideoGamePaint
             //if (flwCode.Controls.Count )
             //Find the options you need
             Type[] options = new Type[0];
-            //try
-            //{
-            //    string strCombo = "";
-            //    foreach (Control ctrl in flwCode.Controls)
-            //    {
-            //        strCombo += ctrl.Text + " ";
-            //    }
-            //    RuleBuilder.buildRule(strCombo);
-            //}
-            //catch(ArgumentMissingException ame)
-            //{
-            //    options = ame.argTypes;
-            //}
-            //catch(IndexOutOfRangeException ioore)
-            //{
-            //    //do nothing
-            //}
-            if (flwCode.Controls.Count > 0)
+            string strCombo = "";
+            foreach (Control ctrl in flwCode.Controls)
             {
-                options = ((Expression)
-                   ((ComboBox) flwCode.Controls[flwCode.Controls.Count - 1]).SelectedItem
-                   ).getArgumentTypeOptions(0);
+                if (ctrl is ComboBox)
+                {
+                    strCombo += ctrl.Text + " ";
+                }
             }
+            if (!strCombo.Contains(":"))
+            {
+                strCombo += ": Move Player VectorUp";
+            }
+            try
+            {
+                RuleBuilder.buildRule(strCombo);
+            }
+            catch (ArgumentMissingException ame)
+            {
+                options = ame.argTypes;
+            }
+            catch (IndexOutOfRangeException ioore)
+            {
+                //do nothing
+            }
+            //if (flwCode.Controls.Count > 0)
+            //{
+            //    options = ((Expression)
+            //       ((ComboBox) flwCode.Controls[flwCode.Controls.Count - 1]).SelectedItem
+            //       ).getArgumentTypeOptions(0);
+            //}
             foreach (Expression expr in RuleBuilder.Expressions)
             {
                 //2020-01-27: TODO: (to fix) this condition currently allows bools in actions and functions in conditions!!
@@ -222,6 +229,14 @@ namespace VideoGamePaint
                     }
                 }
             }
+            if (options.Length > 0 && options[0] != null)
+            {
+                newComboBox.Text = options[0].Name;
+            }
+            else
+            {
+                newComboBox.Text = "Condition or Function";
+            }
             //newComboBox.Items.AddRange(RuleBuilder.Expressions);
             //newComboBox.Location = new System.Drawing.Point(3, 3);
             //newComboBox.Name = "cmbExpression";
@@ -229,18 +244,25 @@ namespace VideoGamePaint
             newComboBox.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
 
             this.flwCode.Controls.Add(newComboBox);
+            //Move "new" button to end of list
+            this.flwCode.Controls.SetChildIndex(btnAddExpression, this.flwCode.Controls.Count - 1);
         }
 
         private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            if (flwCode.Controls[flwCode.Controls.Count-1] == cmb)
+            if (flwCode.Controls[flwCode.Controls.Count-2] == cmb)
             {
                 if (cmb.Text != null && cmb.Text.Trim() != "")
                 {
                     addNewExpressionDropDown();
                 }
             }
+        }
+
+        private void btnAddExpression_Click(object sender, EventArgs e)
+        {
+            addNewExpressionDropDown();
         }
     }
 }

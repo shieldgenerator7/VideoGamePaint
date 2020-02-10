@@ -39,6 +39,10 @@ public class MultiplyOperator : Operator
     {
         get
         {
+            if (isMeta)
+            {
+                return true;
+            }
             return arguments[0].isVector
                 || arguments[1].isVector;
         }
