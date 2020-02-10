@@ -172,7 +172,7 @@ namespace VideoGamePaint
         void addNewExpressionDropDown()
         {
             ComboBox newComboBox = new ComboBox();
-            
+
             newComboBox.FormattingEnabled = true;
             newComboBox.Items.Add(" ");
             //if (flwCode.Controls.Count )
@@ -215,6 +215,18 @@ namespace VideoGamePaint
                     && (expr.isBool || expr.isFunction))
                 {
                     newComboBox.Items.Add(expr);
+                    string[] constantNames;
+                    constantNames = expr.getConstantNames(typeof(bool));
+                    if (constantNames != null && constantNames.Length > 0)
+                    {
+                        foreach (string constantName in constantNames)
+                        {
+                            if (!newComboBox.Items.Contains(constantName))
+                            {
+                                newComboBox.Items.Add(constantName);
+                            }
+                        }
+                    }
                 }
                 //Find a return type that matches one of the options
                 else
@@ -225,6 +237,21 @@ namespace VideoGamePaint
                         {
                             newComboBox.Items.Add(expr);
                             break;
+                        }
+                    }
+                    string[] constantNames;
+                    foreach (Type type in options)
+                    {
+                        constantNames = expr.getConstantNames(type);
+                        if (constantNames != null && constantNames.Length > 0)
+                        {
+                            foreach (string constantName in constantNames)
+                            {
+                                if (!newComboBox.Items.Contains(constantName))
+                                {
+                                    newComboBox.Items.Add(constantName);
+                                }
+                            }
                         }
                     }
                 }
@@ -251,7 +278,7 @@ namespace VideoGamePaint
         private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            if (flwCode.Controls[flwCode.Controls.Count-2] == cmb)
+            if (flwCode.Controls[flwCode.Controls.Count - 2] == cmb)
             {
                 if (cmb.Text != null && cmb.Text.Trim() != "")
                 {

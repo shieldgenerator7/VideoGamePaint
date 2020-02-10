@@ -30,6 +30,7 @@ public class ConstantValue : AnyTypeValue
     public static object getObjectFromString(string valueString)
     {
         valueString = valueString.Trim().ToLower();
+        //Claim vector
         if (valueString == "vectorup")
         {
             return Vector.up;
@@ -46,12 +47,28 @@ public class ConstantValue : AnyTypeValue
         {
             return Vector.right;
         }
+        //Claim bool
+        else if (valueString == "true")
+        {
+            return true;
+        }
+        else if (valueString == "false")
+        {
+            return false;
+        }
         else
         {
+            //Claim int
             int outInt;
             if (Int32.TryParse(valueString, out outInt))
             {
                 return outInt;
+            }
+            //Claim float
+            float outFloat;
+            if (float.TryParse(valueString, out outFloat))
+            {
+                return outFloat;
             }
         }
         //String has not been claimed yet,
@@ -73,6 +90,27 @@ public class ConstantValue : AnyTypeValue
         if (strObj != null)
         {
             return new ConstantValue(strObj);
+        }
+        return null;
+    }
+
+    public override string[] getConstantNames(Type type)
+    {
+        base.getConstantNames(type);
+        if (type == typeof(Vector))
+        {
+            return new string[] { "VectorUp","VectorDown","VectorLeft","VectorRight" };
+        }
+        else if (type == typeof(Boolean))
+        {
+            return new string[] { "True", "False" };
+        }
+        else if (type == typeof(Int32)
+            || type == typeof(float)
+            || type == typeof(string)
+            || type == typeof(object))
+        {
+            return new string[] { "INFINITY" };
         }
         return null;
     }

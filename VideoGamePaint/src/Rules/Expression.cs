@@ -297,6 +297,18 @@ public abstract class Expression
         }
         return null;
     }
+    public virtual string[] getConstantNames(Type type)
+    {
+        if (!isMeta)
+        {
+            throw new InvalidOperationException(
+                "Cannot call getConstantNames() on a non meta expression object! " +
+                "Expression: " + this + ", " +
+                "type param: " + type
+                );
+        }
+        return null;
+    }
 
     #endregion
 

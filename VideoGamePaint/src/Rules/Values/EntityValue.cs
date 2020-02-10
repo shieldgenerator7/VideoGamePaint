@@ -43,6 +43,16 @@ public class EntityValue:Expression
         return null;
     }
 
+    public override string[] getConstantNames(Type type)
+    {
+        base.getConstantNames(type);
+        if (type == typeof(Entity))
+        {
+            return new string[] { "Player" };
+        }
+        return null;
+    }
+
     public override string TokenName => "Entity";
     public override int ConstructorParameterCount => 1;
     public EntityValue()

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public class VariableGetValue:AnyTypeValue
+public class VariableGetValue : AnyTypeValue
 {
     public override int parameterCount { get => 2; }
     protected override Type[] _getParameterTypeList()
@@ -12,7 +12,8 @@ public class VariableGetValue:AnyTypeValue
         };
     }
 
-    protected override object value {
+    protected override object value
+    {
         get
         {
             Entity entity = arguments[0].toEntity();
@@ -20,6 +21,27 @@ public class VariableGetValue:AnyTypeValue
             return entity.variables[str];
         }
         set { }
+    }
+
+    //public override Expression claimExpressionString(string exprStr)
+    //{
+    //    if (Player.instance.variables.ContainsKey(exprStr))
+    //    {
+    //        return Player.instance.variables[exprStr];
+    //    }
+    //    return null;
+    //}
+
+    public override string[] getConstantNames(Type type)
+    {
+        base.getConstantNames(type);
+        if (type == typeof(string))
+        {
+            string[] varNames = new string[Player.instance.variables.Keys.Count];
+            Player.instance.variables.Keys.CopyTo(varNames, 0);
+            return varNames;
+        }
+        return null;
     }
 
     public override string TokenName => "Get";

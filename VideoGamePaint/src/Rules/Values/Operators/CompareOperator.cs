@@ -48,7 +48,7 @@ public class CompareOperator : Operator
             case Comparator.LESSER_EQUALS:
                 return int1 <= int2;
         }
-        return int1 == int2;
+        throw new InvalidOperationException("Expression " + this + ": comparator is " + comparator + ", which is not supported.");
     }
 
     public override Expression claimExpressionString(string exprStr)
@@ -71,6 +71,16 @@ public class CompareOperator : Operator
                 return new CompareOperator(Comparator.LESSER_EQUALS);
         }
         //Unable to claim expression string, return null
+        return null;
+    }
+
+    public override string[] getConstantNames(Type type)
+    {
+        base.getConstantNames(type);
+        if (type == typeof(bool))
+        {
+            return new string[] { "==","!=",">",">=","<","<=" };
+        }
         return null;
     }
 
