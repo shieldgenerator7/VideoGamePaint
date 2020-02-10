@@ -322,9 +322,12 @@ namespace VideoGamePaint
         private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cmb = (ComboBox)sender;
-            if (flwCode.Controls[flwCode.Controls.Count - 2] == cmb)
+            bool blank = "" + cmb.SelectedItem == "" || cmb.Text == null || cmb.Text.Trim() == "";
+            bool lastCMB = flwCode.Controls[flwCode.Controls.Count - 2] == cmb;
+            //Add or Edit next expression
+            if (lastCMB)
             {
-                if (cmb.Text != null && cmb.Text.Trim() != "")
+                if (!blank)
                 {
                     addNewExpressionDropDown();
                 }
@@ -336,6 +339,12 @@ namespace VideoGamePaint
                         flwCode.Controls.IndexOf(cmb) + 1
                         ]
                     );
+            }
+            //Delete current expression
+            if (blank)
+            {
+                flwCode.Controls.Remove(cmb);
+                return;
             }
         }
 
