@@ -208,6 +208,10 @@ namespace VideoGamePaint
             //       ((ComboBox) flwCode.Controls[flwCode.Controls.Count - 1]).SelectedItem
             //       ).getArgumentTypeOptions(0);
             //}
+            if (options.Length == 0)
+            {
+                newComboBox.Items.AddRange(new string[] { ":", ",", "." });
+            }
             foreach (Expression expr in RuleBuilder.Expressions)
             {
                 //2020-01-27: TODO: (to fix) this condition currently allows bools in actions and functions in conditions!!
@@ -256,13 +260,22 @@ namespace VideoGamePaint
                     }
                 }
             }
-            if (options.Length > 0 && options[0] != null)
+            if (options.Length == 0)
             {
-                newComboBox.Text = options[0].Name;
+                newComboBox.SelectedIndex = 4;
             }
             else
             {
-                newComboBox.Text = "Condition or Function";
+                newComboBox.SelectedIndex = 1;
+            }
+            if (newComboBox.Items.Contains("INFINITY"))
+            {
+                newComboBox.Items.Remove("INFINITY");
+                newComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            else
+            {
+                newComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             }
             //newComboBox.Items.AddRange(RuleBuilder.Expressions);
             //newComboBox.Location = new System.Drawing.Point(3, 3);
