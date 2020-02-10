@@ -175,38 +175,30 @@ namespace VideoGamePaint
 
             newComboBox.FormattingEnabled = true;
 
-            setExpressionDropDownOptions(newComboBox);
-
-            for(int i = 0; i < newComboBox.Items.Count; i++)
-            {
-                string option = ""+newComboBox.Items[i];
-                if (option.Length > 1)
-                {
-                    newComboBox.SelectedIndex = i;
-                    break;
-                }
-            }
-            //newComboBox.Items.AddRange(RuleBuilder.Expressions);
-            //newComboBox.Location = new System.Drawing.Point(3, 3);
-            //newComboBox.Name = "cmbExpression";
-            newComboBox.Size = new System.Drawing.Size(121, 33);
-            newComboBox.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
-
             this.flwCode.Controls.Add(newComboBox);
             //Move "new" button to end of list
             this.flwCode.Controls.SetChildIndex(btnAddExpression, this.flwCode.Controls.Count - 1);
+
+            setExpressionDropDownOptions(newComboBox);
+
+            newComboBox.Size = new System.Drawing.Size(121, 33);
         }
 
         private void setExpressionDropDownOptions(ComboBox cmb)
         {
+            cmb.SelectedIndexChanged -= cmbExpression_SelectedIndexChanged;
+            string textCMB = (cmb.SelectedIndex >= 0)
+                ? "" + cmb.Items[cmb.SelectedIndex]
+                : "";
             cmb.Items.Clear();
             cmb.Items.Add(" ");
-            //if (flwCode.Controls.Count )
+            int indexCMB = cmb.Parent.Controls.IndexOf(cmb);
             //Find the options you need
             Type[] options = new Type[0];
             string strCombo = "";
-            foreach (Control ctrl in flwCode.Controls)
+            for (int i = 0; i < indexCMB; i++)
             {
+                Control ctrl = flwCode.Controls[i];
                 if (ctrl is ComboBox)
                 {
                     strCombo += ctrl.Text + " ";
@@ -228,12 +220,9 @@ namespace VideoGamePaint
             {
                 //do nothing
             }
-            //if (flwCode.Controls.Count > 0)
-            //{
-            //    options = ((Expression)
-            //       ((ComboBox) flwCode.Controls[flwCode.Controls.Count - 1]).SelectedItem
-            //       ).getArgumentTypeOptions(0);
-            //}
+
+            //Options found,
+            //Populate the items list
             if (options.Length == 0)
             {
                 cmb.Items.AddRange(new string[] { ":", ",", "." });
@@ -287,15 +276,47 @@ namespace VideoGamePaint
                 }
             }
 
+            //If the value can be anything (like a number or string),
             if (cmb.Items.Contains("INFINITY"))
             {
+                //Make the combobox text editable
                 cmb.Items.Remove("INFINITY");
                 cmb.DropDownStyle = ComboBoxStyle.DropDown;
             }
+            //If the value can only be certain things,
             else
             {
+                //Make the combobox text non-editable
                 cmb.DropDownStyle = ComboBoxStyle.DropDownList;
             }
+
+            //Keep the previously selected item, if possible
+            cmb.SelectedIndex = 0;
+            if (textCMB != null && textCMB != "")
+            {
+                for (int i = 0; i < cmb.Items.Count; i++)
+                {
+                    if (textCMB == "" + cmb.Items[i])
+                    {
+                        cmb.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            //Else find the first acceptable option
+            if (cmb.SelectedIndex == 0 && textCMB != "" + cmb.Items[cmb.SelectedIndex])
+            {
+                for (int i = 0; i < cmb.Items.Count; i++)
+                {
+                    string option = "" + cmb.Items[i];
+                    if (option.Length > 1)
+                    {
+                        cmb.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
+            cmb.SelectedIndexChanged += cmbExpression_SelectedIndexChanged;
         }
 
         private void cmbExpression_SelectedIndexChanged(object sender, EventArgs e)
@@ -307,6 +328,14 @@ namespace VideoGamePaint
                 {
                     addNewExpressionDropDown();
                 }
+            }
+            else
+            {
+                setExpressionDropDownOptions(
+                    (ComboBox)flwCode.Controls[
+                        flwCode.Controls.IndexOf(cmb) + 1
+                        ]
+                    );
             }
         }
 
