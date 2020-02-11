@@ -28,7 +28,6 @@ namespace VideoGamePaint
             resizeForm();
             //Rule Builder
             RuleBuilder.buildMetas();
-            addNewExpressionDropDown();
             //Tools
             pencilTool = new PencilTool(pnlPaint);
             fillTool = new FillTool(pnlPaint);
@@ -39,7 +38,8 @@ namespace VideoGamePaint
             //Player
             player = new Player(pnlPaint.colliderGrid);
             player.setVariableNames(txtVariables.Text);
-            player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
+            generateRuleSetComboBoxesFromString(txtCode.Text);
+            player.rules = RuleBuilder.buildRuleSet(getComboBoxRuleSetString());
             //pnlColorOptions
             this.pnlColorOptions.PixelSize = 20;
             this.pnlColorOptions.defaultPaintingEnabled = false;
@@ -169,27 +169,30 @@ namespace VideoGamePaint
             //ctxtExpression.Show(txtCode, showPoint);
         }
 
-        void addNewExpressionDropDown()
+        void addNewExpressionDropDown(string initialText = "")
         {
             ComboBox newComboBox = new ComboBox();
 
             newComboBox.FormattingEnabled = true;
+            newComboBox.MaximumSize = new System.Drawing.Size(70, 33);
 
             this.flwCode.Controls.Add(newComboBox);
             //Move "new" button to end of list
             this.flwCode.Controls.SetChildIndex(btnAddExpression, this.flwCode.Controls.Count - 1);
 
-            setExpressionDropDownOptions(newComboBox);
-
-            newComboBox.Size = new System.Drawing.Size(121, 33);
+            setExpressionDropDownOptions(newComboBox, initialText);
         }
 
-        private void setExpressionDropDownOptions(ComboBox cmb)
+        private void setExpressionDropDownOptions(ComboBox cmb, string initialText = "")
         {
             cmb.SelectedIndexChanged -= cmbExpression_SelectedIndexChanged;
             string textCMB = (cmb.SelectedIndex >= 0)
                 ? "" + cmb.Items[cmb.SelectedIndex]
                 : "";
+            if (textCMB == "" && initialText != "")
+            {
+                textCMB = initialText;
+            }
             cmb.Items.Clear();
             cmb.Items.Add(" ");
             int indexCMB = cmb.Parent.Controls.IndexOf(cmb);
@@ -276,7 +279,8 @@ namespace VideoGamePaint
 
             //Keep the previously selected item, if possible
             cmb.SelectedIndex = 0;
-            if (textCMB != null && textCMB != "")
+            bool validText = textCMB != null && textCMB != "";
+            if (validText)
             {
                 for (int i = 0; i < cmb.Items.Count; i++)
                 {
@@ -287,16 +291,26 @@ namespace VideoGamePaint
                     }
                 }
             }
-            //Else find the first acceptable option
+            //Else find the next best option
             if (cmb.SelectedIndex == 0 && textCMB != "" + cmb.Items[cmb.SelectedIndex])
             {
-                for (int i = 0; i < cmb.Items.Count; i++)
+                //If the text is valid and the combobox is text editable
+                if (validText && cmb.DropDownStyle == ComboBoxStyle.DropDown)
                 {
-                    string option = "" + cmb.Items[i];
-                    if (option.Length > 1)
+                    cmb.Items.Add(textCMB);
+                    cmb.SelectedItem = textCMB;
+                }
+                //Else find the first acceptable option
+                else
+                {
+                    for (int i = 0; i < cmb.Items.Count; i++)
                     {
-                        cmb.SelectedIndex = i;
-                        break;
+                        string option = "" + cmb.Items[i];
+                        if (option.Length > 1)
+                        {
+                            cmb.SelectedIndex = i;
+                            break;
+                        }
                     }
                 }
             }
@@ -348,6 +362,25 @@ namespace VideoGamePaint
                 }
             }
             return strCombo;
+        }
+
+        private void generateRuleSetComboBoxesFromString(string ruleSetString)
+        {
+            //Make sure there's spaces between each thing that needs its own combobox
+            ruleSetString = ruleSetString.Replace(".", " . ");
+            ruleSetString = ruleSetString.Replace(";", " ; ");
+            ruleSetString = ruleSetString.Replace(":", " : ");
+            ruleSetString = ruleSetString.Replace(",", " , ");
+            string[] split = ruleSetString.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            //Empty the flow panel
+            flwCode.Controls.Clear();
+            //Add the "Add Expression" button
+            flwCode.Controls.Add(btnAddExpression);
+            //Add new comboboxes
+            foreach (string str in split)
+            {
+                addNewExpressionDropDown(str);
+            }
         }
 
         private void btnAddExpression_Click(object sender, EventArgs e)
