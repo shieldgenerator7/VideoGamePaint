@@ -97,35 +97,45 @@ public static class RuleBuilder
             StringSplitOptions.RemoveEmptyEntries
             );
         //Conditions
-        string[] conditionStrings = split[0].Split(
-            new char[] { ' ', ',' },
-            StringSplitOptions.RemoveEmptyEntries
-            );
         List<Expression> conditions = new List<Expression>();
-        for (int i = 0; i < conditionStrings.Length;)
+        //If the rule contains conditions,
+        if (split.Length > 0)
         {
-            int outIndex;
-            Expression expr = getExpression(conditionStrings, i, out outIndex);
-            i = outIndex;
-            if (expr)
+            //Add conditions to the list
+            string[] conditionStrings = split[0].Split(
+                new char[] { ' ', ',' },
+                StringSplitOptions.RemoveEmptyEntries
+                );
+            for (int i = 0; i < conditionStrings.Length;)
             {
-                conditions.Add(expr);
+                int outIndex;
+                Expression expr = getExpression(conditionStrings, i, out outIndex);
+                i = outIndex;
+                if (expr)
+                {
+                    conditions.Add(expr);
+                }
             }
         }
         //Actions
-        string[] actionStrings = split[1].Split(
-            new char[] { ' ', ',' },
-            StringSplitOptions.RemoveEmptyEntries
-            );
         List<Expression> actions = new List<Expression>();
-        for (int i = 0; i < actionStrings.Length;)
+        //If the rule contains actions,
+        if (split.Length > 1)
         {
-            int outIndex;
-            Expression expr = getExpression(actionStrings, i, out outIndex);
-            i = outIndex;
-            if (expr)
+            //Add actions to the list
+            string[] actionStrings = split[1].Split(
+                new char[] { ' ', ',' },
+                StringSplitOptions.RemoveEmptyEntries
+                );
+            for (int i = 0; i < actionStrings.Length;)
             {
-                actions.Add(expr);
+                int outIndex;
+                Expression expr = getExpression(actionStrings, i, out outIndex);
+                i = outIndex;
+                if (expr)
+                {
+                    actions.Add(expr);
+                }
             }
         }
         //Make new rule
@@ -135,30 +145,46 @@ public static class RuleBuilder
     static Expression getExpression(string[] exprs, int index, out int nextIndex)
     {
         nextIndex = index + 1;
-        string expr = exprs[index].Trim().ToLower();
+        string exprStr = exprs[index].Trim().ToLower();
         if (exprs[index].Trim() == "")
         {
             throw new ArgumentException("Expression string at the given index was the empty string!");
         }
         //Get expression string and make a new expression
-        if (exprMetas.ContainsKey(expr))
+        if (exprMetas.ContainsKey(exprStr))
         {
-            int count = exprMetas[expr].ConstructorParameterCount;
+            Expression expr = exprMetas[exprStr];
+            int count = expr.ConstructorParameterCount;
             Type[] strTypes = new Type[count];
             object[] objs = new object[count];
             for (int i = 0; i < count; i++)
             {
                 strTypes[i] = typeof(string);
-                objs[i] = getNextParameter(exprs, index, out nextIndex, i + 1);
+                try
+                {
+                    string str = getNextParameter(exprs, index, out nextIndex, i + 1);
+                    if (expr.canAcceptConstructorArgument(str))
+                    {
+                        objs[i] = str;
+                    }
+                    else
+                    {
+                        throw new ArgumentMissingException(expr, new Type[] { typeof(string) });
+                    }
+                }
+                catch (IndexOutOfRangeException ioore)
+                {
+                    throw new ArgumentMissingException(expr, new Type[] { typeof(string) });
+                }
             }
-            return (Expression)exprMetas[expr].GetType()
+            return (Expression)expr.GetType()
                 .GetConstructor(strTypes)
                 .Invoke(objs);
         }
         //Constant claiming
         foreach (Expression meta in exprMetas.Values)
         {
-            Expression claimedExpression = meta.claimExpressionString(expr);
+            Expression claimedExpression = meta.claimExpressionString(exprStr);
             if (claimedExpression)
             {
                 return claimedExpression;

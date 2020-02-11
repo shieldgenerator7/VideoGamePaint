@@ -117,6 +117,10 @@ public class ConstantValue : AnyTypeValue
 
     public override string TokenName => "Constant";
     public override int ConstructorParameterCount => 1;
+    public override bool canAcceptConstructorArgument(string arg)
+    {
+        return true;
+    }
     public ConstantValue()
     {
         isMeta = true;

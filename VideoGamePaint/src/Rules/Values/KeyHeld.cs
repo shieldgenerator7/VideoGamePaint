@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Windows.Forms;
 
-public class KeyHeld:Expression
+public class KeyHeld : Expression
 {
     Keys key;
 
-    public KeyHeld(Keys key):base()
+    public KeyHeld(Keys key) : base()
     {
         this.key = key;
     }
 
     public KeyHeld(string keyString)
-        :this((Keys)Enum.Parse(typeof(Keys), keyString))
+        : this((Keys)Enum.Parse(typeof(Keys), keyString))
     {
     }
 
@@ -33,6 +33,11 @@ public class KeyHeld:Expression
 
     public override string TokenName => "Key";
     public override int ConstructorParameterCount => 1;
+    public override bool canAcceptConstructorArgument(string arg)
+    {
+        Keys outKeys;
+        return Enum.TryParse(arg, out outKeys);
+    }
     public KeyHeld()
     {
         isMeta = true;

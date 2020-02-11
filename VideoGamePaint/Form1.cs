@@ -204,21 +204,13 @@ namespace VideoGamePaint
                     strCombo += ctrl.Text + " ";
                 }
             }
-            if (!strCombo.Contains(":"))
-            {
-                strCombo += ": Move Player VectorUp";
-            }
             try
             {
-                RuleBuilder.buildRule(strCombo);
+                RuleBuilder.buildRuleSet(strCombo);
             }
             catch (ArgumentMissingException ame)
             {
                 options = ame.argTypes;
-            }
-            catch (IndexOutOfRangeException ioore)
-            {
-                //do nothing
             }
 
             //Options found,

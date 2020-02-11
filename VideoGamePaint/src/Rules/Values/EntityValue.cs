@@ -55,6 +55,10 @@ public class EntityValue:Expression
 
     public override string TokenName => "Entity";
     public override int ConstructorParameterCount => 1;
+    public override bool canAcceptConstructorArgument(string arg)
+    {
+        return arg.Trim().ToLower() == "player";
+    }
     public EntityValue()
     {
         isMeta = true;

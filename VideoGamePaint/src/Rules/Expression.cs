@@ -284,6 +284,10 @@ public abstract class Expression
     //public abstract string DisplayName { get; set; }
 
     public virtual int ConstructorParameterCount { get => 0; }
+    public virtual bool canAcceptConstructorArgument(string arg)
+    {
+        throw new NotImplementedException();
+    }
 
     public virtual Expression claimExpressionString(string exprStr)
     {
