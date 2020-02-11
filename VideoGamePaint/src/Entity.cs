@@ -37,7 +37,7 @@ public class Entity
         string lastVarName = "";
         foreach (string name in names)
         {
-            string nameTrim = name.Trim().ToLower();
+            string nameTrim = name.Trim();
             if (nameTrim == "=")
             {
                 initialValueStep = 1;

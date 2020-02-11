@@ -145,15 +145,16 @@ public static class RuleBuilder
     static Expression getExpression(string[] exprs, int index, out int nextIndex)
     {
         nextIndex = index + 1;
-        string exprStr = exprs[index].Trim().ToLower();
+        string exprStr = exprs[index].Trim();
+        string exprStrLower = exprStr.ToLower();
         if (exprs[index].Trim() == "")
         {
             throw new ArgumentException("Expression string at the given index was the empty string!");
         }
         //Get expression string and make a new expression
-        if (exprMetas.ContainsKey(exprStr))
+        if (exprMetas.ContainsKey(exprStrLower))
         {
-            Expression expr = exprMetas[exprStr];
+            Expression expr = exprMetas[exprStrLower];
             int count = expr.ConstructorParameterCount;
             Type[] strTypes = new Type[count];
             object[] objs = new object[count];

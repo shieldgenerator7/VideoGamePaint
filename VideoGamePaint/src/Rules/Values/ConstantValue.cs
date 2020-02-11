@@ -29,30 +29,31 @@ public class ConstantValue : AnyTypeValue
 
     public static object getObjectFromString(string valueString)
     {
-        valueString = valueString.Trim().ToLower();
+        valueString = valueString.Trim();
+        string valueStringLower = valueString.Trim().ToLower();
         //Claim vector
-        if (valueString == "vectorup")
+        if (valueStringLower == "vectorup")
         {
             return Vector.up;
         }
-        else if (valueString == "vectordown")
+        else if (valueStringLower == "vectordown")
         {
             return Vector.down;
         }
-        else if (valueString == "vectorleft")
+        else if (valueStringLower == "vectorleft")
         {
             return Vector.left;
         }
-        else if (valueString == "vectorright")
+        else if (valueStringLower == "vectorright")
         {
             return Vector.right;
         }
         //Claim bool
-        else if (valueString == "true")
+        else if (valueStringLower == "true")
         {
             return true;
         }
-        else if (valueString == "false")
+        else if (valueStringLower == "false")
         {
             return false;
         }
@@ -60,20 +61,20 @@ public class ConstantValue : AnyTypeValue
         {
             //Claim int
             int outInt;
-            if (Int32.TryParse(valueString, out outInt))
+            if (Int32.TryParse(valueStringLower, out outInt))
             {
                 return outInt;
             }
             //Claim float
             float outFloat;
-            if (float.TryParse(valueString, out outFloat))
+            if (float.TryParse(valueStringLower, out outFloat))
             {
                 return outFloat;
             }
         }
         //String has not been claimed yet,
         //So claim it as its string value
-        if (valueString != null && valueString != "")
+        if (valueStringLower != null && valueStringLower != "")
         {
             return valueString;
         }
@@ -85,7 +86,7 @@ public class ConstantValue : AnyTypeValue
     public override Expression claimExpressionString(string exprStr)
     {
         base.claimExpressionString(exprStr);
-        exprStr = exprStr.ToLower();
+        exprStr = exprStr.Trim();
         object strObj = getObjectFromString(exprStr);
         if (strObj != null)
         {
@@ -99,7 +100,7 @@ public class ConstantValue : AnyTypeValue
         base.getConstantNames(type);
         if (type == typeof(Vector))
         {
-            return new string[] { "VectorUp","VectorDown","VectorLeft","VectorRight" };
+            return new string[] { "VectorUp", "VectorDown", "VectorLeft", "VectorRight" };
         }
         else if (type == typeof(Boolean))
         {
