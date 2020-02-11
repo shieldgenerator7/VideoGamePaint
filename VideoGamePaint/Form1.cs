@@ -139,7 +139,7 @@ namespace VideoGamePaint
         {
             player.setVariableNames(txtVariables.Text);
             player.rules.Clear();
-            player.rules = RuleBuilder.buildRuleSet(txtCode.Text);
+            player.rules = RuleBuilder.buildRuleSet(getComboBoxRuleSetString());
         }
 
         private void frmPaint_Resize(object sender, EventArgs e)
@@ -195,15 +195,7 @@ namespace VideoGamePaint
             int indexCMB = cmb.Parent.Controls.IndexOf(cmb);
             //Find the options you need
             Type[] options = new Type[0];
-            string strCombo = "";
-            for (int i = 0; i < indexCMB; i++)
-            {
-                Control ctrl = flwCode.Controls[i];
-                if (ctrl is ComboBox)
-                {
-                    strCombo += ctrl.Text + " ";
-                }
-            }
+            string strCombo = getComboBoxRuleSetString(indexCMB);
             try
             {
                 RuleBuilder.buildRuleSet(strCombo);
@@ -338,6 +330,24 @@ namespace VideoGamePaint
                 flwCode.Controls.Remove(cmb);
                 return;
             }
+        }
+
+        private string getComboBoxRuleSetString(int maxIndex = -1)
+        {
+            if (maxIndex < 0)
+            {
+                maxIndex = flwCode.Controls.Count - 1;
+            }
+            string strCombo = "";
+            for (int i = 0; i < maxIndex; i++)
+            {
+                Control ctrl = flwCode.Controls[i];
+                if (ctrl is ComboBox)
+                {
+                    strCombo += ctrl.Text + " ";
+                }
+            }
+            return strCombo;
         }
 
         private void btnAddExpression_Click(object sender, EventArgs e)
